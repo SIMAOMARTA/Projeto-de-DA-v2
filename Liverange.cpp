@@ -4,27 +4,27 @@
 
 LiveRange::LiveRange(const std::string& varName,
                      const std::vector<ProgramPoint>& points)
-    : varName_(varName), points_(points)
+    : varName(varName), points(points)
 {
-    for (const auto& p : points_)
-        lineSet_.insert(p.line);
+    for (const auto& p : points)
+        lineSet.insert(p.line);
 }
 
 const std::string& LiveRange::getVarName() const {
-    return varName_;
+    return varName;
 }
 
 const std::vector<ProgramPoint>& LiveRange::getPoints() const {
-    return points_;
+    return points;
 }
 
 const std::set<int>& LiveRange::getLineSet() const {
-    return lineSet_;
+    return lineSet;
 }
 
 bool LiveRange::intersects(const LiveRange& other) const {
-    const auto& a = lineSet_;
-    const auto& b = other.lineSet_;
+    const auto& a = lineSet;
+    const auto& b = other.lineSet;
     auto it1 = a.begin(), it2 = b.begin();
     while (it1 != a.end() && it2 != b.end()) {
         if (*it1 == *it2) return true;
@@ -36,11 +36,11 @@ bool LiveRange::intersects(const LiveRange& other) const {
 
 std::string LiveRange::toString() const {
     std::ostringstream oss;
-    for (size_t i = 0; i < points_.size(); ++i) {
+    for (size_t i = 0; i < points.size(); ++i) {
         if (i > 0) oss << ',';
-        oss << points_[i].line;
-        if (points_[i].isStart) oss << '+';
-        if (points_[i].isEnd)   oss << '-';
+        oss << points[i].line;
+        if (points[i].isStart) oss << '+';
+        if (points[i].isEnd)   oss << '-';
     }
     return oss.str();
 }

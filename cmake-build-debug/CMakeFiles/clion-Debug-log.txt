@@ -1,0 +1,6 @@
+/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "Unix Makefiles" -S /Users/raulsilva/Desktop/DesenhoAlgoritmos/projectad2/Projeto-de-DA-v2 -B /Users/raulsilva/Desktop/DesenhoAlgoritmos/projectad2/Projeto-de-DA-v2/cmake-build-debug
+CMake Error at CMakeLists.txt:1 (cmake_minimum_required):
+  CMake 4.1 or higher is required.  You are running version 3.30.5
+
+
+-- Configuring incomplete, errors occurred!
