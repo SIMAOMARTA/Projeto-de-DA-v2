@@ -60,23 +60,34 @@ std::map<int, Web::LineAnnotation> Web::buildAnnotationMap() const {
 bool Web::interferesWith(const Web& other) const {
     if (!overlaps(other)) return false;
 
+    // Para cada linha partilhada, verifica se APENAS
+    // um começa por definição (+) e o outro termina por uso (-)
+    // Nesse caso específico NÃO interferem (secção 2.5 do enunciado)
+
     auto mapA = buildAnnotationMap();
     auto mapB = other.buildAnnotationMap();
 
     for (int line : lineSet_) {
         if (other.lineSet_.count(line) == 0) continue;
 
-        const LineAnnotation& annA = mapA.count(line) ? mapA[line] : LineAnnotation{};
-        const LineAnnotation& annB = mapB.count(line) ? mapB[line] : LineAnnotation{};
+        // Anotações desta linha em cada web
+        LineAnnotation annA = mapA.count(line) ? mapA.at(line) : LineAnnotation{};
+        LineAnnotation annB = mapB.count(line) ? mapB.at(line) : LineAnnotation{};
 
-        bool aOnlyStart = annA.hasStart && !annA.hasEnd;
-        bool bOnlyEnd   = annB.hasEnd   && !annB.hasStart;
-        if (aOnlyStart && bOnlyEnd) continue;
+        // Caso de não interferência:
+        // A começa por definição NESTA linha E B termina por uso NESTA linha
+        // → a definição de A "mata" o valor de B, não há sobreposição real
+        bool aStartsHere = annA.hasStart;
+        bool bEndsHere   = annB.hasEnd;
+        bool bStartsHere = annB.hasStart;
+        bool aEndsHere   = annA.hasEnd;
 
-        bool bOnlyStart = annB.hasStart && !annB.hasEnd;
-        bool aOnlyEnd   = annA.hasEnd   && !annA.hasStart;
-        if (bOnlyStart && aOnlyEnd) continue;
+        // Se numa linha A só define e B só termina → não interfere nessa linha
+        if (aStartsHere && !aEndsHere && bEndsHere && !bStartsHere) continue;
+        // Simétrico: B define e A termina → não interfere nessa linha
+        if (bStartsHere && !bEndsHere && aEndsHere && !aStartsHere) continue;
 
+        // Em qualquer outro caso de sobreposição → interferem
         return true;
     }
     return false;
@@ -85,31 +96,21 @@ bool Web::interferesWith(const Web& other) const {
 // Output
 
 std::string Web::toString() const {
-    struct Entry {
-        int  line;
-        bool isStart;
-        bool isEnd;
-    };
-    std::vector<Entry> entries;
-    for (const auto& r : ranges_) {
+    std::map<int, std::pair<bool,bool>> merged; // line → {isStart, isEnd}
+    for (const auto& r : ranges_)
         for (const auto& p : r.getPoints()) {
-            entries.push_back({p.line, p.isStart, p.isEnd});
+            merged[p.line].first  |= p.isStart;
+            merged[p.line].second |= p.isEnd;
         }
-    }
-    std::sort(entries.begin(), entries.end(), [](const Entry& a, const Entry& b) {
-        if (a.line != b.line) return a.line < b.line;
-        if (a.isStart != b.isStart) return a.isStart > b.isStart;
-        return a.isEnd < b.isEnd;
-    });
 
     std::ostringstream oss;
     bool first = true;
-    for (const auto& e : entries) {
+    for (const auto& [line, ann] : merged) {
         if (!first) oss << ',';
         first = false;
-        oss << e.line;
-        if (e.isStart) oss << '+';
-        if (e.isEnd)   oss << '-';
+        oss << line;
+        if (ann.first)  oss << '+';
+        if (ann.second) oss << '-';
     }
     return oss.str();
 }
