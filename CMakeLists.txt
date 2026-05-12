@@ -9,4 +9,5 @@ add_executable(Compiler_Register_Allocation_Algorithms
         Web.cpp
         InterferenceGraph.cpp
         Parser.cpp
+        RegisterAllocator.cpp
 )
