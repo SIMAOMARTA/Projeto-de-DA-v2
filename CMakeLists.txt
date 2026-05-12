@@ -3,4 +3,10 @@ project(Compiler_Register_Allocation_Algorithms)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(Compiler_Register_Allocation_Algorithms main.cpp)
+add_executable(Compiler_Register_Allocation_Algorithms
+        main.cpp
+        LiveRange.cpp
+        Web.cpp
+        InterferenceGraph.cpp
+        Parser.cpp
+)
