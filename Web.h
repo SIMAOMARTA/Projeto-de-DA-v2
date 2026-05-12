@@ -30,7 +30,10 @@ private:
     std::set<int>         lineSet_;
 
     struct LineAnnotation { bool hasStart = false; bool hasEnd = false; };
-    std::map<int, LineAnnotation> buildAnnotationMap() const;
+    std::map<int, LineAnnotation> annotationMap_;   // cache pré‑computada
+
+    // Constrói o mapa de anotações a partir das ranges atuais
+    void buildAnnotationMap();
 };
 
-#endif // WEB_H
+#endif

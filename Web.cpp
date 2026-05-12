@@ -1,39 +1,35 @@
 #include "Web.h"
 #include <sstream>
-#include <map>
 #include <algorithm>
 
-// Construction
-
-Web::Web(int id, const LiveRange& range) : id_(id), varName_(range.getVarName()){
+// ---------- Construção ----------
+Web::Web(int id, const LiveRange& range) : id_(id), varName_(range.getVarName()) {
     ranges_.push_back(range);
     for (int line : range.getLineSet())
         lineSet_.insert(line);
+    buildAnnotationMap();   // cache inicial
 }
 
-// Getters
-
+// ---------- Getters ----------
 int Web::getId() const { return id_; }
 void Web::setId(int newId) { id_ = newId; }
-
 const std::string& Web::getVarName() const { return varName_; }
-
 const std::vector<LiveRange>& Web::getRanges() const { return ranges_; }
-
 const std::set<int>& Web::getLineSet() const { return lineSet_; }
 
-// Merge
-
+// ---------- Fusão ----------
 void Web::absorb(const Web& other) {
+    // Adiciona os ranges do outro
     for (const auto& r : other.getRanges()) {
         ranges_.push_back(r);
         for (int line : r.getLineSet())
             lineSet_.insert(line);
     }
+    // Recalcula a cache com todas as ranges
+    buildAnnotationMap();
 }
 
-// Overlap / Interference
-
+// ---------- Sobreposição ----------
 bool Web::overlaps(const Web& other) const {
     const auto& a = lineSet_;
     const auto& b = other.lineSet_;
@@ -46,55 +42,48 @@ bool Web::overlaps(const Web& other) const {
     return false;
 }
 
-std::map<int, Web::LineAnnotation> Web::buildAnnotationMap() const {
-    std::map<int, LineAnnotation> m;
+// ---------- Construção da cache (privada) ----------
+void Web::buildAnnotationMap() {
+    annotationMap_.clear();
     for (const auto& r : ranges_) {
         for (const auto& p : r.getPoints()) {
-            if (p.isStart) m[p.line].hasStart = true;
-            if (p.isEnd)   m[p.line].hasEnd   = true;
+            if (p.isStart) annotationMap_[p.line].hasStart = true;
+            if (p.isEnd)   annotationMap_[p.line].hasEnd   = true;
         }
     }
-    return m;
 }
 
+// ---------- Interferência ----------
 bool Web::interferesWith(const Web& other) const {
+    // Pré‑condição: overlaps() garante que há linhas partilhadas
     if (!overlaps(other)) return false;
 
-    // Para cada linha partilhada, verifica se APENAS
-    // um começa por definição (+) e o outro termina por uso (-)
-    // Nesse caso específico NÃO interferem (secção 2.5 do enunciado)
-
-    auto mapA = buildAnnotationMap();
-    auto mapB = other.buildAnnotationMap();
+    // Usa as caches já calculadas em vez de construir mapas temporários
+    const auto& mapA = annotationMap_;
+    const auto& mapB = other.annotationMap_;
 
     for (int line : lineSet_) {
         if (other.lineSet_.count(line) == 0) continue;
 
-        // Anotações desta linha em cada web
+        // Obtém anotações da linha nas duas webs
         LineAnnotation annA = mapA.count(line) ? mapA.at(line) : LineAnnotation{};
         LineAnnotation annB = mapB.count(line) ? mapB.at(line) : LineAnnotation{};
 
-        // Caso de não interferência:
-        // A começa por definição NESTA linha E B termina por uso NESTA linha
-        // → a definição de A "mata" o valor de B, não há sobreposição real
         bool aStartsHere = annA.hasStart;
         bool bEndsHere   = annB.hasEnd;
         bool bStartsHere = annB.hasStart;
         bool aEndsHere   = annA.hasEnd;
 
-        // Se numa linha A só define e B só termina → não interfere nessa linha
+        // Casos de não interferência
         if (aStartsHere && !aEndsHere && bEndsHere && !bStartsHere) continue;
-        // Simétrico: B define e A termina → não interfere nessa linha
         if (bStartsHere && !bEndsHere && aEndsHere && !aStartsHere) continue;
 
-        // Em qualquer outro caso de sobreposição → interferem
         return true;
     }
     return false;
 }
 
-// Output
-
+// ---------- Representação textual ----------
 std::string Web::toString() const {
     std::map<int, std::pair<bool,bool>> merged; // line → {isStart, isEnd}
     for (const auto& r : ranges_)
