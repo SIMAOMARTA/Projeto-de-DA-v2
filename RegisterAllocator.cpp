@@ -1,3 +1,11 @@
+/**
+ * @file RegisterAllocator.cpp
+ * @brief Implementação do alocador de registos.
+ * Contém os quatro algoritmos de alocação (basic, spilling, splitting, free),
+ * os auxiliares de selecção de candidatos, divisão de webs e organização
+ * do resultado.
+ */
+
 #include "RegisterAllocator.h"
 #include <iostream>
 #include <stack>
@@ -6,22 +14,31 @@
 #include <map>
 #include <numeric>
 
-// ==================== Kempe com spill cap ====================
-
 /**
- * @brief Kempe/Chaitin greedy graph-colouring with an optional spill cap.
+ * @brief Simplificação e coloração.
+ * @details
+ * ### Simplificação
+ *  1. Percorre todos os nós ativos: se workDegree[n] < N, remove n para
+ *     a pilha e decrementa o workDegree dos seus vizinhos ativos.
+ *  2. Se o ciclo não removeu nenhum nó E ainda há nós ativos, selecciona
+ *     o candidato a spill (selectSpillCandidate) e marca-o como spilled.
+ *     - Se spillCap >= 0 e já atingimos spillCap spills, define-se
+ *       feasible=false e retorna-se antecipadamente.
  *
- * Phase 1 – simplification: repeatedly remove nodes with working degree < N
- * onto a stack.  When stuck, select a spill candidate (highest working degree).
+ * ### Coloração
+ * Desempilha um nó de cada vez. Para cada nó, recolhe as cores usadas
+ * pelos seus vizinhos já coloridos e atribui a menor cor não usada.
+ * Se a menor cor disponível for >= N, o nó é adicionalmente marcado
+ * como spilled (pode acontecer em grafos muito densos).
  *
- * Phase 2 – colouring: pop stack and assign the lowest free colour.
+ * @param graph      Grafo de interferência.
+ * @param N          Número de registos físicos disponíveis.
+ * @param spillCap   Limite máximo de spills, se for negativo é ilimitado.
+ * @param feasible   Saída: @c true se a alocação respeita @p spillCap.
+ * @return           Vetor de Allocation, um por web.
  *
- * @param graph      Interference graph.
- * @param N          Physical registers available.
- * @param spillCap   Maximum spills; negative = unlimited.
- * @param feasible   Output: true iff allocation respects spillCap.
- * @return           Per-web allocation vector.
- * @complexity O(W^2) where W = number of webs.
+ * @par Complexidade
+ * O(W²) onde W = número de webs.
  */
 std::vector<RegisterAllocator::Allocation>
 RegisterAllocator::kempeWithSpillCap(const InterferenceGraph& graph,
@@ -46,7 +63,7 @@ RegisterAllocator::kempeWithSpillCap(const InterferenceGraph& graph,
     std::stack<int> colourStack;
     int spillCount = 0;
 
-    // Phase 1
+    // Simplificação
     while (!active.empty()) {
         bool removedAny = true;
         while (removedAny) {
@@ -76,7 +93,7 @@ RegisterAllocator::kempeWithSpillCap(const InterferenceGraph& graph,
         }
     }
 
-    // Phase 2
+    // Coloração
     std::map<int,int> colour;
     while (!colourStack.empty()) {
         int id = colourStack.top(); colourStack.pop();
@@ -105,11 +122,23 @@ RegisterAllocator::kempeWithSpillCap(const InterferenceGraph& graph,
     return result;
 }
 
-// ==================== Spill candidate selection ====================
-
 /**
- * @brief Select the active node with the highest working degree (ties by id).
- * @complexity O(|active|)
+ * @brief Seleciona o candidato a spill com maior grau.
+ *
+ * @details
+ * Percorre todos os nós ativos e regista o nó com o maior grau
+ * de trabalho. Em caso de empate, o nó com id menor é escolhido porque
+ * o set está ordenado.
+ *
+ * Ao remover o nó mais conectado, o grafo tende a tornar-se mais esparso
+ * e a coloração seguinte é mais provável de ser viável.
+ *
+ * @param workDegree  Mapa id -> grau de trabalho atual.
+ * @param active      Conjunto de nós ainda ativos.
+ * @return            Id do nó selecionado.
+ *
+ * @par Complexidade
+ * O(|active|)
  */
 int RegisterAllocator::selectSpillCandidate(const std::map<int,int>& workDegree,
                                             const std::set<int>&     active)
@@ -122,26 +151,33 @@ int RegisterAllocator::selectSpillCandidate(const std::map<int,int>& workDegree,
     return best;
 }
 
-// ==================== Web splitting ====================
-
 /**
- * @brief Split a web into two halves at the median program line.
+ * @brief Divide uma web em dois no ponto mediano das linhas.
+ * @details
+ * A divisão é feita no índice médio do vetor ordenado de linhas.
  *
- * Lines at or before the median go into the first half; the rest into the
- * second.  Program-point annotations (isStart / isEnd) are preserved.
+ * Linhas com índice < média, corresponde à primeira metade.
+ * Linhas com índice >= média, corresponde à segunda metade.
  *
- * @param web  Web to split.
- * @return     Pair {firstHalf, secondHalf} with placeholder id -1.
- * @complexity O(P log P) where P = total program points in the web.
+ * **Casos importantes**:
+ * - Se média == 0 (web com apenas uma linha), força mid=1, colocando a
+ *   única linha na primeira metade.
+ * - Se uma das metades ficar vazia após a distribuição, copia os pontos
+ *   da outra (evita um LiveRange sem pontos, que seria inválido).
+ *
+ * @param web  Web a dividir.
+ * @return     Par {primeira metade, segunda metade} ambas com id=-1.
+ *
+ * @par Complexidade
+ * O(P log P) onde P = total de pontos da web.
  */
 std::pair<Web,Web> RegisterAllocator::splitWeb(const Web& web)
 {
     const std::set<int>& lineSet = web.getLineSet();
     std::vector<int> lines(lineSet.begin(), lineSet.end());
-    // lineSet is already sorted
 
     size_t mid = lines.size() / 2;
-    if (mid == 0) mid = 1; // at least one line per half
+    if (mid == 0) mid = 1;
 
     std::set<int> linesFirst(lines.begin(), lines.begin() + (int)mid);
     std::set<int> linesSecond(lines.begin() + (int)mid, lines.end());
@@ -155,7 +191,6 @@ std::pair<Web,Web> RegisterAllocator::splitWeb(const Web& web)
         }
     }
 
-    // Degenerate fallback: put everything in first half (avoids empty LiveRange)
     if (pts1.empty()) pts1 = pts2;
     if (pts2.empty()) pts2.push_back(pts1.back());
 
@@ -165,10 +200,18 @@ std::pair<Web,Web> RegisterAllocator::splitWeb(const Web& web)
 }
 
 /**
- * @brief Rebuild an InterferenceGraph from a list of Webs.
+ * @brief Reconstrói um InterferenceGraph a partir de uma lista de webs.
  *
- * Extracts all LiveRanges and passes them through the normal constructor.
- * @complexity Same as InterferenceGraph constructor: O(W^2 * L).
+ * @details
+ * Extrai todos os LiveRanges de cada web e passa-os ao construtor do
+ * InterferenceGraph, que refaz buildWebs() + buildEdges().
+ * Garante consistência do grafo após múltiplas divisões de webs.
+ *
+ * @param webs  Lista de webs atuais.
+ * @return      Novo InterferenceGraph reconstruído.
+ *
+ * @par Complexidade
+ * O(W² × L), igual ao construtor do InterferenceGraph.
  */
 InterferenceGraph RegisterAllocator::rebuildGraphFromWebs(const std::vector<Web>& webs)
 {
@@ -179,16 +222,25 @@ InterferenceGraph RegisterAllocator::rebuildGraphFromWebs(const std::vector<Web>
     return InterferenceGraph(allRanges);
 }
 
-// ==================== Free algorithm: Chaitin spill heuristic ====================
 
 /**
- * @brief Chaitin spill heuristic: pick node that maximises degree / liveRangeSize.
+ * @brief Seleciona o candidato a spill pela heurística de Chaitin.
  *
- * A web that spans many lines is relatively cheap to spill; a web with many
- * neighbours but a short live range is expensive to keep in a register.
- * We spill the node with the highest degree-to-size ratio.
+ * @details
+ * Maximiza a razão @c grau_trabalho / tamanho_live_range:
+ *  - **Grau alto**, web muito conectada, difícil de colorir.
+ *  - **Live range grande**, web fraca para guardar em memória.
  *
- * @complexity O(|active|)
+ * Um valor elevado indica uma web "boa" de manter em registo e
+ * "fraca" de deitar para memória — bom candidato a spill.
+ *
+ * @param graph       Grafo de interferência.
+ * @param workDegree  Mapa id -> grau de trabalho atual.
+ * @param active      Conjunto de nós ainda ativos.
+ * @return            Id do melhor candidato a spill.
+ *
+ * @par Complexidade
+ * O(|active|)
  */
 static int chaitinCandidate(const InterferenceGraph&  graph,
                             const std::map<int,int>&  workDegree,
@@ -208,12 +260,20 @@ static int chaitinCandidate(const InterferenceGraph&  graph,
 }
 
 /**
- * @brief Kempe colouring with the Chaitin spill-cost heuristic.
+ * @brief Coloração de Kempe com heurística de Chaitin para seleção de spill.
  *
- * Identical flow to kempeWithSpillCap (unlimited spills) but uses
- * chaitinCandidate instead of highest-degree selection.
+ * @details
+ * Idêntico ao fluxo de kempeWithSpillCap (sem limite de spills), mas
+ * usa chaitinCandidate() em vez de selectSpillCandidate() para escolher
+ * o nó a deitar para memória na fase de simplificação.
  *
- * @complexity O(W^2)
+ * @param graph     Grafo de interferência.
+ * @param N         Registos físicos disponíveis.
+ * @param feasible  Saída: sempre @c true (sem limite de spills).
+ * @return          Vetor de Allocation por web.
+ *
+ * @par Complexidade
+ * O(W²) onde W = número de webs.
  */
 static std::vector<RegisterAllocator::Allocation>
 kempeChaitin(const InterferenceGraph& graph, int N, bool& feasible)
@@ -278,20 +338,40 @@ kempeChaitin(const InterferenceGraph& graph, int N, bool& feasible)
     return result;
 }
 
-// ==================== Main dispatch ====================
-
 /**
- * @brief Dispatch to the appropriate allocation sub-algorithm.
+ * @brief Executa o algoritmo de alocação de registos selecionado na configuração.
  *
- * - "basic"    : Kempe greedy, unlimited spills.
- * - "spilling" : Kempe, at most K spills (tries 0..K until feasible).
- * - "splitting": Iteratively splits the highest-degree web (up to K times)
- *                and retries colouring without spills; falls back to unlimited
- *                spilling if splitting alone is insufficient.
- * - "free"     : Kempe with Chaitin degree/size spill heuristic.
+ * @details
+ * ### basic
+ * Chama kempeWithSpillCap com spillCap=-1 (ilimitado). Se não for possível
+ * colorir sem spills, os nós excedentes são marcados como spilled e é
+ * emitido um aviso no stderr.
  *
- * @complexity Dominated by sub-algorithm; O(W^2) for basic/spilling/free,
- *             O(K * W^2 * L) for splitting.
+ * ### spilling
+ * Itera cap de 0 até K (inclusive). Para cada valor tenta a coloração;
+ * se feasible==true retorna imediatamente. Se nenhuma iteração for viável,
+ * marca todas as webs como spilled e emite erro no stderr.
+ *
+ * ### splitting
+ *  1. Tenta primeiro sem modificações (cap=0).
+ *  2. Se falhar, entra no loop de splitting (até K iterações):
+ *     - Reconstrói o grafo atual.
+ *     - Identifica a web com maior grau como candidata.
+ *     - Divide-a com splitWeb() e substitui no vetor currentWebs.
+ *     - Tenta coloração do novo grafo com cap=0.
+ *  3. Se após K splits ainda falhar, usa spills ilimitados (fallback).
+ *
+ * ### free (Chaitin)
+ * Chama kempeChaitin() que usa a razão grau/tamanho para selecionar
+ * candidatos a spill.
+ *
+ * @param graph   Grafo de interferência.
+ * @param config  Configuração com algoritmo e número de registos.
+ * @return        Vetor de Allocation por web.
+ *
+ * @par Complexidade
+ * O(W²) para basic/spilling/free;
+ * O(K × W² × L) para splitting.
  */
 std::vector<RegisterAllocator::Allocation>
 RegisterAllocator::allocate(const InterferenceGraph& graph,
@@ -301,20 +381,20 @@ RegisterAllocator::allocate(const InterferenceGraph& graph,
     bool feasible = false;
     std::vector<Allocation> result;
 
-    // ---- basic ----
+    // basic
     if (config.algorithm == "basic") {
         result = kempeWithSpillCap(graph, N, -1, feasible);
         return result;
     }
 
-    // ---- spilling ----
+    // spilling
     if (config.algorithm == "spilling") {
         int K = config.algorithmParam;
         for (int cap = 0; cap <= K; ++cap) {
             result = kempeWithSpillCap(graph, N, cap, feasible);
             if (feasible) return result;
         }
-        // All K attempts failed: mark everything as spilled (registers: 0, all M)
+
         std::cerr << "ERRO: alocacao com spilling ate K=" << K
                   << " nao foi possivel.\n";
         const int W2 = graph.numNodes();
@@ -327,22 +407,18 @@ RegisterAllocator::allocate(const InterferenceGraph& graph,
         return result;
     }
 
-    // ---- splitting ----
+    // splitting
     if (config.algorithm == "splitting") {
         int K = config.algorithmParam;
 
-        // Try without any modification first
         result = kempeWithSpillCap(graph, N, 0, feasible);
         if (feasible) return result;
 
-        // Work on an evolving list of webs
         std::vector<Web> currentWebs = graph.getWebs();
 
         for (int splitsDone = 0; splitsDone < K; ++splitsDone) {
-            // Rebuild to get up-to-date degrees
             InterferenceGraph curGraph = rebuildGraphFromWebs(currentWebs);
 
-            // Pick the web with the highest degree as split candidate
             int candidate = -1, maxDeg = -1;
             for (int i = 0; i < curGraph.numNodes(); ++i) {
                 if (curGraph.degree(i) > maxDeg) {
@@ -350,10 +426,8 @@ RegisterAllocator::allocate(const InterferenceGraph& graph,
                     candidate = i;
                 }
             }
-            // Nothing worth splitting
             if (candidate == -1 || maxDeg < N) break;
 
-            // Split the candidate and replace it in currentWebs
             const Web& candWeb = curGraph.getWebs()[candidate];
             auto [w1, w2] = splitWeb(candWeb);
 
@@ -369,13 +443,11 @@ RegisterAllocator::allocate(const InterferenceGraph& graph,
             }
             currentWebs = std::move(newWebs);
 
-            // Try colouring the new graph with 0 spills
             InterferenceGraph newGraph = rebuildGraphFromWebs(currentWebs);
             result = kempeWithSpillCap(newGraph, N, 0, feasible);
             if (feasible) return result;
         }
 
-        // Splitting alone was not enough: fall back to unlimited spilling
         std::cerr << "ERRO: alocacao com splitting ate K=" << K
                   << " nao foi possivel sem spilling.\n"
                   << "       Recorrendo a spilling ilimitado.\n";
@@ -384,25 +456,34 @@ RegisterAllocator::allocate(const InterferenceGraph& graph,
         return result;
     }
 
-    // ---- free (Chaitin heuristic) ----
+    // free
     if (config.algorithm == "free") {
         result = kempeChaitin(graph, N, feasible);
         return result;
     }
 
-    // Should never reach here
     return result;
 }
 
-// ==================== Output ====================
 
 /**
- * @brief Print the allocation result to an output stream.
+ * @brief Imprime o resultado da alocação para um stream de saída.
  *
- * Outputs the web listing followed by register assignments.
- * Spilled webs are marked with "M:".
+ * @details
+ * Percorre as allocations duas vezes:
+ *  1. Para calcular o número de registos efetivamente usados
+ *     (maxReg+1, onde maxReg é o maior regIdx não-spilled).
+ *  2. Para emitir as linhas de atribuição ("rN: webM" ou "M: webM").
  *
- * @complexity O(W * P) where P = average program points per web.
+ * O número de registos reportado pode ser inferior a config.numRegisters
+ * quando nem todos os registos disponíveis são necessários.
+ *
+ * @param graph        Grafo de interferência.
+ * @param allocations  Resultado de allocate().
+ * @param out          Stream de saída.
+ *
+ * @par Complexidade
+ * O(W × P) onde W = número de webs, P = pontos médios por web.
  */
 void RegisterAllocator::printResult(const InterferenceGraph&       graph,
                                     const std::vector<Allocation>&  allocations,

@@ -1,7 +1,26 @@
+/**
+ * @file LiveRange.cpp
+ * @brief Implementação da classe LiveRange.
+ */
+
 #include "LiveRange.h"
 #include <sstream>
 #include <algorithm>
 
+/**
+ * @brief Constrói uma LiveRange para uma variável com os pontos fornecidos.
+ * @details
+ * Inicializa os campos varName e points com os argumentos recebidos.
+ * Itera sobre @p points e insere cada número de linha em lineSet,
+ * pré-construindo o conjunto para que pesquisas posteriores sejam O(log P)
+ * em vez de O(P).
+ *
+ * @param varName  Nome da variável associada a esta live range.
+ * @param points   Lista de pontos de programa que compõem a live range.
+ *
+ * @par Complexidade
+ * O(P log P), onde P = número de pontos.
+ */
 LiveRange::LiveRange(const std::string& varName,
                      const std::vector<ProgramPoint>& points)
     : varName(varName), points(points)
@@ -10,18 +29,59 @@ LiveRange::LiveRange(const std::string& varName,
         lineSet.insert(p.line);
 }
 
+/**
+ * @brief Devolve o nome da variável associada a esta live range.
+ *
+ * @return Referência constante para o nome da variável.
+ *
+ * @par Complexidade
+ * O(1)
+ */
 const std::string& LiveRange::getVarName() const {
     return varName;
 }
 
+/**
+ * @brief Devolve a lista de pontos de programa desta live range.
+ *
+ * @return Referência constante para o vetor de ProgramPoint.
+ *
+ * @par Complexidade
+ * O(1)
+ */
 const std::vector<ProgramPoint>& LiveRange::getPoints() const {
     return points;
 }
 
+/**
+ * @brief Devolve o conjunto de números de linha desta live range.
+ *
+ * @return Referência constante para o set de inteiros ordenados.
+ *
+ * @par Complexidade
+ * O(1)
+ */
 const std::set<int>& LiveRange::getLineSet() const {
     return lineSet;
 }
 
+/**
+ * @brief Verifica se esta live range partilha pelo menos uma linha com @p other.
+ *
+ * @details
+ * Utiliza dois iteradores sobre os lineSets ordenados (passo de merge
+ * do merge-sort). Em cada passo avança o iterador com o valor mais
+ * pequeno. Se em algum ponto os dois valores forem iguais, as ranges
+ * intersetam e a função retorna imediatamente.
+ *
+ * @param other  A outra live range a comparar.
+ * @return       @c true se houver pelo menos uma linha comum;
+ *               @c false caso contrário.
+ *
+ * @par Complexidade
+ * O(min(|a|, |b|)) no melhor caso (primeira linha já comum);
+ * O(|a| + |b|) no pior caso (sem interseção).
+ */
 bool LiveRange::intersects(const LiveRange& other) const {
     const auto& a = lineSet;
     const auto& b = other.lineSet;
@@ -34,6 +94,21 @@ bool LiveRange::intersects(const LiveRange& other) const {
     return false;
 }
 
+
+/**
+ * @brief Devolve uma representação textual da live range.
+ *
+ * @details
+ * Itera sobre o vetor points e constrói a string de saída. Cada ponto
+ * é separado por vírgula; o sufixo '+' é adicionado se isStart for
+ * verdadeiro e '-' se isEnd for verdadeiro.
+ *
+ * @return String com os pontos separados por vírgulas e anotados com
+ *         '+'/'-' conforme aplicável. Exemplo: @c "1+,2,3,4,5,6-".
+ *
+ * @par Complexidade
+ * O(P) onde P = número de pontos de programa.
+ */
 std::string LiveRange::toString() const {
     std::ostringstream oss;
     for (size_t i = 0; i < points.size(); ++i) {

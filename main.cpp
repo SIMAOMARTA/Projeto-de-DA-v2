@@ -1,3 +1,16 @@
+/**
+ * @file main.cpp
+ * @brief Ponto de partida para a alocação de registos.
+ * O programa pode ser executado em dois modos:
+ * **Modo batch**, modo não interativo:
+ * @code
+ *   ./prog -b testes/ranges.txt testes/registers.txt testes/output.txt
+ * @endcode
+ *
+ * **Modo interativo**, onde se apresenta um menu simples que
+ * permite configurar os ficheiros e executar a alocação de forma iterativa.
+ */
+
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -13,29 +26,45 @@
 #include <windows.h>
 #endif
 
-// ----------------------------------------------------------------------
-// Função que executa o pipeline completo e grava o resultado em ficheiro.
-// Retorna true se a alocação foi bem‑sucedida (pode ter havido spills).
-// ----------------------------------------------------------------------
+/**
+ * @brief Executa a pipeline completa.
+ *
+ * Algoritmo:
+ *  1. **Parse** dos dois ficheiros de entrada (ranges e configuração).
+ *  2. **Construção** do grafo de interferência.
+ *  3. **Alocação** de registos com o algoritmo configurado.
+ *  4. **Escrita** do resultado no ficheiro de saída.
+ *
+ * Em caso de erro (ficheiro inacessível ou formato inválido) a
+ * exceção é lançada, onde a função devolve @c false.
+ *
+ * @param rangesFile    Caminho para o ficheiro de live ranges.
+ * @param registersFile Caminho para o ficheiro de configuração.
+ * @param outputFile    Caminho para o ficheiro de saída.
+ * @return              @c true se o pipeline foi concluído sem erros;
+ *                      @c false caso contrário.
+ *
+ * @complexity O(W² × L), onde W = nº de webs, L = linhas médias por web.
+ */
 static bool runAllocation(const std::string& rangesFile,
                           const std::string& registersFile,
                           const std::string& outputFile)
 {
     try {
-        // 1. Parse dos ficheiros de entrada
+        // Parse dos ficheiros de entrada
         auto ranges   = Parser::parseRanges(rangesFile);
         auto config   = Parser::parseRegisters(registersFile);
         std::cout << "Ficheiros lidos com sucesso.\n";
 
-        // 2. Construção do grafo de interferência
+        // Construção do grafo de interferência
         InterferenceGraph graph(ranges);
         std::cout << "Grafo de interferência construído: "
                   << graph.numNodes() << " webs.\n";
 
-        // 3. Executar alocação de registos
+        // Executar alocação de registos
         auto allocations = RegisterAllocator::allocate(graph, config);
 
-        // 4. Imprimir resultado no ficheiro de saída
+        // Imprimir resultado no ficheiro de saída
         std::ofstream out(outputFile);
         if (!out.is_open()) {
             std::cerr << "ERRO: Não foi possível criar o ficheiro de saída: "
@@ -53,13 +82,22 @@ static bool runAllocation(const std::string& rangesFile,
     }
 }
 
-// ----------------------------------------------------------------------
-// Menu interativo simples
-// ----------------------------------------------------------------------
+/**
+ * @brief Menu interativo.
+ *
+ * Apresenta as seguintes opções em loop até o utilizador escolher a opção "Sair":
+ *  1. Definir o ficheiro de live ranges.
+ *  2. Definir o ficheiro de configuração de registos.
+ *  3. Definir o ficheiro de saída.
+ *  4. Executar a alocação (requer sempre as opções 1-3 preenchidas).
+ *  5. Sair.
+ *
+ * Entradas inválidas são reportadas com mensagem de erro.
+ */
 static void interactiveMenu() {
     std::string rangesFile, registersFile, outputFile;
     while (true) {
-        std::cout << "\n========== MENU ==========\n"
+        std::cout << "\n================== MENU ==================\n"
                   << "1. Definir ficheiro de live ranges\n"
                   << "2. Definir ficheiro de registos\n"
                   << "3. Definir ficheiro de saída\n"
@@ -73,11 +111,11 @@ static void interactiveMenu() {
 
         switch (op) {
             case 1:
-                std::cout << "Caminho do ficheiro de live ranges: ";
+                std::cout << "Caminho do ficheiro de range: ";
                 std::getline(std::cin, rangesFile);
                 break;
             case 2:
-                std::cout << "Caminho do ficheiro de registos: ";
+                std::cout << "Caminho do ficheiro de registo: ";
                 std::getline(std::cin, registersFile);
                 break;
             case 3:
@@ -86,7 +124,7 @@ static void interactiveMenu() {
                 break;
             case 4:
                 if (rangesFile.empty() || registersFile.empty() || outputFile.empty()) {
-                    std::cerr << "ERRO: Defina primeiro todos os ficheiros (opções 1-3).\n";
+                    std::cerr << "ERRO: Defina primeiro todos os ficheiros (opções 1 a 3).\n";
                 } else {
                     runAllocation(rangesFile, registersFile, outputFile);
                 }
@@ -99,15 +137,26 @@ static void interactiveMenu() {
     }
 }
 
-// ----------------------------------------------------------------------
-// Ponto de entrada
-// ----------------------------------------------------------------------
+/**
+ * @brief Ponto de entrada — seleciona-se o modo batch ou o modo interativo.
+ *
+ * @par Modo batch
+ * Sintaxe: @c ./prog @c -b @c ranges.txt @c registers.txt @c output.txt
+ * Requer exatamente 4 argumentos.
+ *
+ * @par Modo interativo
+ * Qualquer outra invocação inicia o menu interativo.
+ *
+ * @param argc  Número de argumentos da linha de comandos.
+ * @param argv  Array de argumentos.
+ * @return      0 (sucesso) ou 1 (erro no modo batch).
+ */
 int main(int argc, char* argv[]) {
 #ifdef _WIN32
     SetConsoleOutputCP(CP_UTF8);
 #endif
 
-    // Verifica se é modo batch: -b <ranges> <registers> <output>
+    // Verifica se é modo batch
     if (argc == 5 && std::string(argv[1]) == "-b") {
         std::string rangesFile    = argv[2];
         std::string registersFile = argv[3];

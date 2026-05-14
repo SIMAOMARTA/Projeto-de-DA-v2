@@ -1,9 +1,32 @@
+/**
+ * @file InterferenceGraph.cpp
+ * @brief Implementação do grafo de interferência.
+ *
+ * Implementa a construção do grafo em dois passos:
+ *  - buildWebs()  : fusão de live ranges em webs por variável.
+ *  - buildEdges() : deteção de interferência entre cada par de webs.
+ */
+
 #include "InterferenceGraph.h"
 #include <iostream>
 #include <map>
 #include <algorithm>
 
-//construtor principal
+//construtor
+/**
+ * @brief Constrói o grafo de interferência a partir de uma lista de LiveRanges.
+ *
+ * @details
+ * Envia imediatamente para buildWebs() e depois buildEdges().
+ * A separação em dois métodos distintos facilita testes unitários
+ * independentes de cada fase da construção.
+ *
+ * @param ranges  Lista de LiveRanges obtida do Parser.
+ *
+ * @par Complexidade
+ * O(W² × L) dominado por buildEdges(),
+ * onde W = número de webs e L = número médio de linhas por web.
+ */
 InterferenceGraph::InterferenceGraph(const std::vector<LiveRange>& ranges) {
     buildWebs(ranges);
     buildEdges();
@@ -11,13 +34,35 @@ InterferenceGraph::InterferenceGraph(const std::vector<LiveRange>& ranges) {
 
 //agrupar e fundir webs
 
-
 /**
- * @brief Agrupa os live ranges por variável e funde os que se sobrepõem.
- * Para cada variável pode haver vários live ranges (por exemplo, variável "i" em
- * diferentes laços). Se dois desses ranges partilham pelo menos uma linha,
- * pertencem à mesma web e são fundidos.
- * Algoritmo greedy O(R^2) por variável, onde R = nº de ranges da variável.
+ * @brief Agrupa e funde live ranges em webs por variável.
+ *
+ * @details
+ * Pipeline de construção de webs em três passos:
+ *
+ * **Agrupar por variável**
+ * Usa um @c std::map<string, vector<LiveRange>> para agrupar todas as
+ * live ranges pelo nome da variável.
+ *
+ * **Fusão greedy por grupo**
+ * Para cada variável:
+ *  1. Cria uma Web individual por LiveRange (estado inicial).
+ *  2. Repete enquanto houver fusões possíveis: para cada par (i,j),
+ *     se Web::overlaps() == true, absorve j em i e recomeça o ciclo.
+ *  3. Termina quando nenhum par de webs se sobrepõe.
+ *
+ * Esta abordagem greedy garante que todas as ranges que, direta ou
+ * transitivamente, partilham linhas são fundidas numa única web.
+ *
+ * **Renumeração**
+ * Após todas as fusões os ids internos podem ter lacunas (ids de webs
+ * absorvidas ficam sem uso). Renumera sequencialmente de 0 a N-1.
+ *
+ * @param ranges  Lista de LiveRanges lida pelo Parser.
+ *
+ * @par Complexidade
+ * O(V × R²) onde V = número de variáveis distintas e R = número médio
+ * de live ranges por variável.
  */
 void InterferenceGraph::buildWebs(const std::vector<LiveRange>& ranges) {
     // Agrupa por nome de variável
@@ -66,8 +111,16 @@ void InterferenceGraph::buildWebs(const std::vector<LiveRange>& ranges) {
 //construir as arestas
 
 /**
- * @brief Para cada par de webs verifica se interferem e, se sim, adiciona aresta.
- * Complexidade: O(W^2) chamadas a interferesWith(), cada uma O(L log L).
+ * @brief Constrói as arestas do grafo testando interferência entre cada par de webs.
+ *
+ * @details
+ * Inicializa entradas vazias na adjList_ para todos os nós, garantindo
+ * que neighbors() e degree() funcionam mesmo para nós isolados (sem
+ * vizinhos). De seguida itera sobre todos os pares (i,j) com i < j e
+ * chama Web::interferesWith(); se verdadeiro, adiciona aresta via addEdge().
+ *
+ * @par Complexidade
+ * O(W² × L) onde W = número de webs e L = número médio de linhas por web.
  */
 void InterferenceGraph::buildEdges() {
     int n = (int)webs_.size();
@@ -81,39 +134,105 @@ void InterferenceGraph::buildEdges() {
                 addEdge(i, j);
 }
 
+/**
+ * @brief Adiciona uma aresta bidirecional entre dois nós.
+ *
+ * @details
+ * Insere idB no set de adjacência de idA e idA no set de idB.
+ * Como std::set ignora duplicados, chamadas repetidas com os mesmos
+ * argumentos são seguras.
+ *
+ * @param idA  Id do primeiro nó.
+ * @param idB  Id do segundo nó.
+ *
+ * @par Complexidade
+ * O(log W) onde W = número de webs.
+ */
 void InterferenceGraph::addEdge(int idA, int idB) {
     adjList_[idA].insert(idB);
     adjList_[idB].insert(idA);
 }
 
-// getters
 
+// getters
+/**
+ * @brief Devolve a lista de todas as webs (nós) do grafo.
+ * @return Referência constante para o vetor de webs.
+ * @par Complexidade
+ * O(1)
+ */
 const std::vector<Web>& InterferenceGraph::getWebs() const {
     return webs_;
 }
 
+/**
+ * @brief Verifica se existe uma aresta entre dois nós.
+ *
+ * @param idA  Id do primeiro nó.
+ * @param idB  Id do segundo nó.
+ * @return     @c true se existe aresta entre idA e idB.
+ *
+ * @par Complexidade
+ * O(log W) onde W = número de webs.
+ */
 bool InterferenceGraph::hasEdge(int idA, int idB) const {
     auto it = adjList_.find(idA);
     if (it == adjList_.end()) return false;
     return it->second.count(idB) > 0;
 }
 
+/**
+ * @brief Devolve o conjunto de vizinhos de um nó.
+ *
+ * @param id  Id da web cujos vizinhos se pretendem obter.
+ * @return    Referência constante para o set de ids vizinhos.
+ *
+ * @throws std::out_of_range Se @p id não existir na adjList_.
+ *
+ * @par Complexidade
+ * O(log W) onde W = número de webs.
+ */
 const std::set<int>& InterferenceGraph::neighbors(int id) const {
     return adjList_.at(id);
 }
 
+/**
+ * @brief Devolve o grau (número de vizinhos) de um nó.
+ *
+ * @param id  Id da web cujo grau se pretende calcular.
+ * @return    Número de webs com que @p id interfere; 0 se não existir.
+ *
+ * @par Complexidade
+ * O(log W) onde W = número de webs.
+ */
 int InterferenceGraph::degree(int id) const {
     auto it = adjList_.find(id);
     if (it == adjList_.end()) return 0;
     return (int)it->second.size();
 }
 
+/**
+ * @brief Devolve o número de nós (webs) no grafo.
+ * @return Número total de webs no grafo.
+ * @par Complexidade
+ * O(1)
+ */
 int InterferenceGraph::numNodes() const {
     return (int)webs_.size();
 }
 
 //debug
-
+/**
+ * @brief Imprime o grafo no stdout para fins de depuração.
+ *
+ * @details
+ * Imprime primeiro a lista de webs com o respectivo toString(),
+ * e depois todas as arestas no formato "webA -- webB". Cada aresta
+ * é impressa apenas uma vez, garantido pela condição id < nb.
+ *
+ * @par Complexidade
+ * O(W + E) onde W = número de webs e E = número de arestas.
+ */
 void InterferenceGraph::print() const {
     std::cout << "=== Interference Graph ===\n";
     std::cout << "Webs (" << webs_.size() << "):\n";
