@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['buildannotationmap_0',['buildAnnotationMap',['../class_web.html#aeb6dfd43051263f634303098a47b58ea',1,'Web']]],
-  ['buildedges_1',['buildEdges',['../class_interference_graph.html#a8590504008ef8e76259ba7986f29c76f',1,'InterferenceGraph']]],
-  ['buildwebs_2',['buildWebs',['../class_interference_graph.html#a9ace91ca867c18bc6b849c4531e71cb1',1,'InterferenceGraph']]]
+  ['degree_0',['degree',['../class_interference_graph.html#a6f21fb1f3ff51897c722bea1b493dbbe',1,'InterferenceGraph']]]
 ];

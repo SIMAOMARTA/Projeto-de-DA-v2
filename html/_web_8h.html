@@ -91,6 +91,9 @@ $(function(){initNavTree('_web_8h.html','',''); });
   <div class="headertitle"><div class="title">Web.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Declaração da classe <a class="el" href="class_web.html">Web</a>. Uma web é a união de uma ou mais LiveRanges da mesma variável cujos intervalos se sobrepõem. É o nó fundamental do grafo de interferência.  
+<a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="_live_range_8h_source.html">LiveRange.h</a>&quot;</code><br />
 <code>#include &lt;string&gt;</code><br />
 <code>#include &lt;vector&gt;</code><br />
@@ -103,8 +106,11 @@ $(function(){initNavTree('_web_8h.html','',''); });
 Classes</h2></td></tr>
 <tr class="memitem:Web" id="r_Web"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="class_web.html">Web</a></td></tr>
 <tr class="memitem:Web_3A_3ALineAnnotation" id="r_Web_3A_3ALineAnnotation"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="struct_web_1_1_line_annotation.html">Web::LineAnnotation</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cache de anotações (isStart / isEnd) por linha de programa. Pré-computada por <a class="el" href="class_web.html#aeb6dfd43051263f634303098a47b58ea" title="Reconstrói annotationMap_ a partir das ranges atuais.">buildAnnotationMap()</a> e consultada em <a class="el" href="class_web.html#a1daf0ad084076fd059d0e66e75481125" title="Determina se esta web interfere com other.">interferesWith()</a> para evitar iterar sobre todos os pontos a cada chamada.  <a href="struct_web_1_1_line_annotation.html#details">More...</a><br /></td></tr>
 </table>
-</div><!-- contents -->
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Declaração da classe <a class="el" href="class_web.html">Web</a>. Uma web é a união de uma ou mais LiveRanges da mesma variável cujos intervalos se sobrepõem. É o nó fundamental do grafo de interferência. </p>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <div id="page-nav" class="page-nav-panel">
 <div id="page-nav-resize-handle"></div>

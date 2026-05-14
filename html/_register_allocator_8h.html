@@ -92,12 +92,11 @@ $(function(){initNavTree('_register_allocator_8h.html','',''); });
 </div><!--header-->
 <div class="contents">
 
-<p>Register allocation via graph colouring (Kempe/Chaitin heuristics).  
+<p>Declaração do alocador de registos por coloração de grafos.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="_interference_graph_8h_source.html">InterferenceGraph.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="_algorithm_config_8h_source.html">AlgorithmConfig.h</a>&quot;</code><br />
 <code>#include &lt;vector&gt;</code><br />
-<code>#include &lt;map&gt;</code><br />
 <code>#include &lt;set&gt;</code><br />
 <code>#include &lt;ostream&gt;</code><br />
 </div>
@@ -107,16 +106,17 @@ $(function(){initNavTree('_register_allocator_8h.html','',''); });
 Classes</h2></td></tr>
 <tr class="memitem:RegisterAllocator" id="r_RegisterAllocator"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="class_register_allocator.html">RegisterAllocator</a></td></tr>
 <tr class="memitem:RegisterAllocator_3A_3AAllocation" id="r_RegisterAllocator_3A_3AAllocation"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="struct_register_allocator_1_1_allocation.html">RegisterAllocator::Allocation</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Result of allocating a single web.  <a href="struct_register_allocator_1_1_allocation.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resultado da alocação de uma única web.  <a href="struct_register_allocator_1_1_allocation.html#details">More...</a><br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Register allocation via graph colouring (Kempe/Chaitin heuristics). </p>
-<p>Supported algorithm variants (set via <a class="el" href="struct_algorithm_config.html">AlgorithmConfig</a>):</p><ul>
-<li>"basic" : Kempe greedy with unlimited spills.</li>
-<li>"spilling" : Kempe with at most K spills (K = algorithmParam).</li>
-<li>"splitting": Iterative web splitting (up to K splits) before colouring.</li>
-<li>"free" : Kempe with Chaitin degree/size spill-cost heuristic. </li>
+<div class="textblock"><p>Declaração do alocador de registos por coloração de grafos. </p>
+<p>Implementa quatro variantes de alocação baseadas na heurística de Kempe/Chaitin:</p><ul>
+<li><b>basic</b> : coloração greedy sem limite de spills (T2.1).</li>
+<li><b>spilling</b> : coloração com no máximo K spills (T2.2).</li>
+<li><b>splitting</b> : divisão iterativa de webs antes da coloração (T2.3).</li>
+<li><b>free</b> : heurística própria de Chaitin grau/tamanho (T2.4).</li>
 </ul>
+<p>Todos os métodos são estáticos (classe utilitária sem estado). </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <div id="page-nav" class="page-nav-panel">

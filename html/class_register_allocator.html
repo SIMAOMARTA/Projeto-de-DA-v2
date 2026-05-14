@@ -97,25 +97,25 @@ $(function(){initNavTree('class_register_allocator.html','','class_register_allo
 <tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:Allocation" id="r_Allocation"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="struct_register_allocator_1_1_allocation.html">Allocation</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Result of allocating a single web.  <a href="struct_register_allocator_1_1_allocation.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resultado da alocação de uma única web.  <a href="struct_register_allocator_1_1_allocation.html#details">More...</a><br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-static-methods" class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a2d60d66ed6c403af7a116f022bfc2ffa" id="r_a2d60d66ed6c403af7a116f022bfc2ffa"><td class="memItemLeft">static std::vector&lt; <a class="el" href="struct_register_allocator_1_1_allocation.html">Allocation</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a2d60d66ed6c403af7a116f022bfc2ffa">allocate</a> (const <a class="el" href="class_interference_graph.html">InterferenceGraph</a> &amp;graph, const <a class="el" href="struct_algorithm_config.html">AlgorithmConfig</a> &amp;config)</td></tr>
-<tr class="memdesc:a2d60d66ed6c403af7a116f022bfc2ffa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate registers for all webs in <code class="param">graph</code>.  <br /></td></tr>
+<tr class="memdesc:a2d60d66ed6c403af7a116f022bfc2ffa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Aloca registos para todas as webs em <code class="param">graph</code>.  <br /></td></tr>
 <tr class="memitem:a9e9d8cdaeec913a7a86e4a9161c4ba71" id="r_a9e9d8cdaeec913a7a86e4a9161c4ba71"><td class="memItemLeft">static void&#160;</td><td class="memItemRight"><a class="el" href="#a9e9d8cdaeec913a7a86e4a9161c4ba71">printResult</a> (const <a class="el" href="class_interference_graph.html">InterferenceGraph</a> &amp;graph, const std::vector&lt; <a class="el" href="struct_register_allocator_1_1_allocation.html">Allocation</a> &gt; &amp;allocations, std::ostream &amp;out)</td></tr>
-<tr class="memdesc:a9e9d8cdaeec913a7a86e4a9161c4ba71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write the allocation result to <code class="param">out</code>.  <br /></td></tr>
+<tr class="memdesc:a9e9d8cdaeec913a7a86e4a9161c4ba71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Escreve o resultado da alocação em <code class="param">out</code>.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pri-static-methods" class="groupheader"><a id="pri-static-methods" name="pri-static-methods"></a>
 Static Private Member Functions</h2></td></tr>
 <tr class="memitem:ade9ee399080785b95bd1797c61713661" id="r_ade9ee399080785b95bd1797c61713661"><td class="memItemLeft">static std::vector&lt; <a class="el" href="struct_register_allocator_1_1_allocation.html">Allocation</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#ade9ee399080785b95bd1797c61713661">kempeWithSpillCap</a> (const <a class="el" href="class_interference_graph.html">InterferenceGraph</a> &amp;graph, int numRegisters, int spillCap, bool &amp;feasible)</td></tr>
-<tr class="memdesc:ade9ee399080785b95bd1797c61713661"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kempe greedy colouring with an optional spill cap.  <br /></td></tr>
+<tr class="memdesc:ade9ee399080785b95bd1797c61713661"><td class="mdescLeft">&#160;</td><td class="mdescRight">Coloração greedy de Kempe com limite opcional de spills.  <br /></td></tr>
 <tr class="memitem:a75aefa6f1cfdd56d46b28e31e80eb28c" id="r_a75aefa6f1cfdd56d46b28e31e80eb28c"><td class="memItemLeft">static int&#160;</td><td class="memItemRight"><a class="el" href="#a75aefa6f1cfdd56d46b28e31e80eb28c">selectSpillCandidate</a> (const std::map&lt; int, int &gt; &amp;workDegree, const std::set&lt; int &gt; &amp;active)</td></tr>
-<tr class="memdesc:a75aefa6f1cfdd56d46b28e31e80eb28c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Select the spill candidate by highest working degree. @complexity O(|active|).  <br /></td></tr>
+<tr class="memdesc:a75aefa6f1cfdd56d46b28e31e80eb28c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Seleciona o candidato a spill pelo maior grau de trabalho.  <br /></td></tr>
 <tr class="memitem:a2243834a8b2044eb31a789ba619508b8" id="r_a2243834a8b2044eb31a789ba619508b8"><td class="memItemLeft">static std::pair&lt; <a class="el" href="class_web.html">Web</a>, <a class="el" href="class_web.html">Web</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a2243834a8b2044eb31a789ba619508b8">splitWeb</a> (const <a class="el" href="class_web.html">Web</a> &amp;web)</td></tr>
-<tr class="memdesc:a2243834a8b2044eb31a789ba619508b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Split a web at its median program line. @complexity O(P log P).  <br /></td></tr>
+<tr class="memdesc:a2243834a8b2044eb31a789ba619508b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Divide uma web no ponto mediano das linhas de programa.  <br /></td></tr>
 <tr class="memitem:a0f27f0ce7e0a327cd9787cfba9c2299d" id="r_a0f27f0ce7e0a327cd9787cfba9c2299d"><td class="memItemLeft">static <a class="el" href="class_interference_graph.html">InterferenceGraph</a>&#160;</td><td class="memItemRight"><a class="el" href="#a0f27f0ce7e0a327cd9787cfba9c2299d">rebuildGraphFromWebs</a> (const std::vector&lt; <a class="el" href="class_web.html">Web</a> &gt; &amp;webs)</td></tr>
-<tr class="memdesc:a0f27f0ce7e0a327cd9787cfba9c2299d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rebuild an interference graph from a list of webs. @complexity O(W^2 * L).  <br /></td></tr>
+<tr class="memdesc:a0f27f0ce7e0a327cd9787cfba9c2299d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reconstrói um grafo de interferência a partir de uma lista de webs.  <br /></td></tr>
 </table>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
 <a id="a2d60d66ed6c403af7a116f022bfc2ffa" name="a2d60d66ed6c403af7a116f022bfc2ffa"></a>
@@ -145,23 +145,47 @@ Static Private Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Allocate registers for all webs in <code class="param">graph</code>. </p>
-<p>Dispatch to the appropriate allocation sub-algorithm.</p>
+<p>Aloca registos para todas as webs em <code class="param">graph</code>. </p>
+<p>Executa o algoritmo de alocação de registos selecionado na configuração.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">graph</td><td>Interference graph. </td></tr>
-    <tr><td class="paramname">config</td><td>Number of registers and algorithm variant. </td></tr>
+    <tr><td class="paramname">graph</td><td>Grafo de interferência. </td></tr>
+    <tr><td class="paramname">config</td><td>Número de registos e variante do algoritmo. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Per-web allocation (indexed by web id).</dd></dl>
-<ul>
-<li>"basic" : Kempe greedy, unlimited spills.</li>
-<li>"spilling" : Kempe, at most K spills (tries 0..K until feasible).</li>
-<li>"splitting": Iteratively splits the highest-degree web (up to K times) and retries colouring without spills; falls back to unlimited spilling if splitting alone is insufficient.</li>
-<li>"free" : Kempe with Chaitin degree/size spill heuristic.</li>
+<dl class="section return"><dt>Returns</dt><dd>Alocação por web (indexada pelo id da web).</dd></dl>
+<h3 class="doxsection"><a class="anchor" id="autotoc_md2"></a>
+basic</h3>
+<p>Chama kempeWithSpillCap com spillCap=-1 (ilimitado). Se não for possível colorir sem spills, os nós excedentes são marcados como spilled e é emitido um aviso no stderr.</p>
+<h3 class="doxsection"><a class="anchor" id="autotoc_md3"></a>
+spilling</h3>
+<p>Itera cap de 0 até K (inclusive). Para cada valor tenta a coloração; se feasible==true retorna imediatamente. Se nenhuma iteração for viável, marca todas as webs como spilled e emite erro no stderr.</p>
+<h3 class="doxsection"><a class="anchor" id="autotoc_md4"></a>
+splitting</h3>
+<ol type="1">
+<li>Tenta primeiro sem modificações (cap=0).</li>
+<li>Se falhar, entra no loop de splitting (até K iterações):<ul>
+<li>Reconstrói o grafo atual.</li>
+<li>Identifica a web com maior grau como candidata.</li>
+<li>Divide-a com <a class="el" href="#a2243834a8b2044eb31a789ba619508b8" title="Divide uma web no ponto mediano das linhas de programa.">splitWeb()</a> e substitui no vetor currentWebs.</li>
+<li>Tenta coloração do novo grafo com cap=0.</li>
 </ul>
-<p>@complexity Dominated by sub-algorithm; O(W^2) for basic/spilling/free, O(K * W^2 * L) for splitting. </p>
+</li>
+<li>Se após K splits ainda falhar, usa spills ilimitados (fallback).</li>
+</ol>
+<h3 class="doxsection"><a class="anchor" id="autotoc_md5"></a>
+free (Chaitin)</h3>
+<p>Chama <a class="el" href="_register_allocator_8cpp.html#a02d01c8192ecff9996f2b87861d01540" title="Coloração de Kempe com heurística de Chaitin para seleção de spill.">kempeChaitin()</a> que usa a razão grau/tamanho para selecionar candidatos a spill.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">graph</td><td>Grafo de interferência. </td></tr>
+    <tr><td class="paramname">config</td><td>Configuração com algoritmo e número de registos. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Vetor de <a class="el" href="struct_register_allocator_1_1_allocation.html" title="Resultado da alocação de uma única web.">Allocation</a> por web.</dd></dl>
+<dl class="section user"><dt>Complexidade</dt><dd>O(W²) para basic/spilling/free; O(K × W² × L) para splitting. </dd></dl>
 
 </div>
 </div>
@@ -202,32 +226,40 @@ Static Private Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Kempe greedy colouring with an optional spill cap. </p>
+<p>Coloração greedy de Kempe com limite opcional de spills. </p>
+<p>Simplificação e coloração.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">graph</td><td>Interference graph. </td></tr>
-    <tr><td class="paramname">N</td><td>Number of physical registers. </td></tr>
-    <tr><td class="paramname">spillCap</td><td>Max spills; negative = unlimited. </td></tr>
-    <tr><td class="paramname">feasible</td><td>Set to true iff the result respects spillCap. @complexity O(W^2)</td></tr>
+    <tr><td class="paramname">graph</td><td>Grafo de interferência. </td></tr>
+    <tr><td class="paramname">N</td><td>Número de registos físicos. </td></tr>
+    <tr><td class="paramname">spillCap</td><td>Máximo de spills; negativo = ilimitado. </td></tr>
+    <tr><td class="paramname">feasible</td><td>Definido como <code>true</code> se o resultado respeita spillCap.</td></tr>
   </table>
   </dd>
 </dl>
 <h3 class="doxsection"><a class="anchor" id="autotoc_md0"></a>
-Fase 1 — Simplificação</h3>
-<p>Mantém um mapa <code>workDegree</code> que conta o grau efectivo de cada nó no subgrafo activo (começa igual ao grau no grafo original e é decrementado quando vizinhos são removidos).</p>
-<p>Repete o ciclo:</p><ol type="1">
-<li>Percorre todos os nós activos: se workDegree[n] &lt; N, remove n para a pilha e decrementa o workDegree dos seus vizinhos activos.</li>
-<li>Se o ciclo não removeu nenhum nó E ainda há nós activos, selecciona o candidato a spill (selectSpillCandidate) e marca-o como spilled.<ul>
-<li>Se spillCap &gt;= 0 e já atingimos spillCap spills, define feasible=false e retorna antecipadamente.</li>
+Simplificação</h3>
+<ol type="1">
+<li>Percorre todos os nós ativos: se workDegree[n] &lt; N, remove n para a pilha e decrementa o workDegree dos seus vizinhos ativos.</li>
+<li>Se o ciclo não removeu nenhum nó E ainda há nós ativos, selecciona o candidato a spill (selectSpillCandidate) e marca-o como spilled.<ul>
+<li>Se spillCap &gt;= 0 e já atingimos spillCap spills, define-se feasible=false e retorna-se antecipadamente.</li>
 </ul>
 </li>
 </ol>
 <h3 class="doxsection"><a class="anchor" id="autotoc_md1"></a>
-Fase 2 — Coloração</h3>
+Coloração</h3>
 <p>Desempilha um nó de cada vez. Para cada nó, recolhe as cores usadas pelos seus vizinhos já coloridos e atribui a menor cor não usada. Se a menor cor disponível for &gt;= N, o nó é adicionalmente marcado como spilled (pode acontecer em grafos muito densos).</p>
-<h3 class="doxsection"><a class="anchor" id="autotoc_md2"></a>
-Observação sobre feasible</h3>
-<p><code>feasible</code> é definido como <code>true</code> no final se spillCap &lt; 0 (ilimitado) ou se spillCount &lt;= spillCap. Nas fases de simplificação que ultrapassem spillCap, a função retorna antecipadamente com feasible=false sem completar a coloração. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">graph</td><td>Grafo de interferência. </td></tr>
+    <tr><td class="paramname">N</td><td>Número de registos físicos disponíveis. </td></tr>
+    <tr><td class="paramname">spillCap</td><td>Limite máximo de spills, se for negativo é ilimitado. </td></tr>
+    <tr><td class="paramname">feasible</td><td>Saída: <code>true</code> se a alocação respeita <code class="param">spillCap</code>. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Vetor de <a class="el" href="struct_register_allocator_1_1_allocation.html" title="Resultado da alocação de uma única web.">Allocation</a>, um por web.</dd></dl>
+<dl class="section user"><dt>Complexidade</dt><dd>O(W²) onde W = número de webs. </dd></dl>
 
 </div>
 </div>
@@ -263,18 +295,30 @@ Observação sobre feasible</h3>
 </table>
 </div><div class="memdoc">
 
-<p>Write the allocation result to <code class="param">out</code>. </p>
-<p>Print the allocation result to an output stream.</p>
+<p>Escreve o resultado da alocação em <code class="param">out</code>. </p>
+<p>Imprime o resultado da alocação para um stream de saída.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">graph</td><td>Interference graph (used for web metadata). </td></tr>
-    <tr><td class="paramname">allocations</td><td>Result of <a class="el" href="#a2d60d66ed6c403af7a116f022bfc2ffa" title="Allocate registers for all webs in graph.">allocate()</a>. </td></tr>
-    <tr><td class="paramname">out</td><td>Output stream.</td></tr>
+    <tr><td class="paramname">graph</td><td>Grafo de interferência. </td></tr>
+    <tr><td class="paramname">allocations</td><td>Resultado de <a class="el" href="#a2d60d66ed6c403af7a116f022bfc2ffa" title="Aloca registos para todas as webs em graph.">allocate()</a>. </td></tr>
+    <tr><td class="paramname">out</td><td>Stream de saída.</td></tr>
   </table>
   </dd>
 </dl>
-<p>Outputs the web listing followed by register assignments. Spilled webs are marked with "M:".</p>
-<p>@complexity O(W * P) where P = average program points per web. </p>
+<p>Percorre as allocations duas vezes:</p><ol type="1">
+<li>Para calcular o número de registos efetivamente usados (maxReg+1, onde maxReg é o maior regIdx não-spilled).</li>
+<li>Para emitir as linhas de atribuição ("rN: webM" ou "M: webM").</li>
+</ol>
+<p>O número de registos reportado pode ser inferior a config.numRegisters quando nem todos os registos disponíveis são necessários.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">graph</td><td>Grafo de interferência. </td></tr>
+    <tr><td class="paramname">allocations</td><td>Resultado de <a class="el" href="#a2d60d66ed6c403af7a116f022bfc2ffa" title="Aloca registos para todas as webs em graph.">allocate()</a>. </td></tr>
+    <tr><td class="paramname">out</td><td>Stream de saída.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section user"><dt>Complexidade</dt><dd>O(W × P) onde W = número de webs, P = pontos médios por web. </dd></dl>
 
 </div>
 </div>
@@ -301,9 +345,23 @@ Observação sobre feasible</h3>
 </table>
 </div><div class="memdoc">
 
-<p>Rebuild an interference graph from a list of webs. @complexity O(W^2 * L). </p>
-<p>Rebuild an <a class="el" href="class_interference_graph.html">InterferenceGraph</a> from a list of Webs.</p>
-<p>Extracts all LiveRanges and passes them through the normal constructor. @complexity Same as <a class="el" href="class_interference_graph.html">InterferenceGraph</a> constructor: O(W^2 * L). </p>
+<p>Reconstrói um grafo de interferência a partir de uma lista de webs. </p>
+<p>Reconstrói um <a class="el" href="class_interference_graph.html" title="Grafo de interferência entre webs de alocação de registos.">InterferenceGraph</a> a partir de uma lista de webs.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">webs</td><td>Lista de webs atuais (após divisões ou modificações).</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Extrai todos os LiveRanges de cada web e passa-os ao construtor do <a class="el" href="class_interference_graph.html" title="Grafo de interferência entre webs de alocação de registos.">InterferenceGraph</a>, que refaz buildWebs() + buildEdges(). Garante consistência do grafo após múltiplas divisões de webs.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">webs</td><td>Lista de webs atuais. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Novo <a class="el" href="class_interference_graph.html" title="Grafo de interferência entre webs de alocação de registos.">InterferenceGraph</a> reconstruído.</dd></dl>
+<dl class="section user"><dt>Complexidade</dt><dd>O(W² × L), igual ao construtor do <a class="el" href="class_interference_graph.html" title="Grafo de interferência entre webs de alocação de registos.">InterferenceGraph</a>. </dd></dl>
 
 </div>
 </div>
@@ -334,8 +392,26 @@ Observação sobre feasible</h3>
 </table>
 </div><div class="memdoc">
 
-<p>Select the spill candidate by highest working degree. @complexity O(|active|). </p>
-<p>Select the active node with the highest working degree (ties by id). @complexity O(|active|). </p>
+<p>Seleciona o candidato a spill pelo maior grau de trabalho. </p>
+<p>Seleciona o candidato a spill com maior grau.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">workDegree</td><td>Mapa id -&gt; grau de trabalho atual de cada nó ativo. </td></tr>
+    <tr><td class="paramname">active</td><td>Conjunto de ids dos nós ainda não removidos do grafo.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Percorre todos os nós ativos e regista o nó com o maior grau de trabalho. Em caso de empate, o nó com id menor é escolhido porque o set está ordenado.</p>
+<p>Ao remover o nó mais conectado, o grafo tende a tornar-se mais esparso e a coloração seguinte é mais provável de ser viável.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">workDegree</td><td>Mapa id -&gt; grau de trabalho atual. </td></tr>
+    <tr><td class="paramname">active</td><td>Conjunto de nós ainda ativos. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Id do nó selecionado.</dd></dl>
+<dl class="section user"><dt>Complexidade</dt><dd>O(|active|) </dd></dl>
 
 </div>
 </div>
@@ -362,16 +438,28 @@ Observação sobre feasible</h3>
 </table>
 </div><div class="memdoc">
 
-<p>Split a web at its median program line. @complexity O(P log P). </p>
-<p>Split a web into two halves at the median program line.</p>
-<p>Lines at or before the median go into the first half; the rest into the second. Program-point annotations (isStart / isEnd) are preserved.</p>
+<p>Divide uma web no ponto mediano das linhas de programa. </p>
+<p>Divide uma web em dois no ponto mediano das linhas.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">web</td><td><a class="el" href="class_web.html">Web</a> to split. </td></tr>
+    <tr><td class="paramname">web</td><td><a class="el" href="class_web.html">Web</a> a dividir; deve ter pelo menos um ponto de programa.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Pair {firstHalf, secondHalf} with placeholder id -1. @complexity O(P log P) where P = total program points in the web. </dd></dl>
+<p>A divisão é feita no índice médio do vetor ordenado de linhas.</p>
+<p>Linhas com índice &lt; média, corresponde à primeira metade. Linhas com índice &gt;= média, corresponde à segunda metade.</p>
+<p><b>Casos importantes</b>:</p><ul>
+<li>Se média == 0 (web com apenas uma linha), força mid=1, colocando a única linha na primeira metade.</li>
+<li>Se uma das metades ficar vazia após a distribuição, copia os pontos da outra (evita um <a class="el" href="class_live_range.html" title="Modela uma live range de uma variável como conjunto de pontos de programa.">LiveRange</a> sem pontos, que seria inválido).</li>
+</ul>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">web</td><td><a class="el" href="class_web.html">Web</a> a dividir. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Par {primeira metade, segunda metade} ambas com id=-1.</dd></dl>
+<dl class="section user"><dt>Complexidade</dt><dd>O(P log P) onde P = total de pontos da web. </dd></dl>
 
 </div>
 </div>

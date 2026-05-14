@@ -92,25 +92,35 @@ $(function(){initNavTree('class_parser.html','','class_parser-members'); });
 </div><!--header-->
 <div class="contents">
 
+<p>Classe utilitária para leitura e parsing dos ficheiros de entrada.  
+ <a href="#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="_parser_8h_source.html">Parser.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-static-methods" class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:ad6ad36a00729aeacb1e8f52b5b86256d" id="r_ad6ad36a00729aeacb1e8f52b5b86256d"><td class="memItemLeft">static std::vector&lt; <a class="el" href="class_live_range.html">LiveRange</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#ad6ad36a00729aeacb1e8f52b5b86256d">parseRanges</a> (const std::string &amp;filename)</td></tr>
-<tr class="memdesc:ad6ad36a00729aeacb1e8f52b5b86256d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lê e faz parse do ficheiro de live ranges Formato esperado de cada linha de dados:  <br /></td></tr>
+<tr class="memdesc:ad6ad36a00729aeacb1e8f52b5b86256d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lê e faz o parse do ficheiro de live ranges.  <br /></td></tr>
 <tr class="memitem:a165f65c047fb13e114e37f25c9ee1dbf" id="r_a165f65c047fb13e114e37f25c9ee1dbf"><td class="memItemLeft">static <a class="el" href="struct_algorithm_config.html">AlgorithmConfig</a>&#160;</td><td class="memItemRight"><a class="el" href="#a165f65c047fb13e114e37f25c9ee1dbf">parseRegisters</a> (const std::string &amp;filename)</td></tr>
-<tr class="memdesc:a165f65c047fb13e114e37f25c9ee1dbf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lê e faz parse do ficheiro de configuração de registos. Formato esperado:  <br /></td></tr>
+<tr class="memdesc:a165f65c047fb13e114e37f25c9ee1dbf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lê e faz o parse do ficheiro de configuração de registos.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pri-static-methods" class="groupheader"><a id="pri-static-methods" name="pri-static-methods"></a>
 Static Private Member Functions</h2></td></tr>
 <tr class="memitem:a5d4dd43f0f59c71e4d48f9de6babae2c" id="r_a5d4dd43f0f59c71e4d48f9de6babae2c"><td class="memItemLeft">static <a class="el" href="struct_program_point.html">ProgramPoint</a>&#160;</td><td class="memItemRight"><a class="el" href="#a5d4dd43f0f59c71e4d48f9de6babae2c">parsePoint</a> (const std::string &amp;token)</td></tr>
-<tr class="memdesc:a5d4dd43f0f59c71e4d48f9de6babae2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">faz o parse de um token individual de ponto de programa complexidade: O(n) onde n = comprimento do token  <br /></td></tr>
+<tr class="memdesc:a5d4dd43f0f59c71e4d48f9de6babae2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Faz o parse de um token individual de ponto de programa. Extrai o número inteiro e os sufixos '+' (isStart) e '-' (isEnd) de uma string como <code>"12+"</code> ou <code>"6-"</code> ou <code>"7+-"</code>.  <br /></td></tr>
 <tr class="memitem:a0232860b9febbaa3f08a9ff939fc73f1" id="r_a0232860b9febbaa3f08a9ff939fc73f1"><td class="memItemLeft">static std::string&#160;</td><td class="memItemRight"><a class="el" href="#a0232860b9febbaa3f08a9ff939fc73f1">trim</a> (const std::string &amp;s)</td></tr>
-<tr class="memdesc:a0232860b9febbaa3f08a9ff939fc73f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">remove espaços e '\r' do início e fim de uma string complexidade: O(n) onde n = comprimento da string  <br /></td></tr>
+<tr class="memdesc:a0232860b9febbaa3f08a9ff939fc73f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove espaços e carriage returns do início e fim de uma string.  <br /></td></tr>
 <tr class="memitem:a00bb0d63f03a0292f1450e51008c1fbe" id="r_a00bb0d63f03a0292f1450e51008c1fbe"><td class="memItemLeft">static bool&#160;</td><td class="memItemRight"><a class="el" href="#a00bb0d63f03a0292f1450e51008c1fbe">isCommentOrEmpty</a> (const std::string &amp;line)</td></tr>
-<tr class="memdesc:a00bb0d63f03a0292f1450e51008c1fbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">devolve true se a linha for um comentário (#) ou vazia complexidade: O(n)  <br /></td></tr>
+<tr class="memdesc:a00bb0d63f03a0292f1450e51008c1fbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verifica se uma linha é um comentário ou está vazia. Uma linha é considerada comentário se, após <a class="el" href="#a0232860b9febbaa3f08a9ff939fc73f1" title="Remove espaços e carriage returns do início e fim de uma string.">trim()</a>, o primeiro carácter for '#'. Linhas vazias (após trim) também devolvem <code>true</code>.  <br /></td></tr>
 </table>
-<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Classe utilitária para leitura e parsing dos ficheiros de entrada. </p>
+<p>Fornece dois métodos públicos estáticos:</p><ul>
+<li><a class="el" href="#ad6ad36a00729aeacb1e8f52b5b86256d" title="Lê e faz o parse do ficheiro de live ranges.">parseRanges()</a> : lê o ficheiro de live ranges.</li>
+<li><a class="el" href="#a165f65c047fb13e114e37f25c9ee1dbf" title="Lê e faz o parse do ficheiro de configuração de registos.">parseRegisters()</a> : lê o ficheiro de configuração.</li>
+</ul>
+<p>Linhas começadas por '#' ou vazias são ignoradas em ambos os ficheiros. Erros de formato lançam std::invalid_argument; ficheiros inacessíveis lançam std::runtime_error. </p>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
 <a id="a00bb0d63f03a0292f1450e51008c1fbe" name="a00bb0d63f03a0292f1450e51008c1fbe"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a00bb0d63f03a0292f1450e51008c1fbe">&#9670;&#160;</a></span>isCommentOrEmpty()</h2>
 
@@ -134,7 +144,24 @@ Static Private Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>devolve true se a linha for um comentário (#) ou vazia complexidade: O(n) </p>
+<p>Verifica se uma linha é um comentário ou está vazia. Uma linha é considerada comentário se, após <a class="el" href="#a0232860b9febbaa3f08a9ff939fc73f1" title="Remove espaços e carriage returns do início e fim de uma string.">trim()</a>, o primeiro carácter for '#'. Linhas vazias (após trim) também devolvem <code>true</code>. </p>
+<p>Verifica se uma linha é um comentário ou está vazia.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">line</td><td>Linha a verificar. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> se deve ser ignorada.</dd></dl>
+<p>Aplica <a class="el" href="#a0232860b9febbaa3f08a9ff939fc73f1" title="Remove espaços e carriage returns do início e fim de uma string.">trim()</a> e verifica se o resultado está vazio ou começa por '#'. Desta forma, linhas com apenas espaços antes do '#' também são corretamente identificadas como comentários.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">line</td><td>Linha a verificar. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> se a linha deve ser ignorada (vazia ou comentário).</dd></dl>
+<dl class="section user"><dt>Complexidade</dt><dd>O(n) onde n = comprimento da linha. </dd></dl>
 
 </div>
 </div>
@@ -161,7 +188,36 @@ Static Private Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>faz o parse de um token individual de ponto de programa complexidade: O(n) onde n = comprimento do token </p>
+<p>Faz o parse de um token individual de ponto de programa. Extrai o número inteiro e os sufixos '+' (isStart) e '-' (isEnd) de uma string como <code>"12+"</code> ou <code>"6-"</code> ou <code>"7+-"</code>. </p>
+<p>Faz o parse de um token individual de ponto de programa.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">token</td><td>Token a parsear (espaços são ignorados). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="struct_program_point.html" title="Representa um ponto de programa (linha) dentro de uma live range.">ProgramPoint</a> construído a partir do token.</dd></dl>
+<p>Percorre o token carácter a carácter:</p><ul>
+<li>Dígitos são acumulados na string <code>digits</code>.</li>
+<li>'+' ativa <code>isStart</code>.</li>
+<li>'-' ativa <code>isEnd</code>.</li>
+<li>Outros caracteres são ignorados silenciosamente.</li>
+</ul>
+<p>Se não for encontrado nenhum dígito, é lançada uma exceção. A conversão para int é feita com <code>std::stoi</code>, que lança <code>std::invalid_argument</code> ou <code>std::out_of_range</code> em caso de erro.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">token</td><td>Token a parsear (ex: <code>"1+"</code>, <code>"6-"</code>, <code>"7+-"</code>). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="struct_program_point.html" title="Representa um ponto de programa (linha) dentro de uma live range.">ProgramPoint</a> construído a partir do token.</dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::invalid_argument</td><td>Se o token não contiver nenhum dígito.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section user"><dt>Complexidade</dt><dd>O(n) onde n = comprimento do token. </dd></dl>
 
 </div>
 </div>
@@ -188,22 +244,36 @@ Static Private Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Lê e faz parse do ficheiro de live ranges Formato esperado de cada linha de dados: </p>
-<div class="fragment"><div class="line">&lt;varName&gt;: &lt;ponto&gt;[,&lt;ponto&gt;]*</div>
-</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
+<p>Lê e faz o parse do ficheiro de live ranges. </p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">filename</td><td>Caminho para o ficheiro de ranges. </td></tr>
+    <tr><td class="paramname">filename</td><td>Caminho para o ficheiro de live ranges. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Vetor com todos os <a class="el" href="class_live_range.html">LiveRange</a> lidos (um por linha de dados). </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Vetor de <a class="el" href="class_live_range.html" title="Modela uma live range de uma variável como conjunto de pontos de programa.">LiveRange</a> (um elemento por linha de dados).</dd></dl>
+<p>Algoritmo:</p><ol type="1">
+<li>Ignora linhas de comentário e vazias via <a class="el" href="#a00bb0d63f03a0292f1450e51008c1fbe" title="Verifica se uma linha é um comentário ou está vazia. Uma linha é considerada comentário se,...">isCommentOrEmpty()</a>.</li>
+<li>Divide a linha pelo primeiro ':' para obter varName e a lista de pontos.</li>
+<li>Divide a lista de pontos por ',' e parseia cada token com <a class="el" href="#a5d4dd43f0f59c71e4d48f9de6babae2c" title="Faz o parse de um token individual de ponto de programa. Extrai o número inteiro e os sufixos &#39;+&#39; (is...">parsePoint()</a>.</li>
+<li>Cria um <a class="el" href="class_live_range.html" title="Modela uma live range de uma variável como conjunto de pontos de programa.">LiveRange</a> e adiciona ao vetor de resultado.</li>
+</ol>
+<p>Cada linha do ficheiro gera exatamente um <a class="el" href="class_live_range.html" title="Modela uma live range de uma variável como conjunto de pontos de programa.">LiveRange</a>, mesmo que a mesma variável apareça em múltiplas linhas. A fusão em webs é da responsabilidade do <a class="el" href="class_interference_graph.html" title="Grafo de interferência entre webs de alocação de registos.">InterferenceGraph</a>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">filename</td><td>Caminho para o ficheiro de live ranges. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Vetor de <a class="el" href="class_live_range.html" title="Modela uma live range de uma variável como conjunto de pontos de programa.">LiveRange</a> (um elemento por linha de dados).</dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">std::runtime_error</td><td>se o ficheiro não abrir. </td></tr>
-    <tr><td class="paramname">std::invalid_argument</td><td>se uma linha tiver formato inválido. Complexidade: O(L * P), onde L = número de linhas, P = pontos por linha. </td></tr>
+    <tr><td class="paramname">std::runtime_error</td><td>Se o ficheiro não puder ser aberto. </td></tr>
+    <tr><td class="paramname">std::invalid_argument</td><td>Se uma linha não contiver ':', se o nome da variável estiver vazio, ou se não houver nenhum ponto de programa válido na linha.</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section user"><dt>Complexidade</dt><dd>O(L × P) onde L = número de linhas do ficheiro, P = pontos por linha. </dd></dl>
 
 </div>
 </div>
@@ -230,28 +300,42 @@ Static Private Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Lê e faz parse do ficheiro de configuração de registos. Formato esperado: </p>
-<div class="fragment"><div class="line">registers: N</div>
-<div class="line">algorithm: basic</div>
-<div class="line">algorithm: spilling, 2</div>
-<div class="line">algorithm: splitting, 3</div>
-<div class="line">algorithm: free</div>
-</div><!-- fragment --><p>A ordem das linhas não importa. Linhas com '#' ou vazias são ignoradas.</p>
+<p>Lê e faz o parse do ficheiro de configuração de registos. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">filename</td><td>Caminho para o ficheiro de configuração. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd><a class="el" href="struct_algorithm_config.html">AlgorithmConfig</a> preenchido. </dd></dl>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">std::runtime_error</td><td>se o ficheiro não abrir. </td></tr>
-    <tr><td class="paramname">std::invalid_argument</td><td>se o formato for inválido.</td></tr>
+<dl class="section return"><dt>Returns</dt><dd>Estrutura <a class="el" href="struct_algorithm_config.html" title="Configuração parseada a partir do ficheiro de registos.">AlgorithmConfig</a> preenchida.</dd></dl>
+<p>Algoritmo:</p><ol type="1">
+<li>Ignora comentários e linhas vazias via <a class="el" href="#a00bb0d63f03a0292f1450e51008c1fbe" title="Verifica se uma linha é um comentário ou está vazia. Uma linha é considerada comentário se,...">isCommentOrEmpty()</a>.</li>
+<li>Divide pelo primeiro ':' para obter chave e valor.</li>
+<li>Para a chave <code>"registers"</code>: converte o valor para inteiro.</li>
+<li>Para a chave <code>"algorithm"</code>: verifica se há vírgula no valor:<ul>
+<li>Sem vírgula: algoritmo sem parâmetro (<code>basic</code> ou <code>free</code>).</li>
+<li>Com vírgula: algoritmo com parâmetro K (<code>spilling</code> ou <code>splitting</code>).</li>
+</ul>
+</li>
+<li>Valida que o algoritmo é um dos quatro suportados.</li>
+<li>Após ler todas as linhas, valida que numRegisters &gt; 0.</li>
+</ol>
+<p>Chaves desconhecidas são ignoradas silenciosamente para tolerar ficheiros com campos extra (extensibilidade futura).</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">filename</td><td>Caminho para o ficheiro de configuração. </td></tr>
   </table>
   </dd>
 </dl>
-<p>Complexidade: O(L) onde L = número de linhas do ficheiro. </p>
+<dl class="section return"><dt>Returns</dt><dd>Estrutura <a class="el" href="struct_algorithm_config.html" title="Configuração parseada a partir do ficheiro de registos.">AlgorithmConfig</a> preenchida.</dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>Se o ficheiro não puder ser aberto. </td></tr>
+    <tr><td class="paramname">std::invalid_argument</td><td>Se uma linha não contiver ':', se o valor de <code>registers</code> estiver vazio ou for &lt;= 0, se o parâmetro após a vírgula estiver vazio, ou se o algoritmo for desconhecido.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section user"><dt>Complexidade</dt><dd>O(L) onde L = número de linhas do ficheiro. </dd></dl>
 
 </div>
 </div>
@@ -278,7 +362,24 @@ Static Private Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>remove espaços e '\r' do início e fim de uma string complexidade: O(n) onde n = comprimento da string </p>
+<p>Remove espaços e carriage returns do início e fim de uma string. </p>
+<p>Remove espaços e returns do início e fim de uma string.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">s</td><td>String de entrada. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Substring sem espaços/tabs/\r/\n nas extremidades. Devolve <code>""</code> se a string for composta apenas por espaços.</dd></dl>
+<p>Procura o primeiro e último carácter que não seja espaço, tab, carriage-return ou newline, e devolve a substring entre eles. Se todos os caracteres forem espaços, devolve a string vazia.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">s</td><td>String de entrada. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Substring sem espaços/tabs/\r/\n nas extremidades; string vazia se <code class="param">s</code> for composta apenas por espaços.</dd></dl>
+<dl class="section user"><dt>Complexidade</dt><dd>O(n) onde n = comprimento da string. </dd></dl>
 
 </div>
 </div>

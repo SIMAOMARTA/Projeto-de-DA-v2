@@ -91,10 +91,19 @@ $(function(){initNavTree('_interference_graph_8cpp.html','',''); });
   <div class="headertitle"><div class="title">InterferenceGraph.cpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Implementação do grafo de interferência.  
+<a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="_interference_graph_8h_source.html">InterferenceGraph.h</a>&quot;</code><br />
 <code>#include &lt;iostream&gt;</code><br />
 <code>#include &lt;map&gt;</code><br />
 <code>#include &lt;algorithm&gt;</code><br />
+</div><a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Implementação do grafo de interferência. </p>
+<p>Implementa a construção do grafo em dois passos:</p><ul>
+<li>buildWebs() : fusão de live ranges em webs por variável.</li>
+<li>buildEdges() : deteção de interferência entre cada par de webs. </li>
+</ul>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <div id="page-nav" class="page-nav-panel">

@@ -1,5 +1,8 @@
 var searchData=
 [
-  ['tostring_0',['toString',['../class_live_range.html#ab215b3e0460472dd98c7d2770c26a0dc',1,'LiveRange::toString()'],['../class_web.html#a86e81d9280bf2ca94baf28ee5da596a8',1,'Web::toString()']]],
-  ['trim_1',['trim',['../class_parser.html#a0232860b9febbaa3f08a9ff939fc73f1',1,'Parser']]]
+  ['web_0',['Web',['../class_web.html',1,'Web'],['../class_web.html#ab140f866599622293331cede19ca1a57',1,'Web::Web()']]],
+  ['web_2ecpp_1',['Web.cpp',['../_web_8cpp.html',1,'']]],
+  ['web_2eh_2',['Web.h',['../_web_8h.html',1,'']]],
+  ['webid_3',['webId',['../struct_register_allocator_1_1_allocation.html#acbb685194dc81bcbbc8f220913cee5ba',1,'RegisterAllocator::Allocation']]],
+  ['webs_5f_4',['webs_',['../class_interference_graph.html#a4728c88f0f84629c96d4bde08af7418e',1,'InterferenceGraph']]]
 ];

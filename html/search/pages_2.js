@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['coloração_0',['Fase 2 — Coloração',['../class_register_allocator.html#autotoc_md1',1,'']]]
+  ['free_20chaitin_0',['free (Chaitin)',['../class_register_allocator.html#autotoc_md5',1,'']]]
 ];

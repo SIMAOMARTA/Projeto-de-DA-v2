@@ -92,19 +92,32 @@ $(function(){initNavTree('struct_program_point.html','','struct_program_point-me
 </div><!--header-->
 <div class="contents">
 
+<p>Representa um ponto de programa (linha) dentro de uma live range.  
+ <a href="#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="_program_point_8h_source.html">ProgramPoint.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ad59b9c42e90a0a9444c533141fb2dd22" id="r_ad59b9c42e90a0a9444c533141fb2dd22"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#ad59b9c42e90a0a9444c533141fb2dd22">ProgramPoint</a> (int l, bool s, bool e)</td></tr>
+<tr class="memdesc:ad59b9c42e90a0a9444c533141fb2dd22"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constrói um <a class="el" href="struct_program_point.html" title="Representa um ponto de programa (linha) dentro de uma live range.">ProgramPoint</a> com todos os campos explícitos.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:ad7f4a982da0c6a8b83db5d397ff1ec38" id="r_ad7f4a982da0c6a8b83db5d397ff1ec38"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#ad7f4a982da0c6a8b83db5d397ff1ec38">line</a> = 0</td></tr>
+<tr class="memdesc:ad7f4a982da0c6a8b83db5d397ff1ec38"><td class="mdescLeft">&#160;</td><td class="mdescRight">Número da linha do programa (1-based).  <br /></td></tr>
 <tr class="memitem:a7f112ddcaddddd5b65777b40da5ae2c4" id="r_a7f112ddcaddddd5b65777b40da5ae2c4"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a7f112ddcaddddd5b65777b40da5ae2c4">isStart</a> = false</td></tr>
+<tr class="memdesc:a7f112ddcaddddd5b65777b40da5ae2c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indica que a variável é definida (escrita) nesta linha. Corresponde ao sufixo '+' no ficheiro de live ranges.  <br /></td></tr>
 <tr class="memitem:a1d7cab8fffa92dd11173f44ac73d6a02" id="r_a1d7cab8fffa92dd11173f44ac73d6a02"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a1d7cab8fffa92dd11173f44ac73d6a02">isEnd</a> = false</td></tr>
+<tr class="memdesc:a1d7cab8fffa92dd11173f44ac73d6a02"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indica que esta é a última utilização da variável nesta linha. Corresponde ao sufixo '-' no ficheiro de live ranges.  <br /></td></tr>
 </table>
-<a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Representa um ponto de programa (linha) dentro de uma live range. </p>
+<p>Cada ponto contém o número da linha e duas flags que indicam se a variável é definida (isStart / '+') ou consumida pela última vez (isEnd / '-') nessa linha.</p>
+<p>Exemplo: </p><div class="fragment"><div class="line"><a class="code hl_function" href="#ad59b9c42e90a0a9444c533141fb2dd22">ProgramPoint</a> p(5, <span class="keyword">true</span>, <span class="keyword">false</span>);  <span class="comment">// linha 5, definição da variável</span></div>
+<div class="line"><a class="code hl_function" href="#ad59b9c42e90a0a9444c533141fb2dd22">ProgramPoint</a> q(9, <span class="keyword">false</span>, <span class="keyword">true</span>);  <span class="comment">// linha 9, última utilização</span></div>
+<div class="ttc" id="astruct_program_point_html_ad59b9c42e90a0a9444c533141fb2dd22"><div class="ttname"><a href="#ad59b9c42e90a0a9444c533141fb2dd22">ProgramPoint::ProgramPoint</a></div><div class="ttdeci">ProgramPoint(int l, bool s, bool e)</div><div class="ttdoc">Constrói um ProgramPoint com todos os campos explícitos.</div><div class="ttdef"><b>Definition</b> ProgramPoint.h:51</div></div>
+</div><!-- fragment --> </div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ad59b9c42e90a0a9444c533141fb2dd22" name="ad59b9c42e90a0a9444c533141fb2dd22"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad59b9c42e90a0a9444c533141fb2dd22">&#9670;&#160;</a></span>ProgramPoint()</h2>
 
@@ -137,6 +150,16 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Constrói um <a class="el" href="struct_program_point.html" title="Representa um ponto de programa (linha) dentro de uma live range.">ProgramPoint</a> com todos os campos explícitos. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">l</td><td>Número da linha (deve ser &gt; 0). </td></tr>
+    <tr><td class="paramname">s</td><td><code>true</code> se a variável é definida nesta linha (<code>'+'</code>). </td></tr>
+    <tr><td class="paramname">e</td><td><code>true</code> se esta é a última utilização (<code>'-'</code>). @complexity O(1) </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
@@ -152,6 +175,8 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Indica que esta é a última utilização da variável nesta linha. Corresponde ao sufixo '-' no ficheiro de live ranges. </p>
+
 </div>
 </div>
 <a id="a7f112ddcaddddd5b65777b40da5ae2c4" name="a7f112ddcaddddd5b65777b40da5ae2c4"></a>
@@ -166,6 +191,8 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Indica que a variável é definida (escrita) nesta linha. Corresponde ao sufixo '+' no ficheiro de live ranges. </p>
+
 </div>
 </div>
 <a id="ad7f4a982da0c6a8b83db5d397ff1ec38" name="ad7f4a982da0c6a8b83db5d397ff1ec38"></a>
@@ -179,6 +206,8 @@ Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Número da linha do programa (1-based). </p>
 
 </div>
 </div>

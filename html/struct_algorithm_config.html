@@ -92,18 +92,30 @@ $(function(){initNavTree('struct_algorithm_config.html','','struct_algorithm_con
 </div><!--header-->
 <div class="contents">
 
+<p>Configuração parseada a partir do ficheiro de registos.  
+ <a href="#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="_algorithm_config_8h_source.html">AlgorithmConfig.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a8b840373e153becdd5b5f7e90951a4f6" id="r_a8b840373e153becdd5b5f7e90951a4f6"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#a8b840373e153becdd5b5f7e90951a4f6">numRegisters</a> = 0</td></tr>
-<tr class="memdesc:a8b840373e153becdd5b5f7e90951a4f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of physical registers available (r0 … r_{N-1}).  <br /></td></tr>
+<tr class="memdesc:a8b840373e153becdd5b5f7e90951a4f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Número de registos físicos disponíveis. Deve ser &gt; 0; o <a class="el" href="class_parser.html" title="Classe utilitária para leitura e parsing dos ficheiros de entrada.">Parser</a> valida esta condição.  <br /></td></tr>
 <tr class="memitem:a0dc0b3bceaef8a123821926487386372" id="r_a0dc0b3bceaef8a123821926487386372"><td class="memItemLeft">std::string&#160;</td><td class="memItemRight"><a class="el" href="#a0dc0b3bceaef8a123821926487386372">algorithm</a> = &quot;basic&quot;</td></tr>
-<tr class="memdesc:a0dc0b3bceaef8a123821926487386372"><td class="mdescLeft">&#160;</td><td class="mdescRight">Algorithm variant identifier.  <br /></td></tr>
+<tr class="memdesc:a0dc0b3bceaef8a123821926487386372"><td class="mdescLeft">&#160;</td><td class="mdescRight">Identificador da variante do algoritmo. Valor é um de: <code>"basic"</code>, <code>"spilling"</code>, <code>"splitting"</code>, <code>"free"</code>. O <a class="el" href="class_parser.html" title="Classe utilitária para leitura e parsing dos ficheiros de entrada.">Parser</a> valida que o valor pertence a este conjunto.  <br /></td></tr>
 <tr class="memitem:a14e4136c22e233172caf5cebb0271e60" id="r_a14e4136c22e233172caf5cebb0271e60"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#a14e4136c22e233172caf5cebb0271e60">algorithmParam</a> = 0</td></tr>
-<tr class="memdesc:a14e4136c22e233172caf5cebb0271e60"><td class="mdescLeft">&#160;</td><td class="mdescRight">Numeric parameter for spilling/splitting variants.  <br /></td></tr>
+<tr class="memdesc:a14e4136c22e233172caf5cebb0271e60"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parâmetro numérico para as variantes spilling e splitting.  <br /></td></tr>
 </table>
-<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Configuração parseada a partir do ficheiro de registos. </p>
+<p>Armazena o número de registos físicos disponíveis e a variante do algoritmo a utilizar na alocação de registos.</p>
+<p>Variantes suportadas:</p><ul>
+<li><code>"basic"</code> : coloração greedy sem fallback (T2.1). Tenta colorir o grafo com N cores; se não for possível, faz spill ilimitado.</li>
+<li><code>"spilling"</code> : basic + até K spills de webs (T2.2). Itera de 0 a K spills parando assim que a alocação for viável.</li>
+<li><code>"splitting"</code> : basic + até K splits de webs (T2.3). Divide webs com grau elevado antes de tentar a coloração.</li>
+<li><code>"free"</code> : algoritmo próprio baseado na heurística de Chaitin (grau / tamanho da live range) para selecção do candidato a spill (T2.4). </li>
+</ul>
+</div><a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
 <a id="a0dc0b3bceaef8a123821926487386372" name="a0dc0b3bceaef8a123821926487386372"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0dc0b3bceaef8a123821926487386372">&#9670;&#160;</a></span>algorithm</h2>
 
@@ -116,8 +128,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Algorithm variant identifier. </p>
-<p>One of: "basic", "spilling", "splitting", "free". </p>
+<p>Identificador da variante do algoritmo. Valor é um de: <code>"basic"</code>, <code>"spilling"</code>, <code>"splitting"</code>, <code>"free"</code>. O <a class="el" href="class_parser.html" title="Classe utilitária para leitura e parsing dos ficheiros de entrada.">Parser</a> valida que o valor pertence a este conjunto. </p>
 
 </div>
 </div>
@@ -133,8 +144,10 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Numeric parameter for spilling/splitting variants. </p>
-<p>Maximum number of webs that may be spilled or split. Ignored for "basic" and "free". </p>
+<p>Parâmetro numérico para as variantes spilling e splitting. </p>
+<p>Para <code>"spilling"</code>: número máximo de webs que podem ser enviadas para memória (spilled).</p>
+<p>Para <code>"splitting"</code>: número máximo de webs que podem ser divididas (split) antes de tentar a coloração.</p>
+<p>Ignorado para <code>"basic"</code> e <code>"free"</code>. O <a class="el" href="class_parser.html" title="Classe utilitária para leitura e parsing dos ficheiros de entrada.">Parser</a> define este campo a 0 quando não existe vírgula na linha do algoritmo. </p>
 
 </div>
 </div>
@@ -150,7 +163,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Number of physical registers available (r0 … r_{N-1}). </p>
+<p>Número de registos físicos disponíveis. Deve ser &gt; 0; o <a class="el" href="class_parser.html" title="Classe utilitária para leitura e parsing dos ficheiros de entrada.">Parser</a> valida esta condição. </p>
 
 </div>
 </div>

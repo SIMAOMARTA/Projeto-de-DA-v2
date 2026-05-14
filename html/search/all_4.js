@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['chaitincandidate_0',['chaitinCandidate',['../_register_allocator_8cpp.html#a5f703172b659e28c619f747b31d4f7a8',1,'RegisterAllocator.cpp']]],
-  ['coloração_1',['Fase 2 — Coloração',['../class_register_allocator.html#autotoc_md1',1,'']]]
+  ['free_20chaitin_0',['free (Chaitin)',['../class_register_allocator.html#autotoc_md5',1,'']]]
 ];

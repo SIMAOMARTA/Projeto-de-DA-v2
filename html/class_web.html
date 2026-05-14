@@ -97,23 +97,35 @@ $(function(){initNavTree('class_web.html','','class_web-members'); });
 <tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:LineAnnotation" id="r_LineAnnotation"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="struct_web_1_1_line_annotation.html">LineAnnotation</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cache de anotações (isStart / isEnd) por linha de programa. Pré-computada por <a class="el" href="#aeb6dfd43051263f634303098a47b58ea" title="Reconstrói annotationMap_ a partir das ranges atuais.">buildAnnotationMap()</a> e consultada em <a class="el" href="#a1daf0ad084076fd059d0e66e75481125" title="Determina se esta web interfere com other.">interferesWith()</a> para evitar iterar sobre todos os pontos a cada chamada.  <a href="struct_web_1_1_line_annotation.html#details">More...</a><br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ab140f866599622293331cede19ca1a57" id="r_ab140f866599622293331cede19ca1a57"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#ab140f866599622293331cede19ca1a57">Web</a> (int id, const <a class="el" href="class_live_range.html">LiveRange</a> &amp;range)</td></tr>
+<tr class="memdesc:ab140f866599622293331cede19ca1a57"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constrói uma <a class="el" href="class_web.html">Web</a> a partir de uma <a class="el" href="class_live_range.html" title="Modela uma live range de uma variável como conjunto de pontos de programa.">LiveRange</a> inicial.  <br /></td></tr>
 <tr class="memitem:a8e73703f0dce935f291fe348f0e0a49c" id="r_a8e73703f0dce935f291fe348f0e0a49c"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#a8e73703f0dce935f291fe348f0e0a49c">getId</a> () const</td></tr>
+<tr class="memdesc:a8e73703f0dce935f291fe348f0e0a49c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Devolve o identificador numérico desta web.  <br /></td></tr>
 <tr class="memitem:af03bdf9ea9e86b5bb59842dc394855fe" id="r_af03bdf9ea9e86b5bb59842dc394855fe"><td class="memItemLeft">const std::string &amp;&#160;</td><td class="memItemRight"><a class="el" href="#af03bdf9ea9e86b5bb59842dc394855fe">getVarName</a> () const</td></tr>
+<tr class="memdesc:af03bdf9ea9e86b5bb59842dc394855fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Devolve o nome da variável associada a esta web.  <br /></td></tr>
 <tr class="memitem:a35a83cd2a484307e10d823cdb1a91a62" id="r_a35a83cd2a484307e10d823cdb1a91a62"><td class="memItemLeft">const std::vector&lt; <a class="el" href="class_live_range.html">LiveRange</a> &gt; &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a35a83cd2a484307e10d823cdb1a91a62">getRanges</a> () const</td></tr>
+<tr class="memdesc:a35a83cd2a484307e10d823cdb1a91a62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Devolve todas as LiveRanges que compõem esta web.  <br /></td></tr>
 <tr class="memitem:ad3f3b2635495fee897265cc7cc60940b" id="r_ad3f3b2635495fee897265cc7cc60940b"><td class="memItemLeft">const std::set&lt; int &gt; &amp;&#160;</td><td class="memItemRight"><a class="el" href="#ad3f3b2635495fee897265cc7cc60940b">getLineSet</a> () const</td></tr>
+<tr class="memdesc:ad3f3b2635495fee897265cc7cc60940b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Devolve o conjunto de linhas cobertas por esta web. Equivale à união dos lineSets de todas as ranges fundidas.  <br /></td></tr>
 <tr class="memitem:a793c6e41cc8558ae856bda928d11ff7a" id="r_a793c6e41cc8558ae856bda928d11ff7a"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a793c6e41cc8558ae856bda928d11ff7a">absorb</a> (const <a class="el" href="class_web.html">Web</a> &amp;other)</td></tr>
+<tr class="memdesc:a793c6e41cc8558ae856bda928d11ff7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Funde a web <code class="param">other</code> nesta web.  <br /></td></tr>
 <tr class="memitem:a61f7e45faa8c90848ee78658be9e9bba" id="r_a61f7e45faa8c90848ee78658be9e9bba"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a61f7e45faa8c90848ee78658be9e9bba">overlaps</a> (const <a class="el" href="class_web.html">Web</a> &amp;other) const</td></tr>
+<tr class="memdesc:a61f7e45faa8c90848ee78658be9e9bba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verifica se esta web partilha pelo menos uma linha com <code class="param">other</code>.  <br /></td></tr>
 <tr class="memitem:a1daf0ad084076fd059d0e66e75481125" id="r_a1daf0ad084076fd059d0e66e75481125"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a1daf0ad084076fd059d0e66e75481125">interferesWith</a> (const <a class="el" href="class_web.html">Web</a> &amp;other) const</td></tr>
+<tr class="memdesc:a1daf0ad084076fd059d0e66e75481125"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determina se esta web interfere com <code class="param">other</code>.  <br /></td></tr>
 <tr class="memitem:a86e81d9280bf2ca94baf28ee5da596a8" id="r_a86e81d9280bf2ca94baf28ee5da596a8"><td class="memItemLeft">std::string&#160;</td><td class="memItemRight"><a class="el" href="#a86e81d9280bf2ca94baf28ee5da596a8">toString</a> () const</td></tr>
+<tr class="memdesc:a86e81d9280bf2ca94baf28ee5da596a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Devolve uma representação textual da web.  <br /></td></tr>
 <tr class="memitem:a46047bcb2ab5891d81e84f1962148ad8" id="r_a46047bcb2ab5891d81e84f1962148ad8"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a46047bcb2ab5891d81e84f1962148ad8">setId</a> (int newId)</td></tr>
+<tr class="memdesc:a46047bcb2ab5891d81e84f1962148ad8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Redefine o identificador desta web.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pri-methods" class="groupheader"><a id="pri-methods" name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
 <tr class="memitem:aeb6dfd43051263f634303098a47b58ea" id="r_aeb6dfd43051263f634303098a47b58ea"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#aeb6dfd43051263f634303098a47b58ea">buildAnnotationMap</a> ()</td></tr>
+<tr class="memdesc:aeb6dfd43051263f634303098a47b58ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reconstrói annotationMap_ a partir das ranges atuais.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pri-attribs" class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
@@ -143,6 +155,24 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Constrói uma <a class="el" href="class_web.html">Web</a> a partir de uma <a class="el" href="class_live_range.html" title="Modela uma live range de uma variável como conjunto de pontos de programa.">LiveRange</a> inicial. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>Identificador numérico único (0-based no grafo). </td></tr>
+    <tr><td class="paramname">range</td><td><a class="el" href="class_live_range.html" title="Modela uma live range de uma variável como conjunto de pontos de programa.">LiveRange</a> inicial que compõe esta web.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Inicializa a web com a <a class="el" href="class_live_range.html" title="Modela uma live range de uma variável como conjunto de pontos de programa.">LiveRange</a> fornecida, copia as suas linhas para lineSet_ e constrói a cache inicial.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>Identificador numérico único da web no grafo (0-based). </td></tr>
+    <tr><td class="paramname">range</td><td><a class="el" href="class_live_range.html" title="Modela uma live range de uma variável como conjunto de pontos de programa.">LiveRange</a> inicial que compõe esta web.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section user"><dt>Complexidade</dt><dd>O(P log P) onde P = número de pontos da range. </dd></dl>
+
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
@@ -160,6 +190,25 @@ Private Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Funde a web <code class="param">other</code> nesta web. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">other</td><td><a class="el" href="class_web.html">Web</a> a fundir (não é modificada, só lida).</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Para cada <a class="el" href="class_live_range.html" title="Modela uma live range de uma variável como conjunto de pontos de programa.">LiveRange</a> de <code class="param">other:</code> </p><ol type="1">
+<li>Adiciona a range ao vetor ranges_.</li>
+<li>Insere todas as suas linhas em lineSet_. Após processar todas as ranges, reconstrói annotationMap_ a partir do estado completo (para garantir consistência da cache).</li>
+</ol>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">other</td><td><a class="el" href="class_web.html">Web</a> a absorver (apenas lida, não modificada). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section user"><dt>Complexidade</dt><dd>O(P log P), onde P = total de pontos de ambas as webs. </dd></dl>
 
 </div>
 </div>
@@ -186,6 +235,14 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Reconstrói annotationMap_ a partir das ranges atuais. </p>
+<p>Limpa o mapa anterior e itera sobre todos os pontos de todas as ranges. Para cada ponto:</p><ul>
+<li>se isStart, ativa hasStart na entrada correspondente do mapa.</li>
+<li>se isEnd, ativa hasEnd na entrada correspondente do mapa.</li>
+</ul>
+<p>O mapa resultante permite que <a class="el" href="#a1daf0ad084076fd059d0e66e75481125" title="Determina se esta web interfere com other.">interferesWith()</a> consulte as anotações de qualquer linha em O(log L) em vez de percorrer todos os pontos. Deve ser chamada após cada <a class="el" href="#a793c6e41cc8558ae856bda928d11ff7a" title="Funde a web other nesta web.">absorb()</a> para manter a cache consistente.</p>
+<dl class="section user"><dt>Complexidade</dt><dd>O(P), onde P = total de pontos em todas as ranges. </dd></dl>
+
 </div>
 </div>
 <a id="a8e73703f0dce935f291fe348f0e0a49c" name="a8e73703f0dce935f291fe348f0e0a49c"></a>
@@ -202,6 +259,12 @@ Private Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Devolve o identificador numérico desta web. </p>
+<dl class="section return"><dt>Returns</dt><dd>Id inteiro (0-based).</dd>
+<dd>
+Id inteiro (0-based). </dd></dl>
+<dl class="section user"><dt>Complexidade O(1)</dt><dd></dd></dl>
 
 </div>
 </div>
@@ -220,6 +283,13 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Devolve o conjunto de linhas cobertas por esta web. Equivale à união dos lineSets de todas as ranges fundidas. </p>
+<p>Devolve o conjunto de linhas cobertas por esta web.</p>
+<dl class="section return"><dt>Returns</dt><dd>Referência constante para o set de inteiros.</dd>
+<dd>
+Referência constante para o set de inteiros ordenados. </dd></dl>
+<dl class="section user"><dt>Complexidade O(1)</dt><dd></dd></dl>
+
 </div>
 </div>
 <a id="a35a83cd2a484307e10d823cdb1a91a62" name="a35a83cd2a484307e10d823cdb1a91a62"></a>
@@ -236,6 +306,12 @@ Private Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Devolve todas as LiveRanges que compõem esta web. </p>
+<dl class="section return"><dt>Returns</dt><dd>Referência constante para o vetor de ranges.</dd>
+<dd>
+Referência constante para o vetor de LiveRanges. </dd></dl>
+<dl class="section user"><dt>Complexidade O(1)</dt><dd></dd></dl>
 
 </div>
 </div>
@@ -254,6 +330,12 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Devolve o nome da variável associada a esta web. </p>
+<dl class="section return"><dt>Returns</dt><dd>Referência constante para o nome.</dd>
+<dd>
+Referência constante para o nome da variável. </dd></dl>
+<dl class="section user"><dt>Complexidade O(1)</dt><dd></dd></dl>
+
 </div>
 </div>
 <a id="a1daf0ad084076fd059d0e66e75481125" name="a1daf0ad084076fd059d0e66e75481125"></a>
@@ -270,6 +352,33 @@ Private Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Determina se esta web interfere com <code class="param">other</code>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">other</td><td><a class="el" href="class_web.html">Web</a> a comparar. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> se as webs interferem.</dd></dl>
+<p>Algoritmo:</p><ol type="1">
+<li>Se as webs não se sobrepõem (<a class="el" href="#a61f7e45faa8c90848ee78658be9e9bba" title="Verifica se esta web partilha pelo menos uma linha com other.">overlaps()</a> == false), devolve <code>false</code> imediatamente.</li>
+<li>Para cada linha partilhada, obtém as anotações de cada web usando a annotationMap_ pré-computada.</li>
+<li>Regra de não-interferência (definição/uso na mesma linha):<ul>
+<li>Se a web A inicia na linha (isStart=true, isEnd=false) e a web B termina na linha (isEnd=true, isStart=false), não interferem nessa linha — A define depois de B terminar, pelo que não há simultaneidade.</li>
+<li>O simétrico (B inicia, A termina) também não interfere.</li>
+</ul>
+</li>
+<li>Em qualquer outro caso (ambas vivas, ou ambas definem/usam na mesma linha), há interferência e a função devolve <code>true</code> imediatamente.</li>
+</ol>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">other</td><td><a class="el" href="class_web.html">Web</a> a comparar. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> se as webs interferem.</dd></dl>
+<dl class="section user"><dt>Complexidade</dt><dd>O(L log L), onde L = número de linhas partilhadas pelas duas webs. </dd></dl>
 
 </div>
 </div>
@@ -288,6 +397,25 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Verifica se esta web partilha pelo menos uma linha com <code class="param">other</code>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">other</td><td><a class="el" href="class_web.html">Web</a> a comparar. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> se houver pelo menos uma linha comum.</dd></dl>
+<p>Utiliza dois iteradores sobre os sets ordenados. Se em algum passo os dois iteradores apontam para o mesmo valor, há sobreposição.</p>
+<p>Esta função é chamada por <a class="el" href="class_interference_graph.html#a9ace91ca867c18bc6b849c4531e71cb1" title="Passo 1 e 2 da construção: agrupa ranges em webs.">InterferenceGraph::buildWebs()</a> para decidir se duas webs parciais devem ser fundidas, e por <a class="el" href="#a1daf0ad084076fd059d0e66e75481125" title="Determina se esta web interfere com other.">interferesWith()</a> como condição de saída rápida.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">other</td><td><a class="el" href="class_web.html">Web</a> a comparar. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> se houver pelo menos uma linha comum.</dd></dl>
+<dl class="section user"><dt>Complexidade</dt><dd>O(min(|L_this|, |L_other|)) no melhor caso; O(|L_this| + |L_other|) no pior caso. </dd></dl>
+
 </div>
 </div>
 <a id="a46047bcb2ab5891d81e84f1962148ad8" name="a46047bcb2ab5891d81e84f1962148ad8"></a>
@@ -305,6 +433,16 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Redefine o identificador desta web. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">newId</td><td>Novo identificador (deve ser &gt;= 0).</td></tr>
+    <tr><td class="paramname">newId</td><td>Novo identificador (deve ser &gt;= 0). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section user"><dt>Complexidade O(1)</dt><dd></dd></dl>
+
 </div>
 </div>
 <a id="a86e81d9280bf2ca94baf28ee5da596a8" name="a86e81d9280bf2ca94baf28ee5da596a8"></a>
@@ -321,6 +459,12 @@ Private Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Devolve uma representação textual da web. </p>
+<dl class="section return"><dt>Returns</dt><dd>String com os pontos de programa ordenados.</dd></dl>
+<p>Constrói um mapa temporário linha -&gt; (isStart, isEnd) percorrendo todos os pontos de todas as ranges, combinando os flags com OR lógico. O std::map ordena automaticamente as linhas por ordem crescente. O resultado é a concatenação dos pares linha+sufixos separados por vírgulas.</p>
+<dl class="section return"><dt>Returns</dt><dd>String com os pontos de programa ordenados.</dd></dl>
+<dl class="section user"><dt>Complexidade</dt><dd>O(P log P) onde P = total de pontos de programa em todas as ranges. </dd></dl>
 
 </div>
 </div>

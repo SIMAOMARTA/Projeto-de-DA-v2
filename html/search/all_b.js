@@ -1,10 +1,6 @@
 var searchData=
 [
-  ['line_0',['line',['../struct_program_point.html#ad7f4a982da0c6a8b83db5d397ff1ec38',1,'ProgramPoint']]],
-  ['lineannotation_1',['LineAnnotation',['../struct_web_1_1_line_annotation.html',1,'Web']]],
-  ['lineset_2',['lineSet',['../class_live_range.html#a99f8080a8bb080f7a63856ea1fab73ff',1,'LiveRange']]],
-  ['lineset_5f_3',['lineSet_',['../class_web.html#a336cb9b1456da0bb1f9259e9365dcd70',1,'Web']]],
-  ['liverange_4',['LiveRange',['../class_live_range.html',1,'LiveRange'],['../class_live_range.html#afbf14addda0d04e6cfa0cd4d3988eb32',1,'LiveRange::LiveRange()']]],
-  ['liverange_2ecpp_5',['LiveRange.cpp',['../_live_range_8cpp.html',1,'']]],
-  ['liverange_2eh_6',['LiveRange.h',['../_live_range_8h.html',1,'']]]
+  ['neighbors_0',['neighbors',['../class_interference_graph.html#a7d5e6e7992abdeec55096b9722284d7d',1,'InterferenceGraph']]],
+  ['numnodes_1',['numNodes',['../class_interference_graph.html#ae91751e0870204a207f2cb5de690fb13',1,'InterferenceGraph']]],
+  ['numregisters_2',['numRegisters',['../struct_algorithm_config.html#a8b840373e153becdd5b5f7e90951a4f6',1,'AlgorithmConfig']]]
 ];

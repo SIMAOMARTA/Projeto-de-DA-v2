@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['kempechaitin_0',['kempeChaitin',['../_register_allocator_8cpp.html#a02d01c8192ecff9996f2b87861d01540',1,'RegisterAllocator.cpp']]],
-  ['kempewithspillcap_1',['kempeWithSpillCap',['../class_register_allocator.html#ade9ee399080785b95bd1797c61713661',1,'RegisterAllocator']]]
+  ['main_0',['main',['../main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97',1,'main.cpp']]],
+  ['main_2ecpp_1',['main.cpp',['../main_8cpp.html',1,'']]]
 ];

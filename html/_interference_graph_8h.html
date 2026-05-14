@@ -92,7 +92,7 @@ $(function(){initNavTree('_interference_graph_8h.html','',''); });
 </div><!--header-->
 <div class="contents">
 
-<p>Grafo de interferência para alocação de registos.  
+<p>Declaração do grafo de interferência para alocação de registos.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="_web_8h_source.html">Web.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="_live_range_8h_source.html">LiveRange.h</a>&quot;</code><br />
@@ -106,15 +106,11 @@ $(function(){initNavTree('_interference_graph_8h.html','',''); });
 <tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:InterferenceGraph" id="r_InterferenceGraph"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="class_interference_graph.html">InterferenceGraph</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Grafo de interferência entre webs de alocação de registos.  <a href="class_interference_graph.html#details">More...</a><br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Grafo de interferência para alocação de registos. </p>
-<p>Responsabilidades:</p><ol type="1">
-<li>recebe os LiveRanges do parser</li>
-<li>interseção live ranges que se sobreponham</li>
-<li>determinar dois nós (webs) que têm aresta a interferirem</li>
-</ol>
-<p>Complexidade: O(W^2 * L) onde W = nº de webs, L = nº médio de linhas por web. </p>
+<div class="textblock"><p>Declaração do grafo de interferência para alocação de registos. </p>
+<p>O grafo de interferência é a estrutura central do algoritmo de alocação: os nós são webs e as arestas indicam que dois valores não podem residir no mesmo registo ao mesmo tempo. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <div id="page-nav" class="page-nav-panel">

@@ -1,14 +1,10 @@
 var searchData=
 [
-  ['parsepoint_0',['parsePoint',['../class_parser.html#a5d4dd43f0f59c71e4d48f9de6babae2c',1,'Parser']]],
-  ['parser_1',['Parser',['../class_parser.html',1,'']]],
-  ['parser_2ecpp_2',['Parser.cpp',['../_parser_8cpp.html',1,'']]],
-  ['parser_2eh_3',['Parser.h',['../_parser_8h.html',1,'']]],
-  ['parseranges_4',['parseRanges',['../class_parser.html#ad6ad36a00729aeacb1e8f52b5b86256d',1,'Parser']]],
-  ['parseregisters_5',['parseRegisters',['../class_parser.html#a165f65c047fb13e114e37f25c9ee1dbf',1,'Parser']]],
-  ['points_6',['points',['../class_live_range.html#a4f30ec2658ed5f68bef7efa591fe2737',1,'LiveRange']]],
-  ['print_7',['print',['../class_interference_graph.html#a8ed2be8330ae75504ef60eacae1bd41e',1,'InterferenceGraph']]],
-  ['printresult_8',['printResult',['../class_register_allocator.html#a9e9d8cdaeec913a7a86e4a9161c4ba71',1,'RegisterAllocator']]],
-  ['programpoint_9',['ProgramPoint',['../struct_program_point.html',1,'ProgramPoint'],['../struct_program_point.html#ad59b9c42e90a0a9444c533141fb2dd22',1,'ProgramPoint::ProgramPoint()']]],
-  ['programpoint_2eh_10',['ProgramPoint.h',['../_program_point_8h.html',1,'']]]
+  ['selectspillcandidate_0',['selectSpillCandidate',['../class_register_allocator.html#a75aefa6f1cfdd56d46b28e31e80eb28c',1,'RegisterAllocator']]],
+  ['setid_1',['setId',['../class_web.html#a46047bcb2ab5891d81e84f1962148ad8',1,'Web']]],
+  ['simplificação_2',['Simplificação',['../class_register_allocator.html#autotoc_md0',1,'']]],
+  ['spilled_3',['spilled',['../struct_register_allocator_1_1_allocation.html#a38462667d52e1ef4a841d38dc38739cd',1,'RegisterAllocator::Allocation']]],
+  ['spilling_4',['spilling',['../class_register_allocator.html#autotoc_md3',1,'']]],
+  ['splitting_5',['splitting',['../class_register_allocator.html#autotoc_md4',1,'']]],
+  ['splitweb_6',['splitWeb',['../class_register_allocator.html#a2243834a8b2044eb31a789ba619508b8',1,'RegisterAllocator']]]
 ];

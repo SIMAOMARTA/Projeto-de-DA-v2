@@ -1,4 +1,7 @@
 var searchData=
 [
-  ['2_20—_20coloração_0',['Fase 2 — Coloração',['../class_register_allocator.html#autotoc_md1',1,'']]]
+  ['basic_0',['basic',['../class_register_allocator.html#autotoc_md2',1,'']]],
+  ['buildannotationmap_1',['buildAnnotationMap',['../class_web.html#aeb6dfd43051263f634303098a47b58ea',1,'Web']]],
+  ['buildedges_2',['buildEdges',['../class_interference_graph.html#a8590504008ef8e76259ba7986f29c76f',1,'InterferenceGraph']]],
+  ['buildwebs_3',['buildWebs',['../class_interference_graph.html#a9ace91ca867c18bc6b849c4531e71cb1',1,'InterferenceGraph']]]
 ];

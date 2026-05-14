@@ -92,7 +92,7 @@ $(function(){initNavTree('_algorithm_config_8h.html','',''); });
 </div><!--header-->
 <div class="contents">
 
-<p>Configuration parsed from a registers input file.  
+<p>Configuração do algoritmo de alocação de registos.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;string&gt;</code><br />
 </div>
@@ -101,16 +101,11 @@ $(function(){initNavTree('_algorithm_config_8h.html','',''); });
 <tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:AlgorithmConfig" id="r_AlgorithmConfig"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="struct_algorithm_config.html">AlgorithmConfig</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configuração parseada a partir do ficheiro de registos.  <a href="struct_algorithm_config.html#details">More...</a><br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Configuration parsed from a registers input file. </p>
-<p>Stores the number of available physical registers and the algorithm variant to use for register allocation.</p>
-<p>Supported algorithm variants:</p><ul>
-<li>"basic" : greedy graph-coloring, no fallback (T2.1)</li>
-<li>"spilling,K" : basic + up to K web spills (T2.2)</li>
-<li>"splitting,K" : basic + up to K web splits (T2.3)</li>
-<li>"free" : custom algorithm (T2.4) </li>
-</ul>
+<div class="textblock"><p>Configuração do algoritmo de alocação de registos. </p>
+<p>Esta estrutura é preenchida pelo <a class="el" href="class_parser.html" title="Classe utilitária para leitura e parsing dos ficheiros de entrada.">Parser</a> a partir do ficheiro de registos e é passada ao <a class="el" href="class_register_allocator.html">RegisterAllocator</a> para selecionar o algoritmo a executar e os respetivos parâmetros. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <div id="page-nav" class="page-nav-panel">

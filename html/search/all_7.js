@@ -1,9 +1,13 @@
 var searchData=
 [
-  ['getid_0',['getId',['../class_web.html#a8e73703f0dce935f291fe348f0e0a49c',1,'Web']]],
-  ['getlineset_1',['getLineSet',['../class_live_range.html#a4b20f2aa66f9cbbb4dbb394b3de3f322',1,'LiveRange::getLineSet()'],['../class_web.html#ad3f3b2635495fee897265cc7cc60940b',1,'Web::getLineSet()']]],
-  ['getpoints_2',['getPoints',['../class_live_range.html#a34feeb956a35e188ac2a5b0f50260268',1,'LiveRange']]],
-  ['getranges_3',['getRanges',['../class_web.html#a35a83cd2a484307e10d823cdb1a91a62',1,'Web']]],
-  ['getvarname_4',['getVarName',['../class_live_range.html#a65cd7269b137059c5d1f9fb2f9177cb0',1,'LiveRange::getVarName()'],['../class_web.html#af03bdf9ea9e86b5bb59842dc394855fe',1,'Web::getVarName()']]],
-  ['getwebs_5',['getWebs',['../class_interference_graph.html#a82e45889d4203f30ff7331dced1f5650',1,'InterferenceGraph']]]
+  ['id_5f_0',['id_',['../class_web.html#a03751392e2f43d65cec7f91b2ba1d3a6',1,'Web']]],
+  ['interactivemenu_1',['interactiveMenu',['../main_8cpp.html#a429455d6b30bfd3787786077294a60f3',1,'main.cpp']]],
+  ['interferencegraph_2',['InterferenceGraph',['../class_interference_graph.html',1,'InterferenceGraph'],['../class_interference_graph.html#a6ca82532c2c608d02dd7b36d8e4b3252',1,'InterferenceGraph::InterferenceGraph()']]],
+  ['interferencegraph_2ecpp_3',['InterferenceGraph.cpp',['../_interference_graph_8cpp.html',1,'']]],
+  ['interferencegraph_2eh_4',['InterferenceGraph.h',['../_interference_graph_8h.html',1,'']]],
+  ['interfereswith_5',['interferesWith',['../class_web.html#a1daf0ad084076fd059d0e66e75481125',1,'Web']]],
+  ['intersects_6',['intersects',['../class_live_range.html#a9b3b8c6e3c3cb59ff805e743ea511259',1,'LiveRange']]],
+  ['iscommentorempty_7',['isCommentOrEmpty',['../class_parser.html#a00bb0d63f03a0292f1450e51008c1fbe',1,'Parser']]],
+  ['isend_8',['isEnd',['../struct_program_point.html#a1d7cab8fffa92dd11173f44ac73d6a02',1,'ProgramPoint']]],
+  ['isstart_9',['isStart',['../struct_program_point.html#a7f112ddcaddddd5b65777b40da5ae2c4',1,'ProgramPoint']]]
 ];
