@@ -44,7 +44,7 @@
  * @return              @c true se o pipeline foi concluído sem erros;
  *                      @c false caso contrário.
  *
- * @complexity O(W² × L), onde W = nº de webs, L = linhas médias por web.
+ * @par Complexidade O(W² × L), onde W = nº de webs, L = linhas médias por web.
  */
 static bool runAllocation(const std::string& rangesFile,
                           const std::string& registersFile,
@@ -62,7 +62,7 @@ static bool runAllocation(const std::string& rangesFile,
                   << graph.numNodes() << " webs.\n";
 
         // Executar alocação de registos
-        auto allocations = RegisterAllocator::allocate(graph, config);
+        auto result = RegisterAllocator::allocate(graph, config);
 
         // Imprimir resultado no ficheiro de saída
         std::ofstream out(outputFile);
@@ -71,7 +71,7 @@ static bool runAllocation(const std::string& rangesFile,
                       << outputFile << "\n";
             return false;
         }
-        RegisterAllocator::printResult(graph, allocations, out);
+        RegisterAllocator::printResult(result, out);
         out.close();
         std::cout << "Resultado guardado em: " << outputFile << "\n";
         return true;

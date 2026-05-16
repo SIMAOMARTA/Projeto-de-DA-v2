@@ -33,23 +33,38 @@ public:
     };
 
     /**
-     * @brief Aloca registos para todas as webs em @p graph.
-     * @param graph   Grafo de interferência.
-     * @param config  Número de registos e variante do algoritmo.
-     * @return        Alocação por web (indexada pelo id da web).
+     * @struct AllocResult
+     * @brief Agrupa as alocações e o grafo final (que pode diferir do grafo
+     *        original após operações de splitting).
+     *
+     * O grafo armazenado em @c finalGraph é o que foi efetivamente colorido:
+     *  - Para @c basic, @c spilling e @c free, é igual ao grafo de entrada.
+     *  - Para @c splitting, pode ter mais nós/webs do que o original se uma
+     *    ou mais webs foram divididas.
+     *
+     * @c allocations está indexado pelo id das webs de @c finalGraph.
      */
-    static std::vector<Allocation> allocate(const InterferenceGraph& graph,
-                                            const AlgorithmConfig&    config);
+    struct AllocResult {
+        std::vector<Allocation> allocations; ///< Alocação por web (id da web de finalGraph).
+        InterferenceGraph       finalGraph;  ///< Grafo efetivamente colorido.
+    };
+
+    /**
+     * @brief Aloca registos para todas as webs em @p graph.
+     * @param graph   Grafo de interferência original.
+     * @param config  Número de registos e variante do algoritmo.
+     * @return        AllocResult com alocações e o grafo final usado.
+     */
+    static AllocResult allocate(const InterferenceGraph& graph,
+                                const AlgorithmConfig&   config);
 
     /**
      * @brief Escreve o resultado da alocação em @p out.
-     * @param graph        Grafo de interferência.
-     * @param allocations  Resultado de allocate().
-     * @param out          Stream de saída.
+     * @param result  Resultado de allocate() (contém grafo e alocações).
+     * @param out     Stream de saída.
      */
-    static void printResult(const InterferenceGraph&      graph,
-                            const std::vector<Allocation>& allocations,
-                            std::ostream&                  out);
+    static void printResult(const AllocResult& result,
+                            std::ostream&      out);
 
 private:
     /**
@@ -58,11 +73,14 @@ private:
      * @param N          Número de registos físicos.
      * @param spillCap   Máximo de spills; negativo = ilimitado.
      * @param feasible   Definido como @c true se o resultado respeita spillCap.
+     * @param silent     Se @c true, suprime mensagens de aviso no stderr
+     *                   (usado nas iterações de sondagem do algoritmo spilling).
      */
     static std::vector<Allocation> kempeWithSpillCap(const InterferenceGraph& graph,
                                                      int numRegisters,
                                                      int spillCap,
-                                                     bool& feasible);
+                                                     bool& feasible,
+                                                     bool silent = false);
 
     /**
      * @brief Seleciona o candidato a spill pelo maior grau de trabalho.

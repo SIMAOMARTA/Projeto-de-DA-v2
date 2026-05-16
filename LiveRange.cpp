@@ -15,9 +15,6 @@
  * pré-construindo o conjunto para que pesquisas posteriores sejam O(log P)
  * em vez de O(P).
  *
- * @param varName  Nome da variável associada a esta live range.
- * @param points   Lista de pontos de programa que compõem a live range.
- *
  * @par Complexidade
  * O(P log P), onde P = número de pontos.
  */
@@ -32,8 +29,6 @@ LiveRange::LiveRange(const std::string& varName,
 /**
  * @brief Devolve o nome da variável associada a esta live range.
  *
- * @return Referência constante para o nome da variável.
- *
  * @par Complexidade
  * O(1)
  */
@@ -44,8 +39,6 @@ const std::string& LiveRange::getVarName() const {
 /**
  * @brief Devolve a lista de pontos de programa desta live range.
  *
- * @return Referência constante para o vetor de ProgramPoint.
- *
  * @par Complexidade
  * O(1)
  */
@@ -55,8 +48,6 @@ const std::vector<ProgramPoint>& LiveRange::getPoints() const {
 
 /**
  * @brief Devolve o conjunto de números de linha desta live range.
- *
- * @return Referência constante para o set de inteiros ordenados.
  *
  * @par Complexidade
  * O(1)
@@ -73,10 +64,6 @@ const std::set<int>& LiveRange::getLineSet() const {
  * do merge-sort). Em cada passo avança o iterador com o valor mais
  * pequeno. Se em algum ponto os dois valores forem iguais, as ranges
  * intersetam e a função retorna imediatamente.
- *
- * @param other  A outra live range a comparar.
- * @return       @c true se houver pelo menos uma linha comum;
- *               @c false caso contrário.
  *
  * @par Complexidade
  * O(min(|a|, |b|)) no melhor caso (primeira linha já comum);
@@ -102,9 +89,6 @@ bool LiveRange::intersects(const LiveRange& other) const {
  * Itera sobre o vetor points e constrói a string de saída. Cada ponto
  * é separado por vírgula; o sufixo '+' é adicionado se isStart for
  * verdadeiro e '-' se isEnd for verdadeiro.
- *
- * @return String com os pontos separados por vírgulas e anotados com
- *         '+'/'-' conforme aplicável. Exemplo: @c "1+,2,3,4,5,6-".
  *
  * @par Complexidade
  * O(P) onde P = número de pontos de programa.

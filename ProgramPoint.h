@@ -46,7 +46,7 @@ struct ProgramPoint {
      * @param l  Número da linha (deve ser > 0).
      * @param s  @c true se a variável é definida nesta linha (@c '+').
      * @param e  @c true se esta é a última utilização (@c '-').
-     * @complexity O(1)
+     * @par Complexidade O(1)
      */
     ProgramPoint(int l, bool s, bool e) : line(l), isStart(s), isEnd(e) {}
 };

@@ -21,7 +21,6 @@
  * A separação em dois métodos distintos facilita testes unitários
  * independentes de cada fase da construção.
  *
- * @param ranges  Lista de LiveRanges obtida do Parser.
  *
  * @par Complexidade
  * O(W² × L) dominado por buildEdges(),
@@ -58,7 +57,6 @@ InterferenceGraph::InterferenceGraph(const std::vector<LiveRange>& ranges) {
  * Após todas as fusões os ids internos podem ter lacunas (ids de webs
  * absorvidas ficam sem uso). Renumera sequencialmente de 0 a N-1.
  *
- * @param ranges  Lista de LiveRanges lida pelo Parser.
  *
  * @par Complexidade
  * O(V × R²) onde V = número de variáveis distintas e R = número médio
@@ -142,8 +140,6 @@ void InterferenceGraph::buildEdges() {
  * Como std::set ignora duplicados, chamadas repetidas com os mesmos
  * argumentos são seguras.
  *
- * @param idA  Id do primeiro nó.
- * @param idB  Id do segundo nó.
  *
  * @par Complexidade
  * O(log W) onde W = número de webs.
@@ -157,7 +153,6 @@ void InterferenceGraph::addEdge(int idA, int idB) {
 // getters
 /**
  * @brief Devolve a lista de todas as webs (nós) do grafo.
- * @return Referência constante para o vetor de webs.
  * @par Complexidade
  * O(1)
  */
@@ -168,9 +163,6 @@ const std::vector<Web>& InterferenceGraph::getWebs() const {
 /**
  * @brief Verifica se existe uma aresta entre dois nós.
  *
- * @param idA  Id do primeiro nó.
- * @param idB  Id do segundo nó.
- * @return     @c true se existe aresta entre idA e idB.
  *
  * @par Complexidade
  * O(log W) onde W = número de webs.
@@ -184,10 +176,7 @@ bool InterferenceGraph::hasEdge(int idA, int idB) const {
 /**
  * @brief Devolve o conjunto de vizinhos de um nó.
  *
- * @param id  Id da web cujos vizinhos se pretendem obter.
- * @return    Referência constante para o set de ids vizinhos.
  *
- * @throws std::out_of_range Se @p id não existir na adjList_.
  *
  * @par Complexidade
  * O(log W) onde W = número de webs.
@@ -199,8 +188,6 @@ const std::set<int>& InterferenceGraph::neighbors(int id) const {
 /**
  * @brief Devolve o grau (número de vizinhos) de um nó.
  *
- * @param id  Id da web cujo grau se pretende calcular.
- * @return    Número de webs com que @p id interfere; 0 se não existir.
  *
  * @par Complexidade
  * O(log W) onde W = número de webs.
@@ -213,7 +200,6 @@ int InterferenceGraph::degree(int id) const {
 
 /**
  * @brief Devolve o número de nós (webs) no grafo.
- * @return Número total de webs no grafo.
  * @par Complexidade
  * O(1)
  */

@@ -16,9 +16,6 @@
  * @details Inicializa a web com a LiveRange fornecida, copia as suas linhas
  * para lineSet_ e constrói a cache inicial.
  *
- * @param id     Identificador numérico único da web no grafo (0-based).
- * @param range  LiveRange inicial que compõe esta web.
- *
  * @par Complexidade
  * O(P log P) onde P = número de pontos da range.
  */
@@ -32,35 +29,30 @@ Web::Web(int id, const LiveRange& range) : id_(id), varName_(range.getVarName())
 // Getters
 /**
  * @brief Devolve o identificador numérico desta web.
- * @return Id inteiro (0-based).
  * @par Complexidade O(1)
  */
 int Web::getId() const { return id_; }
 
 /**
  * @brief Redefine o identificador desta web.
- * @param newId  Novo identificador (deve ser >= 0).
  * @par Complexidade O(1)
  */
 void Web::setId(int newId) { id_ = newId; }
 
 /**
  * @brief Devolve o nome da variável associada a esta web.
- * @return Referência constante para o nome da variável.
  * @par Complexidade O(1)
  */
 const std::string& Web::getVarName() const { return varName_; }
 
 /**
  * @brief Devolve todas as LiveRanges que compõem esta web.
- * @return Referência constante para o vetor de LiveRanges.
  * @par Complexidade O(1)
  */
 const std::vector<LiveRange>& Web::getRanges() const { return ranges_; }
 
 /**
  * @brief Devolve o conjunto de linhas cobertas por esta web.
- * @return Referência constante para o set de inteiros ordenados.
  * @par Complexidade O(1)
  */
 const std::set<int>& Web::getLineSet() const { return lineSet_; }
@@ -74,7 +66,6 @@ const std::set<int>& Web::getLineSet() const { return lineSet_; }
  * Após processar todas as ranges, reconstrói annotationMap_ a partir do
  * estado completo (para garantir consistência da cache).
  *
- * @param other  Web a absorver (apenas lida, não modificada).
  * @par Complexidade
  * O(P log P), onde P = total de pontos de ambas as webs.
  */
@@ -99,9 +90,6 @@ void Web::absorb(const Web& other) {
  * Esta função é chamada por InterferenceGraph::buildWebs() para decidir se
  * duas webs parciais devem ser fundidas, e por interferesWith() como
  * condição de saída rápida.
- *
- * @param other  Web a comparar.
- * @return       @c true se houver pelo menos uma linha comum.
  *
  * @par Complexidade
  * O(min(|L_this|, |L_other|)) no melhor caso; O(|L_this| + |L_other|) no pior caso.
@@ -161,9 +149,6 @@ void Web::buildAnnotationMap() {
  *  4. Em qualquer outro caso (ambas vivas, ou ambas definem/usam na mesma
  *     linha), há interferência e a função devolve @c true imediatamente.
  *
- * @param other  Web a comparar.
- * @return       @c true se as webs interferem.
- *
  * @par Complexidade
  * O(L log L), onde L = número de linhas partilhadas pelas duas webs.
  */
@@ -205,8 +190,6 @@ bool Web::interferesWith(const Web& other) const {
  * os pontos de todas as ranges, combinando os flags com OR lógico.
  * O std::map ordena automaticamente as linhas por ordem crescente.
  * O resultado é a concatenação dos pares linha+sufixos separados por vírgulas.
- *
- * @return String com os pontos de programa ordenados.
  *
  * @par Complexidade
  * O(P log P) onde P = total de pontos de programa em todas as ranges.

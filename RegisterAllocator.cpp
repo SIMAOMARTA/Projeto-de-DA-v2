@@ -2,7 +2,7 @@
  * @file RegisterAllocator.cpp
  * @brief Implementação do alocador de registos.
  * Contém os quatro algoritmos de alocação (basic, spilling, splitting, free),
- * os auxiliares de selecção de candidatos, divisão de webs e organização
+ * os auxiliares de seleção de candidatos, divisão de webs e organização
  * do resultado.
  */
 
@@ -20,7 +20,7 @@
  * ### Simplificação
  *  1. Percorre todos os nós ativos: se workDegree[n] < N, remove n para
  *     a pilha e decrementa o workDegree dos seus vizinhos ativos.
- *  2. Se o ciclo não removeu nenhum nó E ainda há nós ativos, selecciona
+ *  2. Se o ciclo não removeu nenhum nó E ainda há nós ativos, seleciona
  *     o candidato a spill (selectSpillCandidate) e marca-o como spilled.
  *     - Se spillCap >= 0 e já atingimos spillCap spills, define-se
  *       feasible=false e retorna-se antecipadamente.
@@ -43,7 +43,8 @@
 std::vector<RegisterAllocator::Allocation>
 RegisterAllocator::kempeWithSpillCap(const InterferenceGraph& graph,
                                      int N, int spillCap,
-                                     bool& feasible)
+                                     bool& feasible,
+                                     bool silent)
 {
     const int W = graph.numNodes();
     std::vector<Allocation> result(W);
@@ -114,7 +115,7 @@ RegisterAllocator::kempeWithSpillCap(const InterferenceGraph& graph,
     }
 
     feasible = (spillCap < 0) || (spillCount <= spillCap);
-    if (spillCount > 0 && spillCap < 0) {
+    if (!silent && spillCount > 0 && spillCap < 0) {
         std::cerr << "AVISO: alocacao aos " << N
                   << " registos nao foi possivel sem spilling.\n"
                   << "       " << spillCount << " web(s) alocada(s) a memoria.\n";
@@ -194,8 +195,8 @@ std::pair<Web,Web> RegisterAllocator::splitWeb(const Web& web)
     if (pts1.empty()) pts1 = pts2;
     if (pts2.empty()) pts2.push_back(pts1.back());
 
-    LiveRange lr1(web.getVarName() + "_s0", pts1);
-    LiveRange lr2(web.getVarName() + "_s1", pts2);
+    LiveRange lr1(web.getVarName() + "__split0__", pts1);
+    LiveRange lr2(web.getVarName() + "__split1__", pts2);
     return { Web(-1, lr1), Web(-1, lr2) };
 }
 
@@ -348,121 +349,119 @@ kempeChaitin(const InterferenceGraph& graph, int N, bool& feasible)
  * emitido um aviso no stderr.
  *
  * ### spilling
- * Itera cap de 0 até K (inclusive). Para cada valor tenta a coloração;
- * se feasible==true retorna imediatamente. Se nenhuma iteração for viável,
- * marca todas as webs como spilled e emite erro no stderr.
+ * Itera cap de 0 até K (inclusive) silenciosamente; emite uma única
+ * mensagem no stderr caso nenhuma iteração seja viável.
  *
  * ### splitting
- *  1. Tenta primeiro sem modificações (cap=0).
+ *  1. Tenta primeiro sem modificações (cap=0, silencioso).
  *  2. Se falhar, entra no loop de splitting (até K iterações):
- *     - Reconstrói o grafo atual.
- *     - Identifica a web com maior grau como candidata.
- *     - Divide-a com splitWeb() e substitui no vetor currentWebs.
+ *     - Seleciona a web com maior grau; se tiver só uma linha procura
+ *       a próxima candidata divisível.
+ *     - Divide-a com splitWeb() e reconstrói o grafo.
  *     - Tenta coloração do novo grafo com cap=0.
- *  3. Se após K splits ainda falhar, usa spills ilimitados (fallback).
+ *  3. Se após K splits ainda falhar, usa spills ilimitados (fallback)
+ *     sobre o grafo mais refinado obtido.
  *
  * ### free (Chaitin)
- * Chama kempeChaitin() que usa a razão grau/tamanho para selecionar
- * candidatos a spill.
+ * Usa kempeChaitin() que seleciona candidatos a spill pela razão
+ * grau_trabalho / tamanho_da_live_range.
  *
- * @param graph   Grafo de interferência.
+ * @param graph   Grafo de interferência original.
  * @param config  Configuração com algoritmo e número de registos.
- * @return        Vetor de Allocation por web.
+ * @return        AllocResult com alocações **e** o grafo efetivamente
+ *                colorido (pode diferir do original em splitting).
  *
  * @par Complexidade
  * O(W²) para basic/spilling/free;
  * O(K × W² × L) para splitting.
  */
-std::vector<RegisterAllocator::Allocation>
+RegisterAllocator::AllocResult
 RegisterAllocator::allocate(const InterferenceGraph& graph,
                             const AlgorithmConfig&    config)
 {
     const int N = config.numRegisters;
     bool feasible = false;
-    std::vector<Allocation> result;
 
-    // basic
+    // --- basic ---
     if (config.algorithm == "basic") {
-        result = kempeWithSpillCap(graph, N, -1, feasible);
-        return result;
+        auto allocs = kempeWithSpillCap(graph, N, -1, feasible);
+        // warning emitted inside kempeWithSpillCap when spillCap<0 and spills>0
+        return { allocs, graph };
     }
 
-    // spilling
+    // --- spilling ---
     if (config.algorithm == "spilling") {
         int K = config.algorithmParam;
         for (int cap = 0; cap <= K; ++cap) {
-            result = kempeWithSpillCap(graph, N, cap, feasible);
-            if (feasible) return result;
+            auto allocs = kempeWithSpillCap(graph, N, cap, feasible, /*silent=*/true);
+            if (feasible) return { allocs, graph };
         }
-
+        // Completely infeasible within K spills — spill everything
         std::cerr << "ERRO: alocacao com spilling ate K=" << K
-                  << " nao foi possivel.\n";
+                  << " nao foi possivel. Todas as webs alocadas a memoria.\n";
         const int W2 = graph.numNodes();
-        result.assign(W2, Allocation{});
-        for (int i = 0; i < W2; ++i) {
-            result[i].webId   = i;
-            result[i].regIdx  = -1;
-            result[i].spilled = true;
-        }
-        return result;
+        std::vector<Allocation> all(W2);
+        for (int i = 0; i < W2; ++i) { all[i].webId = i; all[i].spilled = true; }
+        return { all, graph };
     }
 
-    // splitting
+    // --- splitting ---
     if (config.algorithm == "splitting") {
         int K = config.algorithmParam;
 
-        result = kempeWithSpillCap(graph, N, 0, feasible);
-        if (feasible) return result;
-
-        std::vector<Web> currentWebs = graph.getWebs();
-
-        for (int splitsDone = 0; splitsDone < K; ++splitsDone) {
-            InterferenceGraph curGraph = rebuildGraphFromWebs(currentWebs);
-
-            int candidate = -1, maxDeg = -1;
-            for (int i = 0; i < curGraph.numNodes(); ++i) {
-                if (curGraph.degree(i) > maxDeg) {
-                    maxDeg = curGraph.degree(i);
-                    candidate = i;
-                }
-            }
-            if (candidate == -1 || maxDeg < N) break;
-
-            const Web& candWeb = curGraph.getWebs()[candidate];
-            auto [w1, w2] = splitWeb(candWeb);
-
-            std::vector<Web> newWebs;
-            newWebs.reserve(currentWebs.size() + 1);
-            for (int i = 0; i < curGraph.numNodes(); ++i) {
-                if (i == candidate) {
-                    newWebs.push_back(std::move(w1));
-                    newWebs.push_back(std::move(w2));
-                } else {
-                    newWebs.push_back(curGraph.getWebs()[i]);
-                }
-            }
-            currentWebs = std::move(newWebs);
-
-            InterferenceGraph newGraph = rebuildGraphFromWebs(currentWebs);
-            result = kempeWithSpillCap(newGraph, N, 0, feasible);
-            if (feasible) return result;
+        // First attempt: no splits needed
+        {
+            auto allocs = kempeWithSpillCap(graph, N, 0, feasible, /*silent=*/true);
+            if (feasible) return { allocs, graph };
         }
 
-        std::cerr << "ERRO: alocacao com splitting ate K=" << K
-                  << " nao foi possivel sem spilling.\n"
-                  << "       Recorrendo a spilling ilimitado.\n";
+        std::vector<Web> currentWebs = graph.getWebs();
+        int splitsDone = 0;
+
+        while (splitsDone < K) {
+            InterferenceGraph curGraph = rebuildGraphFromWebs(currentWebs);
+
+            // Find best candidate: highest degree AND more than one line (splittable)
+            int candidate = -1, maxDeg = -1;
+            for (int i = 0; i < curGraph.numNodes(); ++i) {
+                int d = curGraph.degree(i);
+                bool splittable = (int)curGraph.getWebs()[i].getLineSet().size() > 1;
+                if (splittable && d > maxDeg) { maxDeg = d; candidate = i; }
+            }
+            // No splittable web with edges remains — further splitting cannot help
+            if (candidate == -1 || maxDeg == 0) break;
+
+            auto [w1, w2] = splitWeb(curGraph.getWebs()[candidate]);
+
+            std::vector<Web> newWebs;
+            newWebs.reserve((size_t)curGraph.numNodes() + 1);
+            for (int i = 0; i < curGraph.numNodes(); ++i) {
+                if (i == candidate) { newWebs.push_back(w1); newWebs.push_back(w2); }
+                else                { newWebs.push_back(curGraph.getWebs()[i]); }
+            }
+            currentWebs = std::move(newWebs);
+            ++splitsDone;
+
+            InterferenceGraph newGraph = rebuildGraphFromWebs(currentWebs);
+            auto allocs = kempeWithSpillCap(newGraph, N, 0, feasible, /*silent=*/true);
+            if (feasible) return { allocs, newGraph };  // ← correct graph returned
+        }
+
+        // Fallback: unlimited spilling on the best graph produced so far
+        std::cerr << "AVISO: splitting ate K=" << K
+                  << " nao foi suficiente. Recorrendo a spilling ilimitado.\n";
         InterferenceGraph fallback = rebuildGraphFromWebs(currentWebs);
-        result = kempeWithSpillCap(fallback, N, -1, feasible);
-        return result;
+        auto allocs = kempeWithSpillCap(fallback, N, -1, feasible);
+        return { allocs, fallback };  // ← correct (split) graph returned
     }
 
-    // free
+    // --- free (Chaitin) ---
     if (config.algorithm == "free") {
-        result = kempeChaitin(graph, N, feasible);
-        return result;
+        auto allocs = kempeChaitin(graph, N, feasible);
+        return { allocs, graph };
     }
 
-    return result;
+    return { {}, graph };
 }
 
 
@@ -470,27 +469,27 @@ RegisterAllocator::allocate(const InterferenceGraph& graph,
  * @brief Imprime o resultado da alocação para um stream de saída.
  *
  * @details
+ * Usa @c result.finalGraph para obter as webs efetivamente coloridas
+ * (que pode incluir webs novas criadas por splitting) e
+ * @c result.allocations para as atribuições de registo correspondentes.
+ *
  * Percorre as allocations duas vezes:
  *  1. Para calcular o número de registos efetivamente usados
  *     (maxReg+1, onde maxReg é o maior regIdx não-spilled).
  *  2. Para emitir as linhas de atribuição ("rN: webM" ou "M: webM").
  *
- * O número de registos reportado pode ser inferior a config.numRegisters
- * quando nem todos os registos disponíveis são necessários.
- *
- * @param graph        Grafo de interferência.
- * @param allocations  Resultado de allocate().
- * @param out          Stream de saída.
+ * @param result  Resultado de allocate() (contém grafo final e alocações).
+ * @param out     Stream de saída.
  *
  * @par Complexidade
  * O(W × P) onde W = número de webs, P = pontos médios por web.
  */
-void RegisterAllocator::printResult(const InterferenceGraph&       graph,
-                                    const std::vector<Allocation>&  allocations,
-                                    std::ostream&                   out)
+void RegisterAllocator::printResult(const AllocResult& result,
+                                    std::ostream&      out)
 {
-    const auto& webs = graph.getWebs();
-    const int   W    = (int)webs.size();
+    const auto& webs        = result.finalGraph.getWebs();
+    const auto& allocations = result.allocations;
+    const int   W           = (int)webs.size();
 
     out << "# Total number of webs followed by the listing of the program points of each one\n";
     out << "# program points in each web are sorted in ascending order\n";
