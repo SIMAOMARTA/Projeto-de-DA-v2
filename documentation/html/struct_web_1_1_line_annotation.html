@@ -119,16 +119,20 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('struct_web_1_1
 </div><!--header-->
 <div class="contents">
 
-<p>Cache de anotações (isStart / isEnd) por linha de programa. Pré-computada por <a class="el" href="class_web.html#aeb6dfd43051263f634303098a47b58ea" title="Reconstrói annotationMap_ a partir das ranges atuais.">buildAnnotationMap()</a> e consultada em <a class="el" href="class_web.html#a1daf0ad084076fd059d0e66e75481125" title="Determina se esta web interfere com other.">interferesWith()</a> para evitar iterar sobre todos os pontos a cada chamada.  
+<p>Cache de anotações (isStart / isEnd) por linha de instrução.  
  <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a7bbb13df6ea50f8c4a108d4126563ada" id="r_a7bbb13df6ea50f8c4a108d4126563ada"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a7bbb13df6ea50f8c4a108d4126563ada">hasStart</a> = false</td></tr>
+<tr class="memdesc:a7bbb13df6ea50f8c4a108d4126563ada"><td class="mdescLeft">&#160;</td><td class="mdescRight"><code>true</code> se alguma range começa ('+') nesta linha.  <br /></td></tr>
 <tr class="memitem:a65af3b35f99241f2b0ea3a1f209c3f5a" id="r_a65af3b35f99241f2b0ea3a1f209c3f5a"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a65af3b35f99241f2b0ea3a1f209c3f5a">hasEnd</a> = false</td></tr>
+<tr class="memdesc:a65af3b35f99241f2b0ea3a1f209c3f5a"><td class="mdescLeft">&#160;</td><td class="mdescRight"><code>true</code> se alguma range termina ('-') nesta linha.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Cache de anotações (isStart / isEnd) por linha de programa. Pré-computada por <a class="el" href="class_web.html#aeb6dfd43051263f634303098a47b58ea" title="Reconstrói annotationMap_ a partir das ranges atuais.">buildAnnotationMap()</a> e consultada em <a class="el" href="class_web.html#a1daf0ad084076fd059d0e66e75481125" title="Determina se esta web interfere com other.">interferesWith()</a> para evitar iterar sobre todos os pontos a cada chamada. </p>
+<div class="textblock"><p>Cache de anotações (isStart / isEnd) por linha de instrução. </p>
+<p>Pré-computada por <a class="el" href="class_web.html#aeb6dfd43051263f634303098a47b58ea" title="Reconstrói annotationMap_ a partir do estado atual de ranges_.">buildAnnotationMap()</a> e consultada em <a class="el" href="class_web.html#a1daf0ad084076fd059d0e66e75481125" title="Determina se esta web interfere com other.">interferesWith()</a> para determinar, em O(log L), se numa dada linha a web começa, termina, ou simplesmente está viva.</p>
+<p>Evita iterar sobre todos os pontos de todas as ranges a cada chamada a <a class="el" href="class_web.html#a1daf0ad084076fd059d0e66e75481125" title="Determina se esta web interfere com other.">interferesWith()</a>, reduzindo a complexidade de O(L × P) para O(L log L). </p>
 </div><a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
 <a id="a65af3b35f99241f2b0ea3a1f209c3f5a" name="a65af3b35f99241f2b0ea3a1f209c3f5a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a65af3b35f99241f2b0ea3a1f209c3f5a">&#9670;&#160;</a></span>hasEnd</h2>
@@ -141,6 +145,8 @@ Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p><code>true</code> se alguma range termina ('-') nesta linha. </p>
 
 </div>
 </div>
@@ -155,6 +161,8 @@ Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p><code>true</code> se alguma range começa ('+') nesta linha. </p>
 
 </div>
 </div>

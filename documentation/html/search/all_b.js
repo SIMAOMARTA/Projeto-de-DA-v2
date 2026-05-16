@@ -7,6 +7,5 @@ var searchData=
   ['liverange_4',['LiveRange',['../class_live_range.html',1,'LiveRange'],['../class_live_range.html#afbf14addda0d04e6cfa0cd4d3988eb32',1,'LiveRange::LiveRange()']]],
   ['liverange_2ecpp_5',['LiveRange.cpp',['../_live_range_8cpp.html',1,'']]],
   ['liverange_2eh_6',['LiveRange.h',['../_live_range_8h.html',1,'']]],
-  ['log_20de_20spills_7',['Log de spills',['../class_register_allocator.html#autotoc_md2',1,'']]],
-  ['low_8',['low',['../class_vertex.html#a35d937c418952520cfa26b098e86b755',1,'Vertex']]]
+  ['low_7',['low',['../class_vertex.html#a35d937c418952520cfa26b098e86b755',1,'Vertex']]]
 ];

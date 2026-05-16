@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('struct_program
 </div><!--header-->
 <div class="contents">
 
-<p>Representa um ponto de programa (linha) dentro de uma live range.  
+<p>Representa um ponto de programa (instrução) dentro de uma live range.  
  <a href="#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="_program_point_8h_source.html">ProgramPoint.h</a>&gt;</code></p>
@@ -127,24 +127,27 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('struct_program
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ad59b9c42e90a0a9444c533141fb2dd22" id="r_ad59b9c42e90a0a9444c533141fb2dd22"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#ad59b9c42e90a0a9444c533141fb2dd22">ProgramPoint</a> (int l, bool s, bool e)</td></tr>
-<tr class="memdesc:ad59b9c42e90a0a9444c533141fb2dd22"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constrói um <a class="el" href="struct_program_point.html" title="Representa um ponto de programa (linha) dentro de uma live range.">ProgramPoint</a> com todos os campos explícitos.  <br /></td></tr>
+<tr class="memdesc:ad59b9c42e90a0a9444c533141fb2dd22"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constrói um <a class="el" href="struct_program_point.html" title="Representa um ponto de programa (instrução) dentro de uma live range.">ProgramPoint</a> com todos os campos explícitos.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:ad7f4a982da0c6a8b83db5d397ff1ec38" id="r_ad7f4a982da0c6a8b83db5d397ff1ec38"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#ad7f4a982da0c6a8b83db5d397ff1ec38">line</a> = 0</td></tr>
-<tr class="memdesc:ad7f4a982da0c6a8b83db5d397ff1ec38"><td class="mdescLeft">&#160;</td><td class="mdescRight">Número da linha do programa (1-based).  <br /></td></tr>
+<tr class="memdesc:ad7f4a982da0c6a8b83db5d397ff1ec38"><td class="mdescLeft">&#160;</td><td class="mdescRight">Número da linha da instrução (1-based).  <br /></td></tr>
 <tr class="memitem:a7f112ddcaddddd5b65777b40da5ae2c4" id="r_a7f112ddcaddddd5b65777b40da5ae2c4"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a7f112ddcaddddd5b65777b40da5ae2c4">isStart</a> = false</td></tr>
-<tr class="memdesc:a7f112ddcaddddd5b65777b40da5ae2c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indica que a variável é definida (escrita) nesta linha. Corresponde ao sufixo '+' no ficheiro de live ranges.  <br /></td></tr>
+<tr class="memdesc:a7f112ddcaddddd5b65777b40da5ae2c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indica que a variável é definida (escrita) nesta instrução.  <br /></td></tr>
 <tr class="memitem:a1d7cab8fffa92dd11173f44ac73d6a02" id="r_a1d7cab8fffa92dd11173f44ac73d6a02"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a1d7cab8fffa92dd11173f44ac73d6a02">isEnd</a> = false</td></tr>
-<tr class="memdesc:a1d7cab8fffa92dd11173f44ac73d6a02"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indica que esta é a última utilização da variável nesta linha. Corresponde ao sufixo '-' no ficheiro de live ranges.  <br /></td></tr>
+<tr class="memdesc:a1d7cab8fffa92dd11173f44ac73d6a02"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indica que esta é a última utilização da variável nesta instrução.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Representa um ponto de programa (linha) dentro de uma live range. </p>
-<p>Cada ponto contém o número da linha e duas flags que indicam se a variável é definida (isStart / '+') ou consumida pela última vez (isEnd / '-') nessa linha.</p>
-<p>Exemplo: </p><div class="fragment"><div class="line"><a class="code hl_function" href="#ad59b9c42e90a0a9444c533141fb2dd22">ProgramPoint</a> p(5, <span class="keyword">true</span>, <span class="keyword">false</span>);  <span class="comment">// linha 5, definição da variável</span></div>
-<div class="line"><a class="code hl_function" href="#ad59b9c42e90a0a9444c533141fb2dd22">ProgramPoint</a> q(9, <span class="keyword">false</span>, <span class="keyword">true</span>);  <span class="comment">// linha 9, última utilização</span></div>
-<div class="ttc" id="astruct_program_point_html_ad59b9c42e90a0a9444c533141fb2dd22"><div class="ttname"><a href="#ad59b9c42e90a0a9444c533141fb2dd22">ProgramPoint::ProgramPoint</a></div><div class="ttdeci">ProgramPoint(int l, bool s, bool e)</div><div class="ttdoc">Constrói um ProgramPoint com todos os campos explícitos.</div><div class="ttdef"><b>Definition</b> ProgramPoint.h:51</div></div>
-</div><!-- fragment --> </div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<div class="textblock"><p>Representa um ponto de programa (instrução) dentro de uma live range. </p>
+<p>Cada ponto contém o número da linha de instrução e duas flags booleanas que anotam eventos de definição (<code>isStart</code> / '+') e de último uso (<code>isEnd</code> / '-') nessa instrução.</p>
+<dl class="section note"><dt>Note</dt><dd>O mesmo ponto pode ter ambas as flags ativas simultaneamente, como acontece em instruções do tipo <code>"i = i + 1"</code>, onde a variável <code>i</code> é lida (último uso da live range anterior) e definida (início da nova live range) na mesma instrução.</dd></dl>
+<dl class="section user"><dt>Exemplo de uso</dt><dd><div class="fragment"><div class="line"><a class="code hl_function" href="#ad59b9c42e90a0a9444c533141fb2dd22">ProgramPoint</a> def(5, <span class="keyword">true</span>, <span class="keyword">false</span>);   <span class="comment">// linha 5: definição de variável</span></div>
+<div class="line"><a class="code hl_function" href="#ad59b9c42e90a0a9444c533141fb2dd22">ProgramPoint</a> use(9, <span class="keyword">false</span>, <span class="keyword">true</span>);   <span class="comment">// linha 9: última utilização</span></div>
+<div class="line"><a class="code hl_function" href="#ad59b9c42e90a0a9444c533141fb2dd22">ProgramPoint</a> both(7, <span class="keyword">true</span>, <span class="keyword">true</span>);   <span class="comment">// linha 7: def. e último uso</span></div>
+<div class="ttc" id="astruct_program_point_html_ad59b9c42e90a0a9444c533141fb2dd22"><div class="ttname"><a href="#ad59b9c42e90a0a9444c533141fb2dd22">ProgramPoint::ProgramPoint</a></div><div class="ttdeci">ProgramPoint(int l, bool s, bool e)</div><div class="ttdoc">Constrói um ProgramPoint com todos os campos explícitos.</div><div class="ttdef"><b>Definition</b> ProgramPoint.h:90</div></div>
+</div><!-- fragment --> </dd></dl>
+</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ad59b9c42e90a0a9444c533141fb2dd22" name="ad59b9c42e90a0a9444c533141fb2dd22"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad59b9c42e90a0a9444c533141fb2dd22">&#9670;&#160;</a></span>ProgramPoint()</h2>
 
@@ -177,15 +180,17 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Constrói um <a class="el" href="struct_program_point.html" title="Representa um ponto de programa (linha) dentro de uma live range.">ProgramPoint</a> com todos os campos explícitos. </p>
+<p>Constrói um <a class="el" href="struct_program_point.html" title="Representa um ponto de programa (instrução) dentro de uma live range.">ProgramPoint</a> com todos os campos explícitos. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">l</td><td>Número da linha (deve ser &gt; 0). </td></tr>
-    <tr><td class="paramname">s</td><td><code>true</code> se a variável é definida nesta linha (<code>'+'</code>). </td></tr>
-    <tr><td class="paramname">e</td><td><code>true</code> se esta é a última utilização (<code>'-'</code>). @complexity O(1) </td></tr>
+    <tr><td class="paramname">l</td><td>Número da linha de instrução (deve ser &gt; 0). </td></tr>
+    <tr><td class="paramname">s</td><td><code>true</code> se a variável é definida nesta instrução (<code>'+'</code>). </td></tr>
+    <tr><td class="paramname">e</td><td><code>true</code> se esta é a última utilização da variável (<code>'-'</code>).</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section pre"><dt>Precondition</dt><dd><code class="param">l</code> deve ser maior que zero.</dd></dl>
+<dl class="section user"><dt>Complexidade</dt><dd>O(1) — inicialização direta dos três campos. </dd></dl>
 
 </div>
 </div>
@@ -202,7 +207,8 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Indica que esta é a última utilização da variável nesta linha. Corresponde ao sufixo '-' no ficheiro de live ranges. </p>
+<p>Indica que esta é a última utilização da variável nesta instrução. </p>
+<p>Corresponde ao sufixo <code>'-'</code> no ficheiro de live ranges. Quando <code>true</code>, esta instrução é o ponto de fim da live range — o registo que contém o valor pode ser libertado imediatamente após esta instrução ser executada. </p>
 
 </div>
 </div>
@@ -218,7 +224,8 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Indica que a variável é definida (escrita) nesta linha. Corresponde ao sufixo '+' no ficheiro de live ranges. </p>
+<p>Indica que a variável é definida (escrita) nesta instrução. </p>
+<p>Corresponde ao sufixo <code>'+'</code> no ficheiro de live ranges. Quando <code>true</code>, esta instrução é o ponto de início de uma nova live range para a variável — o compilador gera aqui uma escrita para o registo ou posição de memória associada. </p>
 
 </div>
 </div>
@@ -234,7 +241,8 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Número da linha do programa (1-based). </p>
+<p>Número da linha da instrução (1-based). </p>
+<p>Corresponde diretamente ao número de linha do ficheiro de live ranges de entrada. Deve ser estritamente positivo. </p>
 
 </div>
 </div>

@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('_parser_8cpp.h
 </div><!--header-->
 <div class="contents">
 
-<p>Implementação da classe <a class="el" href="class_parser.html" title="Classe utilitária para leitura e parsing dos ficheiros de entrada.">Parser</a>.  
+<p>Implementação da classe <a class="el" href="class_parser.html" title="Classe utilitária estática para leitura e parsing dos ficheiros de entrada.">Parser</a>.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="_parser_8h_source.html">Parser.h</a>&quot;</code><br />
 <code>#include &lt;fstream&gt;</code><br />
@@ -127,11 +127,13 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('_parser_8cpp.h
 <code>#include &lt;stdexcept&gt;</code><br />
 <code>#include &lt;cctype&gt;</code><br />
 </div><a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Implementação da classe <a class="el" href="class_parser.html" title="Classe utilitária para leitura e parsing dos ficheiros de entrada.">Parser</a>. </p>
-<p>Implementa a leitura e validação dos ficheiros de entrada:</p><ul>
-<li>Ficheiro de live ranges (parseRanges).</li>
-<li>Ficheiro de configuração de registos (parseRegisters). </li>
+<div class="textblock"><p>Implementação da classe <a class="el" href="class_parser.html" title="Classe utilitária estática para leitura e parsing dos ficheiros de entrada.">Parser</a>. </p>
+<p>Implementa a leitura e validação dos dois ficheiros de entrada do alocador de registos:</p><ul>
+<li>parseRanges() : lê e parseia o ficheiro de live ranges.</li>
+<li>parseRegisters() : lê e parseia o ficheiro de configuração de registos.</li>
 </ul>
+<p>Os auxiliares privados trim(), isCommentOrEmpty() e parsePoint() são partilhados pelas duas operações de parsing e documentados aqui com detalhe suficiente para servir de referência à análise de complexidade.</p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="_parser_8h.html" title="Declaração da classe Parser.">Parser.h</a> para a documentação completa da interface pública. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <div id="page-nav" class="page-nav-panel">

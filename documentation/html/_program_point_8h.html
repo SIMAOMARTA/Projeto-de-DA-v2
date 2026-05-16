@@ -127,11 +127,15 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('_program_point
 <tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:ProgramPoint" id="r_ProgramPoint"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="struct_program_point.html">ProgramPoint</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Representa um ponto de programa (linha) dentro de uma live range.  <a href="struct_program_point.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Representa um ponto de programa (instrução) dentro de uma live range.  <a href="struct_program_point.html#details">More...</a><br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Definição de um ponto de programa numa live range. </p>
-<p>Um ponto de programa representa uma linha de código onde uma variável está viva. Pode estar anotado com '+' (início de definição) e/ou '-' (fim de utilização). </p>
+<p>Um ponto de programa representa uma instrução (linha) do código intermédio de 3 endereços onde uma variável está viva. Pode estar anotado com '+' para marcar o início de uma definição (escrita) e/ou com '-' para marcar o último uso (leitura) da variável nessa instrução.</p>
+<p>Estas anotações são essenciais para determinar se duas webs interferem numa linha partilhada. Especificamente, se a web A começa (<code>isStart</code>) numa linha em que a web B termina (<code>isEnd</code>), e não há sobreposição inversa, as duas webs <b>não interferem</b> nessa linha — A define um novo valor apenas depois de B ter consumido o seu último valor.</p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="class_web.html#a1daf0ad084076fd059d0e66e75481125" title="Determina se esta web interfere com other.">Web::interferesWith()</a> </dd>
+<dd>
+<a class="el" href="class_live_range.html" title="Modela uma live range de uma variável como sequência de pontos de programa.">LiveRange</a> </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <div id="page-nav" class="page-nav-panel">

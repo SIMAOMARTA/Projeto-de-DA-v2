@@ -7,7 +7,7 @@ var searchData=
   ['registerallocator_2ecpp_4',['RegisterAllocator.cpp',['../_register_allocator_8cpp.html',1,'']]],
   ['registerallocator_2eh_5',['RegisterAllocator.h',['../_register_allocator_8h.html',1,'']]],
   ['registos_6',['Secção de registos',['../class_register_allocator.html#autotoc_md8',1,'']]],
-  ['relativamente_20à_20versão_20anterior_7',['Alterações relativamente à versão anterior',['../_register_allocator_8h.html#changes',1,'']]],
+  ['relativamente_20à_20versão_20anterior_7',['Alterações relativamente à versão anterior',['../_register_allocator_8cpp.html#changes',1,'']]],
   ['removeedge_8',['removeEdge',['../class_graph.html#a1106092a37366486cf55576f9ec01692',1,'Graph']]],
   ['removeedgeto_9',['removeEdgeTo',['../class_vertex.html#ab2b5b43fb1709a901b78718436763a84',1,'Vertex']]],
   ['removevertex_10',['removeVertex',['../class_graph.html#af9c903104ad69a7782979fa9caedf163',1,'Graph']]],

@@ -144,7 +144,7 @@ Functions</h2></td></tr>
 <p>O programa pode ser executado em dois modos:</p>
 <p><b>Modo batch</b>, modo não interativo: </p><div class="fragment"><div class="line">./prog -b testes/ranges.txt testes/registers.txt testes/output.txt</div>
 </div><!-- fragment --><p><b>Modo interativo</b>, onde se apresenta um menu simples que permite configurar os ficheiros e executar a alocação de forma iterativa.</p>
-<dl class="section note"><dt>Note</dt><dd>Alteração relativamente à versão anterior: <a class="el" href="class_register_allocator.html#a7ff05ef6c4ef05afb770a2722e618c14" title="Aloca registos para todas as webs em graph.">RegisterAllocator::allocate()</a> devolve agora um triplo {alocações, grafo final, metadados}. O desempacotamento foi atualizado para extrair também a string de metadados, que é passada a printResult() para ser escrita no ficheiro de saída. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Alteração relativamente à versão anterior: <a class="el" href="class_register_allocator.html#a7ff05ef6c4ef05afb770a2722e618c14" title="Aloca registos para todas as webs em graph e devolve o resultado.">RegisterAllocator::allocate()</a> devolve agora um triplo {alocações, grafo final, metadados}. O desempacotamento foi atualizado para extrair também a string de metadados, que é passada a printResult() para ser escrita no ficheiro de saída. </dd></dl>
 </div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Function Documentation</h2>
 <a id="a429455d6b30bfd3787786077294a60f3" name="a429455d6b30bfd3787786077294a60f3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a429455d6b30bfd3787786077294a60f3">&#9670;&#160;</a></span>interactiveMenu()</h2>

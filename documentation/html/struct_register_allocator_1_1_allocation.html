@@ -127,14 +127,15 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('struct_registe
 <tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:acbb685194dc81bcbbc8f220913cee5ba" id="r_acbb685194dc81bcbbc8f220913cee5ba"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#acbb685194dc81bcbbc8f220913cee5ba">webId</a> = -1</td></tr>
-<tr class="memdesc:acbb685194dc81bcbbc8f220913cee5ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">ID da web alocada.  <br /></td></tr>
+<tr class="memdesc:acbb685194dc81bcbbc8f220913cee5ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Id da web alocada (igual ao índice no grafo).  <br /></td></tr>
 <tr class="memitem:a42506ad5e3f8c7ccfb97135de966ead0" id="r_a42506ad5e3f8c7ccfb97135de966ead0"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#a42506ad5e3f8c7ccfb97135de966ead0">regIdx</a> = -1</td></tr>
 <tr class="memdesc:a42506ad5e3f8c7ccfb97135de966ead0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Índice do registo físico (0-based); -1 se spilled.  <br /></td></tr>
 <tr class="memitem:a38462667d52e1ef4a841d38dc38739cd" id="r_a38462667d52e1ef4a841d38dc38739cd"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a38462667d52e1ef4a841d38dc38739cd">spilled</a> = false</td></tr>
-<tr class="memdesc:a38462667d52e1ef4a841d38dc38739cd"><td class="mdescLeft">&#160;</td><td class="mdescRight"><code>true</code> se a web foi enviada para memória.  <br /></td></tr>
+<tr class="memdesc:a38462667d52e1ef4a841d38dc38739cd"><td class="mdescLeft">&#160;</td><td class="mdescRight"><code>true</code> se a web foi enviada para memória ("M").  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Resultado da alocação de uma única web. </p>
+<p>Após a execução de <a class="el" href="class_register_allocator.html#a7ff05ef6c4ef05afb770a2722e618c14" title="Aloca registos para todas as webs em graph e devolve o resultado.">allocate()</a>, existe um <a class="el" href="struct_register_allocator_1_1_allocation.html" title="Resultado da alocação de uma única web.">Allocation</a> por cada web no grafo final. O campo <code>spilled</code> determina se a web foi vertida para memória (<code>true</code>) ou se foi atribuída a um registo (<code>false</code>). </p>
 </div><a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
 <a id="a42506ad5e3f8c7ccfb97135de966ead0" name="a42506ad5e3f8c7ccfb97135de966ead0"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a42506ad5e3f8c7ccfb97135de966ead0">&#9670;&#160;</a></span>regIdx</h2>
@@ -164,7 +165,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p><code>true</code> se a web foi enviada para memória. </p>
+<p><code>true</code> se a web foi enviada para memória ("M"). </p>
 
 </div>
 </div>
@@ -180,7 +181,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>ID da web alocada. </p>
+<p>Id da web alocada (igual ao índice no grafo). </p>
 
 </div>
 </div>

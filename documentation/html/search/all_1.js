@@ -11,8 +11,8 @@ var searchData=
   ['algorithmparam_8',['algorithmParam',['../struct_algorithm_config.html#a14e4136c22e233172caf5cebb0271e60',1,'AlgorithmConfig']]],
   ['allocate_9',['allocate',['../class_register_allocator.html#a7ff05ef6c4ef05afb770a2722e618c14',1,'RegisterAllocator']]],
   ['allocation_10',['Allocation',['../struct_register_allocator_1_1_allocation.html',1,'RegisterAllocator']]],
-  ['alterações_20relativamente_20à_20versão_20anterior_11',['Alterações relativamente à versão anterior',['../_register_allocator_8h.html#changes',1,'']]],
+  ['alterações_20relativamente_20à_20versão_20anterior_11',['Alterações relativamente à versão anterior',['../_register_allocator_8cpp.html#changes',1,'']]],
   ['annotationmap_5f_12',['annotationMap_',['../class_web.html#a8a52b0d9fb99ca78f323cd1122695335',1,'Web']]],
-  ['anterior_13',['Alterações relativamente à versão anterior',['../_register_allocator_8h.html#changes',1,'']]],
+  ['anterior_13',['Alterações relativamente à versão anterior',['../_register_allocator_8cpp.html#changes',1,'']]],
   ['architecture_5fid_14',['ARCHITECTURE_ID',['../_c_make_c_x_x_compiler_id_8cpp.html#aba35d0d200deaeb06aee95ca297acb28',1,'CMakeCXXCompilerId.cpp']]]
 ];

@@ -119,13 +119,14 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('_web_8cpp.html
 </div><!--header-->
 <div class="contents">
 
-<p>Implementação da classe <a class="el" href="class_web.html">Web</a>.  
+<p>Implementação da classe <a class="el" href="class_web.html" title="Nó do grafo de interferência — união de live ranges sobrepostas de uma variável.">Web</a>.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="_web_8h_source.html">Web.h</a>&quot;</code><br />
 <code>#include &lt;sstream&gt;</code><br />
 </div><a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Implementação da classe <a class="el" href="class_web.html">Web</a>. </p>
-<p>Contém a lógica de fusão de live ranges, deteção de sobreposição, determinação de interferência e representação textual. </p>
+<div class="textblock"><p>Implementação da classe <a class="el" href="class_web.html" title="Nó do grafo de interferência — união de live ranges sobrepostas de uma variável.">Web</a>. </p>
+<p>Contém a lógica de fusão de live ranges (absorb()), deteção de sobreposição (overlaps()), determinação de interferência real (interferesWith()) e representação textual (toString()). A cache <code>annotationMap_</code> é mantida consistente pela função privada buildAnnotationMap(), que é invocada sempre que o estado das ranges muda.</p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="_web_8h.html" title="Declaração da classe Web.">Web.h</a> para a documentação completa da interface pública. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <div id="page-nav" class="page-nav-panel">

@@ -127,21 +127,33 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('struct_algorit
 <tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a8b840373e153becdd5b5f7e90951a4f6" id="r_a8b840373e153becdd5b5f7e90951a4f6"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#a8b840373e153becdd5b5f7e90951a4f6">numRegisters</a> = 0</td></tr>
-<tr class="memdesc:a8b840373e153becdd5b5f7e90951a4f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Número de registos físicos disponíveis. Deve ser &gt; 0; o <a class="el" href="class_parser.html" title="Classe utilitária para leitura e parsing dos ficheiros de entrada.">Parser</a> valida esta condição.  <br /></td></tr>
+<tr class="memdesc:a8b840373e153becdd5b5f7e90951a4f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Número de registos físicos disponíveis para a alocação.  <br /></td></tr>
 <tr class="memitem:a0dc0b3bceaef8a123821926487386372" id="r_a0dc0b3bceaef8a123821926487386372"><td class="memItemLeft">std::string&#160;</td><td class="memItemRight"><a class="el" href="#a0dc0b3bceaef8a123821926487386372">algorithm</a> = &quot;basic&quot;</td></tr>
-<tr class="memdesc:a0dc0b3bceaef8a123821926487386372"><td class="mdescLeft">&#160;</td><td class="mdescRight">Identificador da variante do algoritmo. Valor é um de: <code>"basic"</code>, <code>"spilling"</code>, <code>"splitting"</code>, <code>"free"</code>. O <a class="el" href="class_parser.html" title="Classe utilitária para leitura e parsing dos ficheiros de entrada.">Parser</a> valida que o valor pertence a este conjunto.  <br /></td></tr>
+<tr class="memdesc:a0dc0b3bceaef8a123821926487386372"><td class="mdescLeft">&#160;</td><td class="mdescRight">Identificador textual da variante do algoritmo a executar.  <br /></td></tr>
 <tr class="memitem:a14e4136c22e233172caf5cebb0271e60" id="r_a14e4136c22e233172caf5cebb0271e60"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#a14e4136c22e233172caf5cebb0271e60">algorithmParam</a> = 0</td></tr>
-<tr class="memdesc:a14e4136c22e233172caf5cebb0271e60"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parâmetro numérico para as variantes spilling e splitting.  <br /></td></tr>
+<tr class="memdesc:a14e4136c22e233172caf5cebb0271e60"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parâmetro numérico inteiro para as variantes <code>spilling</code> e <code>splitting</code>.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Configuração parseada a partir do ficheiro de registos. </p>
-<p>Armazena o número de registos físicos disponíveis e a variante do algoritmo a utilizar na alocação de registos.</p>
-<p>Variantes suportadas:</p><ul>
-<li><code>"basic"</code> : coloração greedy sem fallback (T2.1). Tenta colorir o grafo com N cores; se não for possível, faz spill ilimitado.</li>
-<li><code>"spilling"</code> : basic + até K spills de webs (T2.2). Itera de 0 a K spills parando assim que a alocação for viável.</li>
-<li><code>"splitting"</code> : basic + até K splits de webs (T2.3). Divide webs com grau elevado antes de tentar a coloração.</li>
-<li><code>"free"</code> : algoritmo próprio baseado na heurística de Chaitin (grau / tamanho da live range) para selecção do candidato a spill (T2.4). </li>
-</ul>
+<p>Armazena o número de registos físicos disponíveis e a variante do algoritmo de coloração de grafos a utilizar na alocação de registos.</p>
+<dl class="section user"><dt>Variantes suportadas</dt><dd></dd></dl>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Valor de <code>algorithm</code>  </th><th class="markdownTableHeadNone">Parâmetro  </th><th class="markdownTableHeadNone">Descrição  </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>"basic"</code>  </td><td class="markdownTableBodyNone">ignorado (0)  </td><td class="markdownTableBodyNone">Coloração greedy de Kempe sem limite de spills (T2.1). Tenta colorir o grafo com N cores; as webs não coloridas são marcadas como spilled.  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>"spilling"</code>  </td><td class="markdownTableBodyNone">K ≥ 0  </td><td class="markdownTableBodyNone">Coloração basic + até K webs em spill (T2.2). Itera de 0 a K spills, parando assim que a alocação for viável sem exceder esse limite.  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>"splitting"</code>  </td><td class="markdownTableBodyNone">K ≥ 0  </td><td class="markdownTableBodyNone">Divisão iterativa de webs antes da coloração (T2.3). Em cada iteração divide a web com maior grau; repete até K vezes ou até a coloração ser viável.  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>"free"</code>  </td><td class="markdownTableBodyNone">ignorado (0)  </td><td class="markdownTableBodyNone">Heurística de Chaitin: seleciona candidato a spill pela razão grau/tamanho da live range (T2.4).  </td></tr>
+</table>
+<dl class="section user"><dt>Formato do ficheiro de configuração</dt><dd><div class="fragment"><div class="line"><span class="preprocessor"># comment line</span></div>
+<div class="line">registers: 4</div>
+<div class="line"><a class="code hl_variable" href="#a0dc0b3bceaef8a123821926487386372">algorithm</a>: spilling, 2</div>
+<div class="ttc" id="astruct_algorithm_config_html_a0dc0b3bceaef8a123821926487386372"><div class="ttname"><a href="#a0dc0b3bceaef8a123821926487386372">AlgorithmConfig::algorithm</a></div><div class="ttdeci">std::string algorithm</div><div class="ttdoc">Identificador textual da variante do algoritmo a executar.</div><div class="ttdef"><b>Definition</b> AlgorithmConfig.h:74</div></div>
+</div><!-- fragment --> </dd></dl>
 </div><a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
 <a id="a0dc0b3bceaef8a123821926487386372" name="a0dc0b3bceaef8a123821926487386372"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0dc0b3bceaef8a123821926487386372">&#9670;&#160;</a></span>algorithm</h2>
@@ -155,7 +167,9 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Identificador da variante do algoritmo. Valor é um de: <code>"basic"</code>, <code>"spilling"</code>, <code>"splitting"</code>, <code>"free"</code>. O <a class="el" href="class_parser.html" title="Classe utilitária para leitura e parsing dos ficheiros de entrada.">Parser</a> valida que o valor pertence a este conjunto. </p>
+<p>Identificador textual da variante do algoritmo a executar. </p>
+<p>O valor deve pertencer ao conjunto: <code>"basic"</code>, <code>"spilling"</code>, <code>"splitting"</code>, <code>"free"</code>. O <a class="el" href="class_parser.html" title="Classe utilitária estática para leitura e parsing dos ficheiros de entrada.">Parser</a> valida que o valor é um destes quatro e lança <code>std::invalid_argument</code> se não reconhecer o algoritmo.</p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="class_register_allocator.html#a7ff05ef6c4ef05afb770a2722e618c14" title="Aloca registos para todas as webs em graph e devolve o resultado.">RegisterAllocator::allocate()</a> para a semântica de cada variante. </dd></dl>
 
 </div>
 </div>
@@ -171,10 +185,12 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Parâmetro numérico para as variantes spilling e splitting. </p>
-<p>Para <code>"spilling"</code>: número máximo de webs que podem ser enviadas para memória (spilled).</p>
-<p>Para <code>"splitting"</code>: número máximo de webs que podem ser divididas (split) antes de tentar a coloração.</p>
-<p>Ignorado para <code>"basic"</code> e <code>"free"</code>. O <a class="el" href="class_parser.html" title="Classe utilitária para leitura e parsing dos ficheiros de entrada.">Parser</a> define este campo a 0 quando não existe vírgula na linha do algoritmo. </p>
+<p>Parâmetro numérico inteiro para as variantes <code>spilling</code> e <code>splitting</code>. </p>
+<ul>
+<li>Para <code>"spilling"</code>: número máximo de webs que podem ser enviadas para memória (K spills). O <a class="el" href="class_register_allocator.html" title="Classe utilitária estática que implementa os algoritmos de alocação de registos.">RegisterAllocator</a> itera de 0 a K spills, retornando na primeira iteração viável.</li>
+<li>Para <code>"splitting"</code>: número máximo de webs que podem ser divididas antes de tentar a coloração. O <a class="el" href="class_register_allocator.html" title="Classe utilitária estática que implementa os algoritmos de alocação de registos.">RegisterAllocator</a> tenta dividir a web com maior grau em cada iteração, até K vezes.</li>
+</ul>
+<p>Para <code>"basic"</code> e <code>"free"</code> este campo é ignorado pelo alocador. O <a class="el" href="class_parser.html" title="Classe utilitária estática para leitura e parsing dos ficheiros de entrada.">Parser</a> define este campo a 0 quando não existe vírgula na linha do algoritmo no ficheiro de entrada. </p>
 
 </div>
 </div>
@@ -190,7 +206,9 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Número de registos físicos disponíveis. Deve ser &gt; 0; o <a class="el" href="class_parser.html" title="Classe utilitária para leitura e parsing dos ficheiros de entrada.">Parser</a> valida esta condição. </p>
+<p>Número de registos físicos disponíveis para a alocação. </p>
+<p>Corresponde ao número de cores usadas na coloração do grafo de interferência. Deve ser estritamente maior que zero; o <a class="el" href="class_parser.html" title="Classe utilitária estática para leitura e parsing dos ficheiros de entrada.">Parser</a> valida esta condição e lança <code>std::invalid_argument</code> caso contrário.</p>
+<p>Os registos são nomeados <code>r0</code>, <code>r1</code>, …, <code>r</code>(N-1) na saída. </p>
 
 </div>
 </div>

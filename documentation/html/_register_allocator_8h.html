@@ -135,26 +135,29 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('_register_allo
 <tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:RegisterAllocator" id="r_RegisterAllocator"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="class_register_allocator.html">RegisterAllocator</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Classe utilitária estática que implementa os algoritmos de alocação de registos.  <a href="class_register_allocator.html#details">More...</a><br /></td></tr>
 <tr class="memitem:RegisterAllocator_3A_3AAllocation" id="r_RegisterAllocator_3A_3AAllocation"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="struct_register_allocator_1_1_allocation.html">RegisterAllocator::Allocation</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resultado da alocação de uma única web.  <a href="struct_register_allocator_1_1_allocation.html#details">More...</a><br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Declaração do alocador de registos por coloração de grafos. </p>
-<p>Implementa quatro variantes de alocação baseadas na heurística de Kempe/Chaitin:</p><ul>
-<li><b>basic</b> : coloração greedy sem limite de spills (T2.1).</li>
-<li><b>spilling</b> : coloração com no máximo K spills (T2.2).</li>
-<li><b>splitting</b> : divisão iterativa de webs antes da coloração (T2.3).</li>
-<li><b>free</b> : heurística própria de Chaitin grau/tamanho (T2.4).</li>
-</ul>
-<p>Todos os métodos são estáticos (classe utilitária sem estado).</p>
-<h1 class="doxsection"><a class="anchor" id="changes"></a>
-Alterações relativamente à versão anterior</h1>
-<ul>
-<li><span class="tt">allocate()</span> devolve agora um triplo <span class="tt">{alocações, grafo final, string de metadados}</span> em vez de um par. Os metadados descrevem as operações de spill/split efectuadas e são escritos no ficheiro de saída por <span class="tt">printResult()</span>.</li>
-<li><span class="tt">printResult()</span> aceita um quarto parâmetro opcional <span class="tt">metadata</span> (valor por defeito <span class="tt">""</span>; compatível com chamadas existentes sem metadados).</li>
-<li><span class="tt">splitWeb()</span> aceita um segundo parâmetro de saída <span class="tt">splitLine</span> que recebe a primeira linha da segunda metade após a divisão.</li>
-<li><span class="tt">kempeWithSpillCap()</span> aceita um quinto parâmetro opcional <span class="tt">spillLog</span> (ponteiro nulo por defeito) onde são registados os ids e graus das webs selecionadas para spill durante a simplificação. </li>
-</ul>
+<p>Implementa quatro variantes do algoritmo de Kempe/Chaitin para coloração do grafo de interferência e consequente alocação de registos físicos:</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Variante  </th><th class="markdownTableHeadNone">Tarefa  </th><th class="markdownTableHeadNone">Descrição  </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>basic</code>  </td><td class="markdownTableBodyNone">T2.1  </td><td class="markdownTableBodyNone">Coloração greedy de Kempe sem limite de spills.  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>spilling</code>  </td><td class="markdownTableBodyNone">T2.2  </td><td class="markdownTableBodyNone">Coloração com até K webs em spill (itera de 0 a K).  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>splitting</code>  </td><td class="markdownTableBodyNone">T2.3  </td><td class="markdownTableBodyNone">Divisão iterativa de webs de alto grau antes da coloração.  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>free</code>  </td><td class="markdownTableBodyNone">T2.4  </td><td class="markdownTableBodyNone">Heurística de Chaitin: razão grau/tamanho da live range.  </td></tr>
+</table>
+<p>Todos os métodos são estáticos: <a class="el" href="class_register_allocator.html" title="Classe utilitária estática que implementa os algoritmos de alocação de registos.">RegisterAllocator</a> é uma classe utilitária sem estado (não é instanciável). O ponto de entrada principal é allocate(), que seleciona internamente a variante e devolve um triplo com os resultados, o grafo final e metadados textuais.</p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="class_interference_graph.html" title="Grafo de interferência entre webs de variáveis.">InterferenceGraph</a> </dd>
+<dd>
+<a class="el" href="struct_algorithm_config.html" title="Configuração parseada a partir do ficheiro de registos.">AlgorithmConfig</a> </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <div id="page-nav" class="page-nav-panel">

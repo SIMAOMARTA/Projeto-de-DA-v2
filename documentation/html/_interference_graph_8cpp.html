@@ -118,10 +118,21 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('_interference_
   <div class="headertitle"><div class="title">InterferenceGraph.cpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Implementação da classe <a class="el" href="class_interference_graph.html" title="Grafo de interferência entre webs de variáveis.">InterferenceGraph</a>.  
+<a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="_interference_graph_8h_source.html">InterferenceGraph.h</a>&quot;</code><br />
 <code>#include &lt;iostream&gt;</code><br />
 <code>#include &lt;map&gt;</code><br />
 <code>#include &lt;algorithm&gt;</code><br />
+</div><a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Implementação da classe <a class="el" href="class_interference_graph.html" title="Grafo de interferência entre webs de variáveis.">InterferenceGraph</a>. </p>
+<p>Implementa a construção do grafo de interferência a partir de um conjunto de live ranges. A implementação divide-se em duas fases:</p><ul>
+<li>buildWebs() : fusão greedy de live ranges sobrepostas em webs.</li>
+<li>buildEdges() : determinação de interferência entre todos os pares de webs.</li>
+</ul>
+<p>O grafo subjacente (<code><a class="el" href="class_graph.html">Graph&lt;int&gt;</a></code>) é o fornecido nas aulas TP, ao qual se acedem via <code>addVertex()</code>, <code>addBidirectionalEdge()</code>, <code>findVertex()</code>, <code>getAdj()</code>, <code>getNumVertex()</code> e <code>getVertexSet()</code>.</p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="_interference_graph_8h.html" title="Declaração da classe InterferenceGraph.">InterferenceGraph.h</a> para a documentação completa da interface pública. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <div id="page-nav" class="page-nav-panel">

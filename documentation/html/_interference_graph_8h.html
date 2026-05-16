@@ -118,8 +118,10 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('_interference_
   <div class="headertitle"><div class="title">InterferenceGraph.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Declaração da classe <a class="el" href="class_interference_graph.html" title="Grafo de interferência entre webs de variáveis.">InterferenceGraph</a>.  
+<a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;vector&gt;</code><br />
-<code>#include &lt;string&gt;</code><br />
 <code>#include &quot;<a class="el" href="_live_range_8h_source.html">LiveRange.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="_web_8h_source.html">Web.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="_graph_8h_source.html">Graph.h</a>&quot;</code><br />
@@ -129,8 +131,23 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('_interference_
 <tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:InterferenceGraph" id="r_InterferenceGraph"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="class_interference_graph.html">InterferenceGraph</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Grafo de interferência entre webs de variáveis.  <a href="class_interference_graph.html#details">More...</a><br /></td></tr>
 </table>
-</div><!-- contents -->
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Declaração da classe <a class="el" href="class_interference_graph.html" title="Grafo de interferência entre webs de variáveis.">InterferenceGraph</a>. </p>
+<p>O grafo de interferência é a estrutura central do alocador de registos. Os seus nós representam webs (uniões de live ranges sobrepostas de uma variável) e as suas arestas ligam webs que interferem — i.e., que não podem partilhar o mesmo registo físico.</p>
+<p>A classe utiliza como estrutura de dados subjacente o <code><a class="el" href="class_graph.html">Graph&lt;int&gt;</a></code> fornecido nas aulas TP, mapeando cada web ao seu id inteiro. Esta escolha cumpre o requisito de T1.2 do enunciado: "This data structure
+must be based on the data structure described in the TP lectures for
+graphs".</p>
+<p>Estrutura interna:</p><ul>
+<li><code>webs_</code> : vetor de <a class="el" href="class_web.html" title="Nó do grafo de interferência — união de live ranges sobrepostas de uma variável.">Web</a>, indexado por id (posição == id).</li>
+<li><code>baseGraph_</code> : <code><a class="el" href="class_graph.html">Graph&lt;int&gt;</a></code> com os mesmos ids como informação dos vértices.</li>
+</ul>
+<p>Os dois contêineres são mantidos sincronizados: um vértice com info <code class="param">i</code> em <code>baseGraph_</code> corresponde sempre a <code>webs_</code>[i].</p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="class_web.html" title="Nó do grafo de interferência — união de live ranges sobrepostas de uma variável.">Web</a> </dd>
+<dd>
+<a class="el" href="class_register_allocator.html" title="Classe utilitária estática que implementa os algoritmos de alocação de registos.">RegisterAllocator</a> </dd></dl>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <div id="page-nav" class="page-nav-panel">
 <div id="page-nav-resize-handle"></div>

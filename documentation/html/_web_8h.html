@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('_web_8h.html',
 </div><!--header-->
 <div class="contents">
 
-<p>Declaração da classe <a class="el" href="class_web.html">Web</a>. Uma web é a união de uma ou mais LiveRanges da mesma variável cujos intervalos se sobrepõem. É o nó fundamental do grafo de interferência.  
+<p>Declaração da classe <a class="el" href="class_web.html" title="Nó do grafo de interferência — união de live ranges sobrepostas de uma variável.">Web</a>.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="_live_range_8h_source.html">LiveRange.h</a>&quot;</code><br />
 <code>#include &lt;string&gt;</code><br />
@@ -132,11 +132,22 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('_web_8h.html',
 <tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:Web" id="r_Web"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="class_web.html">Web</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Nó do grafo de interferência — união de live ranges sobrepostas de uma variável.  <a href="class_web.html#details">More...</a><br /></td></tr>
 <tr class="memitem:Web_3A_3ALineAnnotation" id="r_Web_3A_3ALineAnnotation"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="struct_web_1_1_line_annotation.html">Web::LineAnnotation</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cache de anotações (isStart / isEnd) por linha de programa. Pré-computada por <a class="el" href="class_web.html#aeb6dfd43051263f634303098a47b58ea" title="Reconstrói annotationMap_ a partir das ranges atuais.">buildAnnotationMap()</a> e consultada em <a class="el" href="class_web.html#a1daf0ad084076fd059d0e66e75481125" title="Determina se esta web interfere com other.">interferesWith()</a> para evitar iterar sobre todos os pontos a cada chamada.  <a href="struct_web_1_1_line_annotation.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cache de anotações (isStart / isEnd) por linha de instrução.  <a href="struct_web_1_1_line_annotation.html#details">More...</a><br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Declaração da classe <a class="el" href="class_web.html">Web</a>. Uma web é a união de uma ou mais LiveRanges da mesma variável cujos intervalos se sobrepõem. É o nó fundamental do grafo de interferência. </p>
+<div class="textblock"><p>Declaração da classe <a class="el" href="class_web.html" title="Nó do grafo de interferência — união de live ranges sobrepostas de uma variável.">Web</a>. </p>
+<p>Uma web é a união de uma ou mais LiveRanges da mesma variável cujos intervalos de programa se sobrepõem. É o nó fundamental do grafo de interferência: cada web corresponde a um valor distinto da variável que pode ser atribuído a um registo físico independente.</p>
+<p>A construção de webs segue um algoritmo greedy de fusão descrito em <a class="el" href="class_interference_graph.html#a9ace91ca867c18bc6b849c4531e71cb1" title="Constrói as webs a partir das live ranges e adiciona os vértices ao grafo.">InterferenceGraph::buildWebs()</a>: parte de uma web por live range e funde iterativamente pares de webs da mesma variável que se sobreponham, até nenhum par se sobrepor. O resultado é o conjunto minimal de webs tal que cada web é uma live range maximal conexa.</p>
+<p>Internamente, a <a class="el" href="class_web.html" title="Nó do grafo de interferência — união de live ranges sobrepostas de uma variável.">Web</a> mantém:</p><ul>
+<li><code>ranges_</code> : as live ranges originais fundidas nesta web.</li>
+<li><code>lineSet_</code> : união dos <code>lineSets</code> de todas as ranges (para pesquisas rápidas).</li>
+<li><code>annotationMap_</code> : cache de anotações (+/-) por linha, usada em interferesWith().</li>
+</ul>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="class_live_range.html" title="Modela uma live range de uma variável como sequência de pontos de programa.">LiveRange</a> </dd>
+<dd>
+<a class="el" href="class_interference_graph.html" title="Grafo de interferência entre webs de variáveis.">InterferenceGraph</a> </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <div id="page-nav" class="page-nav-panel">

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['versão_20anterior_0',['Alterações relativamente à versão anterior',['../_register_allocator_8h.html#changes',1,'']]]
+  ['webs_0',['Secção de webs',['../class_register_allocator.html#autotoc_md7',1,'']]]
 ];

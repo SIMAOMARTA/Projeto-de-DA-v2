@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('_parser_8h.htm
 </div><!--header-->
 <div class="contents">
 
-<p>Declaração da classe <a class="el" href="class_parser.html" title="Classe utilitária para leitura e parsing dos ficheiros de entrada.">Parser</a>.  
+<p>Declaração da classe <a class="el" href="class_parser.html" title="Classe utilitária estática para leitura e parsing dos ficheiros de entrada.">Parser</a>.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="_live_range_8h_source.html">LiveRange.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="_algorithm_config_8h_source.html">AlgorithmConfig.h</a>&quot;</code><br />
@@ -132,14 +132,30 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('_parser_8h.htm
 <tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:Parser" id="r_Parser"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="class_parser.html">Parser</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Classe utilitária para leitura e parsing dos ficheiros de entrada.  <a href="class_parser.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Classe utilitária estática para leitura e parsing dos ficheiros de entrada.  <a href="class_parser.html#details">More...</a><br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Declaração da classe <a class="el" href="class_parser.html" title="Classe utilitária para leitura e parsing dos ficheiros de entrada.">Parser</a>. </p>
-<p>O <a class="el" href="class_parser.html" title="Classe utilitária para leitura e parsing dos ficheiros de entrada.">Parser</a> é responsável por ler e validar os dois ficheiros de entrada do programa:</p><ol type="1">
-<li>Ficheiro de live ranges — uma linha por range, formato <code>"var: pts"</code>.</li>
-<li>Ficheiro de configuração — número de registos e algoritmo. </li>
+<div class="textblock"><p>Declaração da classe <a class="el" href="class_parser.html" title="Classe utilitária estática para leitura e parsing dos ficheiros de entrada.">Parser</a>. </p>
+<p>O <a class="el" href="class_parser.html" title="Classe utilitária estática para leitura e parsing dos ficheiros de entrada.">Parser</a> é responsável por ler, validar e interpretar os dois ficheiros de texto que constituem a entrada do alocador de registos:</p><ol type="1">
+<li><b>Ficheiro de live ranges</b> — uma linha por range, formato <code>"var: pts"</code>.</li>
+<li><b>Ficheiro de configuração</b> — número de registos e algoritmo a usar.</li>
 </ol>
+<p>Todos os métodos são estáticos: <a class="el" href="class_parser.html" title="Classe utilitária estática para leitura e parsing dos ficheiros de entrada.">Parser</a> é uma classe utilitária sem estado (não é instanciável). Os erros de formato lançam <code>std::invalid_argument</code>; ficheiros inacessíveis lançam <code>std::runtime_error</code>.</p>
+<p>Linhas começadas por <code>'#'</code> (incluindo após espaços iniciais) ou inteiramente compostas por espaços são silenciosamente ignoradas em ambos os ficheiros.</p>
+<dl class="section user"><dt>Formato do ficheiro de live ranges</dt><dd><div class="fragment"><div class="line"><span class="preprocessor"># comentário</span></div>
+<div class="line">sum: 1+,2,3,4-</div>
+<div class="line">i: 5+,6,7-</div>
+<div class="line">i: 9+,10,11-</div>
+</div><!-- fragment --></dd></dl>
+<dl class="section user"><dt>Formato do ficheiro de configuração</dt><dd><div class="fragment"><div class="line"><span class="preprocessor"># comentário</span></div>
+<div class="line">registers: 4</div>
+<div class="line">algorithm: spilling, 2</div>
+</div><!-- fragment --></dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="class_live_range.html" title="Modela uma live range de uma variável como sequência de pontos de programa.">LiveRange</a> </dd>
+<dd>
+<a class="el" href="struct_algorithm_config.html" title="Configuração parseada a partir do ficheiro de registos.">AlgorithmConfig</a> </dd>
+<dd>
+<a class="el" href="struct_program_point.html" title="Representa um ponto de programa (instrução) dentro de uma live range.">ProgramPoint</a> </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <div id="page-nav" class="page-nav-panel">

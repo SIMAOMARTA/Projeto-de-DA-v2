@@ -119,43 +119,48 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('_parser_8h_sou
 </div><!--header-->
 <div class="contents">
 <a href="_parser_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span></div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#ifndef PARSER_H</span></div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#define PARSER_H</span></div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &quot;<a class="code" href="_live_range_8h.html">LiveRange.h</a>&quot;</span></div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &quot;<a class="code" href="_algorithm_config_8h.html">AlgorithmConfig.h</a>&quot;</span></div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &lt;string&gt;</span></div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#include &lt;vector&gt;</span></div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#include &lt;stdexcept&gt;</span></div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span></div>
-<div class="foldopen" id="foldopen00032" data-start="{" data-end="};">
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno"><a class="line" href="class_parser.html">   32</a></span><span class="keyword">class </span><a class="code hl_class" href="class_parser.html">Parser</a> {</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    <span class="keyword">static</span> std::vector&lt;LiveRange&gt; <a class="code hl_function" href="class_parser.html#ad6ad36a00729aeacb1e8f52b5b86256d">parseRanges</a>(<span class="keyword">const</span> std::string&amp; filename);</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span></div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    <span class="keyword">static</span> <a class="code hl_struct" href="struct_algorithm_config.html">AlgorithmConfig</a> <a class="code hl_function" href="class_parser.html#a165f65c047fb13e114e37f25c9ee1dbf">parseRegisters</a>(<span class="keyword">const</span> std::string&amp; filename);</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    <span class="keyword">static</span> <a class="code hl_struct" href="struct_program_point.html">ProgramPoint</a> <a class="code hl_function" href="class_parser.html#a5d4dd43f0f59c71e4d48f9de6babae2c">parsePoint</a>(<span class="keyword">const</span> std::string&amp; token);</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span></div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    <span class="keyword">static</span> std::string <a class="code hl_function" href="class_parser.html#a0232860b9febbaa3f08a9ff939fc73f1">trim</a>(<span class="keyword">const</span> std::string&amp; s);</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span></div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>    <span class="keyword">static</span> <span class="keywordtype">bool</span> <a class="code hl_function" href="class_parser.html#a00bb0d63f03a0292f1450e51008c1fbe">isCommentOrEmpty</a>(<span class="keyword">const</span> std::string&amp; line);</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>};</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="preprocessor">#ifndef PARSER_H</span></div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="preprocessor">#define PARSER_H</span></div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="preprocessor">#include &quot;<a class="code" href="_live_range_8h.html">LiveRange.h</a>&quot;</span></div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><span class="preprocessor">#include &quot;<a class="code" href="_algorithm_config_8h.html">AlgorithmConfig.h</a>&quot;</span></div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span><span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span><span class="preprocessor">#include &lt;stdexcept&gt;</span></div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span></div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span> </div>
+<div class="foldopen" id="foldopen00061" data-start="{" data-end="};">
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno"><a class="line" href="class_parser.html">   61</a></span><span class="keyword">class </span><a class="code hl_class" href="class_parser.html">Parser</a> {</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>    <span class="keyword">static</span> std::vector&lt;LiveRange&gt; <a class="code hl_function" href="class_parser.html#ad6ad36a00729aeacb1e8f52b5b86256d">parseRanges</a>(<span class="keyword">const</span> std::string&amp; filename);</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span></div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span> </div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>    <span class="keyword">static</span> <a class="code hl_struct" href="struct_algorithm_config.html">AlgorithmConfig</a> <a class="code hl_function" href="class_parser.html#a165f65c047fb13e114e37f25c9ee1dbf">parseRegisters</a>(<span class="keyword">const</span> std::string&amp; filename);</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span> </div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span> </div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>    <span class="keyword">static</span> std::string <a class="code hl_function" href="class_parser.html#a0232860b9febbaa3f08a9ff939fc73f1">trim</a>(<span class="keyword">const</span> std::string&amp; s);</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span></div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span> </div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>    <span class="keyword">static</span> <span class="keywordtype">bool</span> <a class="code hl_function" href="class_parser.html#a00bb0d63f03a0292f1450e51008c1fbe">isCommentOrEmpty</a>(<span class="keyword">const</span> std::string&amp; line);</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span></div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span> </div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>    <span class="keyword">static</span> <a class="code hl_struct" href="struct_program_point.html">ProgramPoint</a> <a class="code hl_function" href="class_parser.html#a5d4dd43f0f59c71e4d48f9de6babae2c">parsePoint</a>(<span class="keyword">const</span> std::string&amp; token);</div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>};</div>
 </div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span> </div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span><span class="preprocessor">#endif </span><span class="comment">// PARSER_H</span></div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span> </div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span><span class="preprocessor">#endif </span><span class="comment">// PARSER_H</span></div>
 <div class="ttc" id="a_algorithm_config_8h_html"><div class="ttname"><a href="_algorithm_config_8h.html">AlgorithmConfig.h</a></div><div class="ttdoc">Configuração do algoritmo de alocação de registos.</div></div>
 <div class="ttc" id="a_live_range_8h_html"><div class="ttname"><a href="_live_range_8h.html">LiveRange.h</a></div><div class="ttdoc">Declaração da classe LiveRange.</div></div>
-<div class="ttc" id="aclass_parser_html"><div class="ttname"><a href="class_parser.html">Parser</a></div><div class="ttdoc">Classe utilitária para leitura e parsing dos ficheiros de entrada.</div><div class="ttdef"><b>Definition</b> Parser.h:32</div></div>
-<div class="ttc" id="aclass_parser_html_a00bb0d63f03a0292f1450e51008c1fbe"><div class="ttname"><a href="class_parser.html#a00bb0d63f03a0292f1450e51008c1fbe">Parser::isCommentOrEmpty</a></div><div class="ttdeci">static bool isCommentOrEmpty(const std::string &amp;line)</div><div class="ttdoc">Verifica se uma linha é um comentário ou está vazia. Uma linha é considerada comentário se,...</div><div class="ttdef"><b>Definition</b> Parser.cpp:54</div></div>
-<div class="ttc" id="aclass_parser_html_a0232860b9febbaa3f08a9ff939fc73f1"><div class="ttname"><a href="class_parser.html#a0232860b9febbaa3f08a9ff939fc73f1">Parser::trim</a></div><div class="ttdeci">static std::string trim(const std::string &amp;s)</div><div class="ttdoc">Remove espaços e carriage returns do início e fim de uma string.</div><div class="ttdef"><b>Definition</b> Parser.cpp:33</div></div>
-<div class="ttc" id="aclass_parser_html_a165f65c047fb13e114e37f25c9ee1dbf"><div class="ttname"><a href="class_parser.html#a165f65c047fb13e114e37f25c9ee1dbf">Parser::parseRegisters</a></div><div class="ttdeci">static AlgorithmConfig parseRegisters(const std::string &amp;filename)</div><div class="ttdoc">Lê e faz o parse do ficheiro de configuração de registos.</div><div class="ttdef"><b>Definition</b> Parser.cpp:209</div></div>
-<div class="ttc" id="aclass_parser_html_a5d4dd43f0f59c71e4d48f9de6babae2c"><div class="ttname"><a href="class_parser.html#a5d4dd43f0f59c71e4d48f9de6babae2c">Parser::parsePoint</a></div><div class="ttdeci">static ProgramPoint parsePoint(const std::string &amp;token)</div><div class="ttdoc">Faz o parse de um token individual de ponto de programa. Extrai o número inteiro e os sufixos &#39;+&#39; (is...</div><div class="ttdef"><b>Definition</b> Parser.cpp:82</div></div>
-<div class="ttc" id="aclass_parser_html_ad6ad36a00729aeacb1e8f52b5b86256d"><div class="ttname"><a href="class_parser.html#ad6ad36a00729aeacb1e8f52b5b86256d">Parser::parseRanges</a></div><div class="ttdeci">static std::vector&lt; LiveRange &gt; parseRanges(const std::string &amp;filename)</div><div class="ttdoc">Lê e faz o parse do ficheiro de live ranges.</div><div class="ttdef"><b>Definition</b> Parser.cpp:132</div></div>
-<div class="ttc" id="astruct_algorithm_config_html"><div class="ttname"><a href="struct_algorithm_config.html">AlgorithmConfig</a></div><div class="ttdoc">Configuração parseada a partir do ficheiro de registos.</div><div class="ttdef"><b>Definition</b> AlgorithmConfig.h:34</div></div>
-<div class="ttc" id="astruct_program_point_html"><div class="ttname"><a href="struct_program_point.html">ProgramPoint</a></div><div class="ttdoc">Representa um ponto de programa (linha) dentro de uma live range.</div><div class="ttdef"><b>Definition</b> ProgramPoint.h:27</div></div>
+<div class="ttc" id="aclass_parser_html"><div class="ttname"><a href="class_parser.html">Parser</a></div><div class="ttdoc">Classe utilitária estática para leitura e parsing dos ficheiros de entrada.</div><div class="ttdef"><b>Definition</b> Parser.h:61</div></div>
+<div class="ttc" id="aclass_parser_html_a00bb0d63f03a0292f1450e51008c1fbe"><div class="ttname"><a href="class_parser.html#a00bb0d63f03a0292f1450e51008c1fbe">Parser::isCommentOrEmpty</a></div><div class="ttdeci">static bool isCommentOrEmpty(const std::string &amp;line)</div><div class="ttdoc">Verifica se uma linha deve ser ignorada (comentário ou vazia).</div><div class="ttdef"><b>Definition</b> Parser.cpp:69</div></div>
+<div class="ttc" id="aclass_parser_html_a0232860b9febbaa3f08a9ff939fc73f1"><div class="ttname"><a href="class_parser.html#a0232860b9febbaa3f08a9ff939fc73f1">Parser::trim</a></div><div class="ttdeci">static std::string trim(const std::string &amp;s)</div><div class="ttdoc">Remove espaços em branco do início e do fim de uma string.</div><div class="ttdef"><b>Definition</b> Parser.cpp:45</div></div>
+<div class="ttc" id="aclass_parser_html_a165f65c047fb13e114e37f25c9ee1dbf"><div class="ttname"><a href="class_parser.html#a165f65c047fb13e114e37f25c9ee1dbf">Parser::parseRegisters</a></div><div class="ttdeci">static AlgorithmConfig parseRegisters(const std::string &amp;filename)</div><div class="ttdoc">Lê e faz o parse do ficheiro de configuração de registos.</div><div class="ttdef"><b>Definition</b> Parser.cpp:226</div></div>
+<div class="ttc" id="aclass_parser_html_a5d4dd43f0f59c71e4d48f9de6babae2c"><div class="ttname"><a href="class_parser.html#a5d4dd43f0f59c71e4d48f9de6babae2c">Parser::parsePoint</a></div><div class="ttdeci">static ProgramPoint parsePoint(const std::string &amp;token)</div><div class="ttdoc">Faz o parse de um token individual de ponto de programa.</div><div class="ttdef"><b>Definition</b> Parser.cpp:105</div></div>
+<div class="ttc" id="aclass_parser_html_ad6ad36a00729aeacb1e8f52b5b86256d"><div class="ttname"><a href="class_parser.html#ad6ad36a00729aeacb1e8f52b5b86256d">Parser::parseRanges</a></div><div class="ttdeci">static std::vector&lt; LiveRange &gt; parseRanges(const std::string &amp;filename)</div><div class="ttdoc">Lê e faz o parse do ficheiro de live ranges.</div><div class="ttdef"><b>Definition</b> Parser.cpp:156</div></div>
+<div class="ttc" id="astruct_algorithm_config_html"><div class="ttname"><a href="struct_algorithm_config.html">AlgorithmConfig</a></div><div class="ttdoc">Configuração parseada a partir do ficheiro de registos.</div><div class="ttdef"><b>Definition</b> AlgorithmConfig.h:49</div></div>
+<div class="ttc" id="astruct_program_point_html"><div class="ttname"><a href="struct_program_point.html">ProgramPoint</a></div><div class="ttdoc">Representa um ponto de programa (instrução) dentro de uma live range.</div><div class="ttdef"><b>Definition</b> ProgramPoint.h:45</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->
