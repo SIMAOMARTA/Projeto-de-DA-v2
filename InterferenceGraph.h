@@ -11,6 +11,8 @@ class InterferenceGraph {
 public:
     explicit InterferenceGraph(const std::vector<LiveRange>& ranges);
 
+    InterferenceGraph(const InterferenceGraph& other);
+
     int numNodes() const;
     const std::vector<Web>& getWebs() const;
     bool hasEdge(int idA, int idB) const;

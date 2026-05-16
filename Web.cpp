@@ -8,7 +8,6 @@
 
 #include "Web.h"
 #include <sstream>
-#include <algorithm>
 
 //Construção
 /**

@@ -63,6 +63,17 @@ void InterferenceGraph::addEdge(int idA, int idB) {
     baseGraph_.addBidirectionalEdge(idA, idB, 0.0);
 }
 
+InterferenceGraph::InterferenceGraph(const InterferenceGraph& other)
+    : webs_(other.webs_)
+{
+    // Reconstrói baseGraph_ a partir dos webs_ copiados
+    for (int i = 0; i < (int)webs_.size(); ++i) {
+        webs_[i].setId(i);
+        baseGraph_.addVertex(i);
+    }
+    buildEdges(); // reutiliza o método já existente
+}
+
 const std::vector<Web>& InterferenceGraph::getWebs() const {
     return webs_;
 }

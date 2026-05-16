@@ -1,15 +1,28 @@
 /**
  * @file main.cpp
  * @brief Ponto de partida para a alocação de registos.
+ *
  * O programa pode ser executado em dois modos:
+ *
  * **Modo batch**, modo não interativo:
- * @codeit
+ * @code
  *   ./prog -b testes/ranges.txt testes/registers.txt testes/output.txt
  * @endcode
  *
  * **Modo interativo**, onde se apresenta um menu simples que
  * permite configurar os ficheiros e executar a alocação de forma iterativa.
+ *
+ * @note Alteração relativamente à versão anterior: RegisterAllocator::allocate()
+ * devolve agora um triplo {alocações, grafo final, metadados}. O desempacotamento
+ * foi atualizado para extrair também a string de metadados, que é passada a
+ * printResult() para ser escrita no ficheiro de saída.
  */
+
+#ifdef _WIN32
+#define NOMINMAX
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+#endif
 
 #include <iostream>
 #include <fstream>
@@ -21,11 +34,6 @@
 #include "RegisterAllocator.h"
 #include "AlgorithmConfig.h"
 
-#ifdef _WIN32
-#define NOMINMAX
-#include <windows.h>
-#endif
-
 /**
  * @brief Executa a pipeline completa.
  *
@@ -33,10 +41,7 @@
  *  1. **Parse** dos dois ficheiros de entrada (ranges e configuração).
  *  2. **Construção** do grafo de interferência.
  *  3. **Alocação** de registos com o algoritmo configurado.
- *  4. **Escrita** do resultado no ficheiro de saída.
- *
- * Em caso de erro (ficheiro inacessível ou formato inválido) a
- * exceção é lançada, onde a função devolve @c false.
+ *  4. **Escrita** do resultado (+ metadados) no ficheiro de saída.
  *
  * @param rangesFile    Caminho para o ficheiro de live ranges.
  * @param registersFile Caminho para o ficheiro de configuração.
@@ -44,7 +49,8 @@
  * @return              @c true se o pipeline foi concluído sem erros;
  *                      @c false caso contrário.
  *
- * @complexity O(W² × L), onde W = nº de webs, L = linhas médias por web.
+ * @par Complexidade
+ * O(W² × L), onde W = nº de webs, L = linhas médias por web.
  */
 static bool runAllocation(const std::string& rangesFile,
                           const std::string& registersFile,
@@ -61,12 +67,15 @@ static bool runAllocation(const std::string& rangesFile,
         std::cout << "Grafo de interferência construído: "
                   << graph.numNodes() << " webs.\n";
 
-        // Executar alocação de registos
-        // allocate devolve {alocações, grafo final}.
+        // Executar alocação de registos.
+        // allocate() devolve {alocações, grafo final, metadados}.
         // Para splitting o grafo final pode ter mais webs do que o original
         // (uma por cada divisão efectuada); os outros algoritmos devolvem
         // uma cópia do grafo original inalterado.
-        auto [allocations, finalGraph] = RegisterAllocator::allocate(graph, config);
+        // Os metadados descrevem quais webs foram vertidas (spilling) ou
+        // divididas (splitting) e são escritos no ficheiro de saída.
+        auto [allocations, finalGraph, metadata] =
+            RegisterAllocator::allocate(graph, config);
 
         // Imprimir resultado no ficheiro de saída
         std::ofstream out(outputFile);
@@ -75,7 +84,7 @@ static bool runAllocation(const std::string& rangesFile,
                       << outputFile << "\n";
             return false;
         }
-        RegisterAllocator::printResult(finalGraph, allocations, out);
+        RegisterAllocator::printResult(finalGraph, allocations, out, metadata);
         out.close();
         std::cout << "Resultado guardado em: " << outputFile << "\n";
         return true;
@@ -111,14 +120,11 @@ static void interactiveMenu() {
 
         int op;
         if (!(std::cin >> op)) {
-            // Se a leitura falhar (ex: utilizador introduziu texto em vez de número)
-            std::cin.clear(); // 1. Limpa o estado de erro do cin para que volte a funcionar
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // 2. Limpa o texto inválido do buffer
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             std::cerr << "ERRO: Opção inválida. Por favor, introduza um número de 1 a 5.\n";
-            continue; // 3. Salta o resto do switch e volta a mostrar o menu
+            continue;
         }
-
-        // Se a leitura do número correu bem, limpa o resto da linha (ex: o '\n' que ficou)
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
         switch (op) {
@@ -150,11 +156,10 @@ static void interactiveMenu() {
 }
 
 /**
- * @brief Ponto de entrada — seleciona-se o modo batch ou o modo interativo.
+ * @brief Ponto de entrada — seleciona o modo batch ou o modo interativo.
  *
  * @par Modo batch
  * Sintaxe: @c ./prog @c -b @c ranges.txt @c registers.txt @c output.txt
- * Requer exatamente 4 argumentos.
  *
  * @par Modo interativo
  * Qualquer outra invocação inicia o menu interativo.
@@ -168,7 +173,6 @@ int main(int argc, char* argv[]) {
     SetConsoleOutputCP(CP_UTF8);
 #endif
 
-    // Verifica se é modo batch
     if (argc == 5 && std::string(argv[1]) == "-b") {
         std::string rangesFile    = argv[2];
         std::string registersFile = argv[3];
@@ -177,7 +181,6 @@ int main(int argc, char* argv[]) {
         return ok ? 0 : 1;
     }
 
-    // Caso contrário, modo interativo
     interactiveMenu();
     return 0;
 }
