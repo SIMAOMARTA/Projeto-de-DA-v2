@@ -34,12 +34,18 @@ public:
 
     /**
      * @brief Aloca registos para todas as webs em @p graph.
-     * @param graph   Grafo de interferência.
+     *
+     * @param graph   Grafo de interferência original.
      * @param config  Número de registos e variante do algoritmo.
-     * @return        Alocação por web (indexada pelo id da web).
+     * @return        Par {alocações por web, grafo final usado na coloração}.
+     *                O grafo final pode diferir do grafo de entrada quando o
+     *                algoritmo @c splitting divide webs, aumentando o número
+     *                de nós. Para @c basic, @c spilling e @c free o grafo
+     *                devolvido é uma cópia do grafo original.
      */
-    static std::vector<Allocation> allocate(const InterferenceGraph& graph,
-                                            const AlgorithmConfig&    config);
+    static std::pair<std::vector<Allocation>, InterferenceGraph>
+        allocate(const InterferenceGraph& graph,
+                 const AlgorithmConfig&   config);
 
     /**
      * @brief Escreve o resultado da alocação em @p out.

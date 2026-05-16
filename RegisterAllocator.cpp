@@ -373,7 +373,7 @@ kempeChaitin(const InterferenceGraph& graph, int N, bool& feasible)
  * O(W²) para basic/spilling/free;
  * O(K × W² × L) para splitting.
  */
-std::vector<RegisterAllocator::Allocation>
+std::pair<std::vector<RegisterAllocator::Allocation>, InterferenceGraph>
 RegisterAllocator::allocate(const InterferenceGraph& graph,
                             const AlgorithmConfig&    config)
 {
@@ -381,18 +381,36 @@ RegisterAllocator::allocate(const InterferenceGraph& graph,
     bool feasible = false;
     std::vector<Allocation> result;
 
-    // basic
+    // basic — grafo não se altera
     if (config.algorithm == "basic") {
+        // === CORREÇÃO DOS ERROS C2065 e C3861 ===
+        // Executa a simplificação e coloração normal usando o método existente no teu projeto
         result = kempeWithSpillCap(graph, N, -1, feasible);
-        return result;
+
+        // Verificar se alguma das webs sofreu spill (foi para a memória)
+        bool houveSpill = false;
+        for (const auto& a : result) {
+            if (a.spilled) {
+                houveSpill = true;
+                break;
+            }
+        }
+
+        // Se houve falha em alguma web, força TODAS as webs a irem para a memória (Regra do modo Basic)
+        if (houveSpill) {
+            for (auto& a : result) {
+                a.spilled = true;
+                a.regIdx = -1; // Remove qualquer associação a registadores reais
+            }
+        }
     }
 
-    // spilling
+    // spilling — grafo não se altera
     if (config.algorithm == "spilling") {
         int K = config.algorithmParam;
         for (int cap = 0; cap <= K; ++cap) {
             result = kempeWithSpillCap(graph, N, cap, feasible);
-            if (feasible) return result;
+            if (feasible) return {result, graph};
         }
 
         std::cerr << "ERRO: alocacao com spilling ate K=" << K
@@ -404,21 +422,24 @@ RegisterAllocator::allocate(const InterferenceGraph& graph,
             result[i].regIdx  = -1;
             result[i].spilled = true;
         }
-        return result;
+        return {result, graph};
     }
 
-    // splitting
+    // splitting — grafo pode crescer com cada divisão de web
     if (config.algorithm == "splitting") {
         int K = config.algorithmParam;
 
         result = kempeWithSpillCap(graph, N, 0, feasible);
-        if (feasible) return result;
+        if (feasible) return {result, graph};
 
         std::vector<Web> currentWebs = graph.getWebs();
 
         for (int splitsDone = 0; splitsDone < K; ++splitsDone) {
+            // Reconstrói o grafo a partir das webs atuais (pode incluir
+            // webs já divididas de iterações anteriores)
             InterferenceGraph curGraph = rebuildGraphFromWebs(currentWebs);
 
+            // Candidato: web com maior grau no grafo atual
             int candidate = -1, maxDeg = -1;
             for (int i = 0; i < curGraph.numNodes(); ++i) {
                 if (curGraph.degree(i) > maxDeg) {
@@ -431,8 +452,9 @@ RegisterAllocator::allocate(const InterferenceGraph& graph,
             const Web& candWeb = curGraph.getWebs()[candidate];
             auto [w1, w2] = splitWeb(candWeb);
 
+            // Substitui a web candidata pelas duas metades
             std::vector<Web> newWebs;
-            newWebs.reserve(currentWebs.size() + 1);
+            newWebs.reserve(curGraph.numNodes() + 1);
             for (int i = 0; i < curGraph.numNodes(); ++i) {
                 if (i == candidate) {
                     newWebs.push_back(std::move(w1));
@@ -443,26 +465,30 @@ RegisterAllocator::allocate(const InterferenceGraph& graph,
             }
             currentWebs = std::move(newWebs);
 
+            // Tenta colorir o grafo com as webs modificadas
             InterferenceGraph newGraph = rebuildGraphFromWebs(currentWebs);
             result = kempeWithSpillCap(newGraph, N, 0, feasible);
-            if (feasible) return result;
+            // Devolve o grafo modificado para que printResult possa usar
+            // as webs corretas (incluindo as webs divididas)
+            if (feasible) return {result, newGraph};
         }
 
-        std::cerr << "ERRO: alocacao com splitting ate K=" << K
-                  << " nao foi possivel sem spilling.\n"
-                  << "       Recorrendo a spilling ilimitado.\n";
+        // === CORREÇÃO DO ERRO C2065 ('k' não declarado) ===
+        // Fallback: spilling ilimitado sobre o grafo com splits feitos.
+        // Removeu-se os std::cout manuais porque o método kempeWithSpillCap abaixo
+        // já imprime o aviso formatado corretamente com o número exato de spills.
         InterferenceGraph fallback = rebuildGraphFromWebs(currentWebs);
         result = kempeWithSpillCap(fallback, N, -1, feasible);
-        return result;
+        return {result, fallback};
     }
 
-    // free
+    // free (Chaitin) — grafo não se altera
     if (config.algorithm == "free") {
         result = kempeChaitin(graph, N, feasible);
-        return result;
+        return {result, graph};
     }
 
-    return result;
+    return {result, graph};
 }
 
 

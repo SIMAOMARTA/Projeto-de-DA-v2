@@ -3,7 +3,7 @@
  * @brief Ponto de partida para a alocação de registos.
  * O programa pode ser executado em dois modos:
  * **Modo batch**, modo não interativo:
- * @code
+ * @codeit
  *   ./prog -b testes/ranges.txt testes/registers.txt testes/output.txt
  * @endcode
  *
@@ -62,7 +62,11 @@ static bool runAllocation(const std::string& rangesFile,
                   << graph.numNodes() << " webs.\n";
 
         // Executar alocação de registos
-        auto allocations = RegisterAllocator::allocate(graph, config);
+        // allocate devolve {alocações, grafo final}.
+        // Para splitting o grafo final pode ter mais webs do que o original
+        // (uma por cada divisão efectuada); os outros algoritmos devolvem
+        // uma cópia do grafo original inalterado.
+        auto [allocations, finalGraph] = RegisterAllocator::allocate(graph, config);
 
         // Imprimir resultado no ficheiro de saída
         std::ofstream out(outputFile);
@@ -71,7 +75,7 @@ static bool runAllocation(const std::string& rangesFile,
                       << outputFile << "\n";
             return false;
         }
-        RegisterAllocator::printResult(graph, allocations, out);
+        RegisterAllocator::printResult(finalGraph, allocations, out);
         out.close();
         std::cout << "Resultado guardado em: " << outputFile << "\n";
         return true;
@@ -106,7 +110,15 @@ static void interactiveMenu() {
                   << "Opção: ";
 
         int op;
-        std::cin >> op;
+        if (!(std::cin >> op)) {
+            // Se a leitura falhar (ex: utilizador introduziu texto em vez de número)
+            std::cin.clear(); // 1. Limpa o estado de erro do cin para que volte a funcionar
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // 2. Limpa o texto inválido do buffer
+            std::cerr << "ERRO: Opção inválida. Por favor, introduza um número de 1 a 5.\n";
+            continue; // 3. Salta o resto do switch e volta a mostrar o menu
+        }
+
+        // Se a leitura do número correu bem, limpa o resto da linha (ex: o '\n' que ficou)
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
         switch (op) {
