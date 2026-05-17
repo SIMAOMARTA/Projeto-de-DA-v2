@@ -145,7 +145,9 @@ public:
      * @param metadata     String de metadados complementares (valor por defeito @c "").
      *
      * @par Complexidade
-     * O(W × P), onde W = número de webs, P = pontos médios por web.
+     * O(W × P log P), onde W = número de webs, P = pontos médios por web.
+     * O fator log P provém de toString(), que insere P pontos num
+     * @c std::map ordenado (O(log P) por inserção).
      */
 
     static void printResult(const InterferenceGraph& graph, const std::vector<Allocation>& allocations, std::ostream& out,

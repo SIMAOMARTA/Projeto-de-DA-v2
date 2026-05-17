@@ -206,9 +206,12 @@ private:
      * @param ranges  Live ranges de entrada.
      *
      * @par Complexidade
-     * O(R² × P) no pior caso, onde R = número de ranges da variável com
-     * mais ranges, P = número de pontos por range. Na prática tende a ser
-     * linear no número de ranges.
+     * O(R³ × P) no pior caso, onde R = número de ranges da variável com
+     * mais ranges, P = número de pontos por range. O fator cúbico deve-se
+     * ao facto de a cada fusão (absorb) o loop externo reiniciar desde o
+     * início, podendo ocorrer até R fusões cada uma precedida de O(R²)
+     * chamadas a overlaps(). Na prática tende a ser muito mais eficiente
+     * porque as fusões são poucas.
      */
 
     void buildWebs(const std::vector<LiveRange>& ranges);

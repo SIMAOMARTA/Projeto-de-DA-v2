@@ -158,7 +158,8 @@ public:
      * @return       @c true se houver pelo menos uma linha comum.
      *
      * @par Complexidade
-     * O(min(|L_this|, |L_other|)) melhor caso; O(|L_this| + |L_other|) pior caso.
+     * O(1) melhor caso (primeira linha já comum);
+     * O(|L_this| + |L_other|) pior caso (sem linhas comuns).
      */
 
     bool overlaps(const Web& other) const;
@@ -187,7 +188,8 @@ public:
      * @return       @c true se as webs interferem (não podem partilhar registo).
      *
      * @par Complexidade
-     * O(L log L), onde L = número de linhas partilhadas pelas duas webs.
+     * O(|L_this| × log |L_other|), onde |L_this| e |L_other| são os
+     * tamanhos dos lineSets das duas webs.
      */
 
     bool interferesWith(const Web& other) const;
