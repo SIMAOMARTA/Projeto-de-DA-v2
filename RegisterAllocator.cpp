@@ -424,9 +424,11 @@ static std::vector<RegisterAllocator::Allocation> kempeChaitin(const Interferenc
  * @c {alocações, grafofinal, metadados}.
  *
  * ### Variante @c basic
- * Chama kempeWithSpillCap() com @c spillCap = -1 (sem limite). As webs
- * não coloríveis recebem @c spilled=true individualmente; as restantes
- * mantêm o registo atribuído. Nenhum metadado é gerado.
+ * Chama kempeWithSpillCap() com @c spillCap = 0 (não permite nenhum spill durante a simplificação).
+ * Se a alocação completa não for possível com os registos fornecidos, a flag de viabilidade
+ * torna-se falsa, ativando o fallback que verte integralmente TODAS as webs para a memória
+ * (@c spilled=true, associadas a @c M), resultando em 0 registos efetivamente utilizados.
+ * Nenhum metadado é gerado.
  *
  * ### Variante @c spilling
  * Itera @c cap de 0 até K (inclusive). Na primeira iteração em que
@@ -481,7 +483,18 @@ std::tuple<std::vector<RegisterAllocator::Allocation>, InterferenceGraph, std::s
     std::string metadata;
 
     if (config.algorithm == "basic"){
-        result = kempeWithSpillCap(graph, N, -1, feasible);
+        result = kempeWithSpillCap(graph, N, 0, feasible);
+
+        if (!feasible) {
+            const int W = graph.numNodes();
+            result.assign(W, Allocation{});
+            for (int i = 0; i < W; ++i) {
+                result[i].webId   = i;
+                result[i].regIdx  = -1;   // Força r0, r1, etc. a não serem usados
+                result[i].spilled = true;
+            }
+        }
+
         return {result, graph, ""};
     }
 
@@ -523,24 +536,23 @@ std::tuple<std::vector<RegisterAllocator::Allocation>, InterferenceGraph, std::s
     if (config.algorithm == "splitting"){
         int K = config.algorithmParam;
 
-        /**
-         * @brief Registo de uma única operação de divisão de web.
-         *
-         * Armazena os dados necessários para construir a linha de
-         * metadados correspondente no ficheiro de saída.
-         */
-
         struct SplitRecord {
-            std::string originalVar;  ///< nome da variável antes do split
-            int         splitAtLine;  ///< ponto de corte
-            int         newWebA;      ///< indice da primeira metade
-            int         newWebB;      ///< Índice da segunda metade
+            std::string originalVar;
+            int         splitAtLine;
+            int         newWebA;
+            int         newWebB;
         };
         std::vector<SplitRecord> splitLog;
 
         // Tentativa inicial sem splits
         result = kempeWithSpillCap(graph, N, 0, feasible);
-        if (feasible) return {result, graph, ""};
+        if (feasible) {
+            std::ostringstream oss;
+            oss << "# Splitting metadata [K=" << K << "]\n";
+            oss << "# Format: split: original_var=<name> split_at_line=<line> -> web<A> web<B>\n";
+            oss << "splits_count: 0\n";
+            return {result, graph, oss.str()};
+        }
 
         std::vector<Web> currentWebs = graph.getWebs();
 
@@ -554,7 +566,6 @@ std::tuple<std::vector<RegisterAllocator::Allocation>, InterferenceGraph, std::s
                     candidate = i;
                 }
             }
-            // caso não haja candidato com grau >= N
             if (candidate == -1 || maxDeg < N) break;
 
             const Web& candWeb = curGraph.getWebs()[candidate];
@@ -562,7 +573,6 @@ std::tuple<std::vector<RegisterAllocator::Allocation>, InterferenceGraph, std::s
             int splitLine = 0;
             auto [w1, w2] = splitWeb(candWeb, splitLine);
 
-            // Substitui a web candidata pelas duas metades no vetor atual
             std::vector<Web> newWebs;
             newWebs.reserve(currentWebs.size() + 1);
             for (int i = 0; i < (int)currentWebs.size(); ++i){
@@ -576,11 +586,9 @@ std::tuple<std::vector<RegisterAllocator::Allocation>, InterferenceGraph, std::s
             }
             currentWebs = std::move(newWebs);
 
-            // Tenta colorir o grafo com as webs modificadas
             InterferenceGraph newGraph = rebuildGraphFromWebs(currentWebs);
             result = kempeWithSpillCap(newGraph, N, 0, feasible);
 
-            // As duas metades ocupam posições consecutivas a partir de candidate
             int idxA = candidate;
             int idxB = candidate + 1;
             splitLog.push_back({originalVar, splitLine, idxA, idxB});
@@ -614,7 +622,6 @@ std::tuple<std::vector<RegisterAllocator::Allocation>, InterferenceGraph, std::s
 
     if (config.algorithm == "free") {
         result = kempeChaitin(graph, N, feasible);
-
         return {result, graph, ""};
     }
 

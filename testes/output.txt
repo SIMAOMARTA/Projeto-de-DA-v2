@@ -1,0 +1,18 @@
+# Total number of webs followed by the listing of the program points of each one
+# program points in each web are sorted in ascending order
+webs: 4
+web0: 1+,2
+web1: 5,6-
+web2: 2+,3,4-
+web3: 3+,4,5-
+# Total number of registers used, followed by assignment to webs
+registers: 2
+r0: web0
+r1: web1
+r1: web2
+r0: web3
+
+# Splitting metadata [K=1]
+# Format: split: original_var=<name> split_at_line=<line> -> web<A> web<B>
+splits_count: 1
+split: original_var=a split_at_line=5 -> web0 web1

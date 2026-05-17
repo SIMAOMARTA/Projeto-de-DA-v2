@@ -3,7 +3,7 @@ project(Compiler_Register_Allocation_Algorithms)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(Compiler_Register_Allocation_Algorithms
+add_executable(myProg
         main.cpp
         LiveRange.cpp
         Web.cpp
