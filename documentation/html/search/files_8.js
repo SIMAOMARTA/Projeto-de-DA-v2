@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['web_2ecpp_0',['Web.cpp',['../Web_8cpp.html',1,'']]],
-  ['web_2eh_1',['Web.h',['../Web_8h.html',1,'']]]
+  ['registerallocator_2ecpp_0',['RegisterAllocator.cpp',['../_register_allocator_8cpp.html',1,'']]],
+  ['registerallocator_2eh_1',['RegisterAllocator.h',['../_register_allocator_8h.html',1,'']]]
 ];

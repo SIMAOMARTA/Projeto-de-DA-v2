@@ -208,15 +208,6 @@ Private Attributes</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section user"><dt>Complexidade</dt><dd>O(P log P), onde P = número de pontos de <code class="param">range</code>.</dd></dl>
-<p>Inicializa a web com a live range fornecida: copia o seu <code>lineSet</code> para <code>lineSet_</code> e invoca <a class="el" href="#aeb6dfd43051263f634303098a47b58ea" title="Reconstrói annotationMap_ a partir do estado atual de ranges_.">buildAnnotationMap()</a> para pré-calcular a cache de anotações usada em <a class="el" href="#a1daf0ad084076fd059d0e66e75481125" title="Determina se esta web interfere com other.">interferesWith()</a>.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">id</td><td>Identificador numérico único da web no grafo (0-based). </td></tr>
-    <tr><td class="paramname">range</td><td><a class="el" href="class_live_range.html" title="Modela uma live range de uma variável como sequência de pontos de programa.">LiveRange</a> inicial que compõe esta web.</td></tr>
-  </table>
-  </dd>
-</dl>
 <dl class="section user"><dt>Complexidade</dt><dd>O(P log P), onde P = número de pontos de <code class="param">range</code>. </dd></dl>
 
 </div>
@@ -250,20 +241,7 @@ Private Attributes</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section user"><dt>Complexidade</dt><dd>O(P log P), onde P = total de pontos em ambas as webs após fusão.</dd></dl>
-<p>Para cada <a class="el" href="class_live_range.html" title="Modela uma live range de uma variável como sequência de pontos de programa.">LiveRange</a> de <code class="param">other:</code> </p><ol type="1">
-<li>Adiciona a range ao vetor <code>ranges_</code>.</li>
-<li>Insere todas as suas linhas em <code>lineSet_</code> (usando a referência ao <code>lineSet</code> da range, sem iterar sobre os pontos).</li>
-</ol>
-<p>Após processar todas as ranges, reconstrói <code>annotationMap_</code> invocando <a class="el" href="#aeb6dfd43051263f634303098a47b58ea" title="Reconstrói annotationMap_ a partir do estado atual de ranges_.">buildAnnotationMap()</a> sobre o estado completo, garantindo que a cache reflita a união de todas as ranges após a absorção.</p>
-<dl class="section note"><dt>Note</dt><dd><code class="param">other</code> não é modificada — apenas esta web é alterada.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">other</td><td><a class="el" href="class_web.html" title="Nó do grafo de interferência — união de live ranges sobrepostas de uma variável.">Web</a> a absorver.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section user"><dt>Complexidade</dt><dd>O(P log P), onde P = total de pontos em ambas as webs após fusão, dominado pela reconstrução de <code>annotationMap_</code>. </dd></dl>
+<dl class="section user"><dt>Complexidade</dt><dd>O(P log P), onde P = total de pontos em ambas as webs após fusão. </dd></dl>
 
 </div>
 </div>
@@ -292,11 +270,7 @@ Private Attributes</h2></td></tr>
 
 <p>Reconstrói <code>annotationMap_</code> a partir do estado atual de <code>ranges_</code>. </p>
 <p>Limpa o mapa e itera sobre todos os pontos de todas as ranges. Para cada ponto com <code>isStart=true</code>, ativa <code>hasStart</code> na entrada correspondente do mapa. Analogamente para <code>isEnd</code>. Deve ser chamada após cada <a class="el" href="#a793c6e41cc8558ae856bda928d11ff7a" title="Funde a web other nesta web (absorção unilateral).">absorb()</a> para manter a cache consistente.</p>
-<dl class="section user"><dt>Complexidade</dt><dd>O(P log L), onde P = total de pontos, L = número de linhas distintas.</dd></dl>
-<p>Limpa o mapa e itera sobre todos os pontos de todas as ranges. Para cada ponto com <code>isStart=true</code>, ativa <code>hasStart</code> na entrada correspondente do mapa. Analogamente para <code>isEnd</code>.</p>
-<p>A cache resultante permite que <a class="el" href="#a1daf0ad084076fd059d0e66e75481125" title="Determina se esta web interfere com other.">interferesWith()</a> consulte as anotações de qualquer linha em O(log L), em vez de percorrer todos os pontos a cada chamada.</p>
-<p>Deve ser invocada após cada operação que altere <code>ranges_:</code> construtor e <a class="el" href="#a793c6e41cc8558ae856bda928d11ff7a" title="Funde a web other nesta web (absorção unilateral).">absorb()</a>.</p>
-<dl class="section user"><dt>Complexidade</dt><dd>O(P log L), onde P = total de pontos em todas as ranges, L = número de linhas distintas. </dd></dl>
+<dl class="section user"><dt>Complexidade</dt><dd>O(P log L), onde P = total de pontos, L = número de linhas distintas. </dd></dl>
 
 </div>
 </div>
@@ -317,8 +291,6 @@ Private Attributes</h2></td></tr>
 
 <p>Devolve o identificador numérico desta web. </p>
 <dl class="section return"><dt>Returns</dt><dd>Id inteiro (0-based no grafo de interferência). </dd></dl>
-<dl class="section user"><dt>Complexidade O(1)</dt><dd></dd></dl>
-<dl class="section return"><dt>Returns</dt><dd>Id inteiro (0-based). </dd></dl>
 <dl class="section user"><dt>Complexidade O(1)</dt><dd></dd></dl>
 
 </div>
@@ -342,8 +314,6 @@ Private Attributes</h2></td></tr>
 <p>Equivale à união dos <code>lineSets</code> de todas as ranges fundidas. Este conjunto é mantido incrementalmente em <a class="el" href="#a793c6e41cc8558ae856bda928d11ff7a" title="Funde a web other nesta web (absorção unilateral).">absorb()</a> e pode ser consultado em O(1).</p>
 <dl class="section return"><dt>Returns</dt><dd>Referência constante para o <code>std::set&lt;int&gt;</code> de linhas ordenadas. </dd></dl>
 <dl class="section user"><dt>Complexidade O(1)</dt><dd></dd></dl>
-<dl class="section return"><dt>Returns</dt><dd>Referência constante para o <code>std::set&lt;int&gt;</code> de linhas ordenadas. </dd></dl>
-<dl class="section user"><dt>Complexidade O(1)</dt><dd></dd></dl>
 
 </div>
 </div>
@@ -364,8 +334,6 @@ Private Attributes</h2></td></tr>
 
 <p>Devolve todas as LiveRanges que compõem esta web. </p>
 <p>Inclui a range inicial e todas as ranges absorvidas por chamadas a <a class="el" href="#a793c6e41cc8558ae856bda928d11ff7a" title="Funde a web other nesta web (absorção unilateral).">absorb()</a>. A ordem corresponde à sequência de absorções.</p>
-<dl class="section return"><dt>Returns</dt><dd>Referência constante para o vetor de <a class="el" href="class_live_range.html" title="Modela uma live range de uma variável como sequência de pontos de programa.">LiveRange</a>. </dd></dl>
-<dl class="section user"><dt>Complexidade O(1)</dt><dd></dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>Referência constante para o vetor de <a class="el" href="class_live_range.html" title="Modela uma live range de uma variável como sequência de pontos de programa.">LiveRange</a>. </dd></dl>
 <dl class="section user"><dt>Complexidade O(1)</dt><dd></dd></dl>
 
@@ -426,27 +394,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><code>true</code> se as webs interferem (não podem partilhar registo).</dd></dl>
-<dl class="section user"><dt>Complexidade</dt><dd>O(L log L), onde L = número de linhas partilhadas pelas duas webs.</dd></dl>
-<p>Duas webs interferem se, numa linha que partilham, não se puder garantir que uma termina exatamente quando a outra começa (sem sobreposição simultânea de valores vivos).</p>
-<p>Algoritmo:</p><ol type="1">
-<li>Se <a class="el" href="#a61f7e45faa8c90848ee78658be9e9bba" title="Verifica se esta web partilha pelo menos uma linha com other.">overlaps()</a> == <code>false</code>, não há linhas partilhadas → retorna <code>false</code>.</li>
-<li>Para cada linha do <code>lineSet_</code> desta web que também pertença ao <code>lineSet_</code> de <code class="param">other</code>, consulta as anotações de ambas através de <code>annotationMap_</code> (O(log L) por consulta).</li>
-<li>Regra de não-interferência (definição/uso na mesma instrução):<ul>
-<li>Se a web A apenas começa na linha (<code>hasStart=true</code>, <code>hasEnd=false</code>) e a web B apenas termina (<code>hasEnd=true</code>, <code>hasStart=false</code>) → A define um novo valor depois de B consumir o seu último; não há simultaneidade → <code>continue</code>.</li>
-<li>O simétrico (B começa, A termina) também não interfere.</li>
-</ul>
-</li>
-<li>Qualquer outro caso (ambas vivas, ambas com def+uso, etc.) → interferência confirmada → retorna <code>true</code>.</li>
-<li>Se nenhuma linha partilhada originou interferência → retorna <code>false</code>.</li>
-</ol>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">other</td><td><a class="el" href="class_web.html" title="Nó do grafo de interferência — união de live ranges sobrepostas de uma variável.">Web</a> a comparar. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd><code>true</code> se as webs interferem (não podem partilhar registo).</dd></dl>
-<dl class="section user"><dt>Complexidade</dt><dd>O(L log L), onde L = número de linhas partilhadas pelas duas webs. </dd></dl>
+<dl class="section user"><dt>Complexidade</dt><dd>O(|L_this| × log |L_other|), onde |L_this| e |L_other| são os tamanhos dos lineSets das duas webs. </dd></dl>
 
 </div>
 </div>
@@ -477,20 +425,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><code>true</code> se houver pelo menos uma linha comum.</dd></dl>
-<dl class="section user"><dt>Complexidade</dt><dd>O(min(|L_this|, |L_other|)) melhor caso; O(|L_this| + |L_other|) pior caso.</dd></dl>
-<p>Usa o algoritmo de merge sobre dois iteradores dos <code>lineSet_</code> ordenados. Em cada passo avança o iterador cujo valor corrente é menor. Se em algum ponto ambos os iteradores apontam para o mesmo valor, há sobreposição e a função retorna <code>true</code> imediatamente.</p>
-<p>Este método é chamado em dois contextos distintos:</p><ul>
-<li>Por <a class="el" href="class_interference_graph.html#a9ace91ca867c18bc6b849c4531e71cb1" title="Constrói as webs a partir das live ranges e adiciona os vértices ao grafo.">InterferenceGraph::buildWebs()</a> para decidir se duas webs parciais da mesma variável devem ser fundidas.</li>
-<li>Por <a class="el" href="#a1daf0ad084076fd059d0e66e75481125" title="Determina se esta web interfere com other.">interferesWith()</a> como verificação preliminar: se não há sobreposição, não pode haver interferência.</li>
-</ul>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">other</td><td><a class="el" href="class_web.html" title="Nó do grafo de interferência — união de live ranges sobrepostas de uma variável.">Web</a> a comparar. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd><code>true</code> se houver pelo menos uma linha comum.</dd></dl>
-<dl class="section user"><dt>Complexidade</dt><dd>O(min(|L_this|, |L_other|)) melhor caso (primeira linha já comum); O(|L_this| + |L_other|) pior caso (sem linhas comuns). </dd></dl>
+<dl class="section user"><dt>Complexidade</dt><dd>O(1) melhor caso (primeira linha já comum); O(|L_this| + |L_other|) pior caso (sem linhas comuns). </dd></dl>
 
 </div>
 </div>
@@ -511,14 +446,6 @@ Private Attributes</h2></td></tr>
 
 <p>Redefine o identificador desta web. </p>
 <p>Chamado por <a class="el" href="class_interference_graph.html#a9ace91ca867c18bc6b849c4531e71cb1" title="Constrói as webs a partir das live ranges e adiciona os vértices ao grafo.">InterferenceGraph::buildWebs()</a> após a renumeração final das webs, que ocorre após a fusão greedy de live ranges sobrepostas.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">newId</td><td>Novo identificador (deve ser &gt;= 0). </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section user"><dt>Complexidade O(1)</dt><dd></dd></dl>
-<p>Chamado por <a class="el" href="class_interference_graph.html#a9ace91ca867c18bc6b849c4531e71cb1" title="Constrói as webs a partir das live ranges e adiciona os vértices ao grafo.">InterferenceGraph::buildWebs()</a> durante a renumeração final das webs (após a fusão greedy das live ranges sobrepostas), de forma a garantir que os ids são contíguos e coerentes com os índices usados na estrutura <code><a class="el" href="class_graph.html">Graph&lt;int&gt;</a></code> subjacente.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">newId</td><td>Novo identificador (deve ser &gt;= 0). </td></tr>
@@ -547,9 +474,6 @@ Private Attributes</h2></td></tr>
 <p>Devolve uma representação textual da web no formato do enunciado. </p>
 <p>Constrói um <code>std::map</code> temporário linha → (isStart, isEnd), combinando as anotações de todos os pontos de todas as ranges com OR lógico. O <code>std::map</code> ordena automaticamente as linhas por ordem crescente. O resultado é a concatenação dos pares linha+sufixos separados por vírgulas, no formato exigido para o ficheiro de saída.</p>
 <dl class="section return"><dt>Returns</dt><dd>String com os pontos de programa ordenados. Exemplo: <code>"1+,2,3,4,5,6-,9+,10,11-"</code> </dd></dl>
-<dl class="section user"><dt>Complexidade</dt><dd>O(P log P) onde P = total de pontos de programa em todas as ranges.</dd></dl>
-<p>Constrói um <code>std::map</code> temporário linha → (isStart, isEnd), iterando sobre todos os pontos de todas as ranges e combinando as flags com OR lógico (um ponto num <code>range</code> já absorvido pode ter isStart; outro range pode ter isEnd para a mesma linha). O <code>std::map</code> garante ordenação automática por número de linha. O resultado é a concatenação dos pares linha+sufixos separados por vírgulas.</p>
-<dl class="section return"><dt>Returns</dt><dd>String com os pontos de programa ordenados em ordem crescente. Exemplo: <code>"1+,2,3,4,5,6-,9+,10,11-"</code> </dd></dl>
 <dl class="section user"><dt>Complexidade</dt><dd>O(P log P) onde P = total de pontos de programa em todas as ranges. </dd></dl>
 
 </div>

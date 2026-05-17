@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['interferencegraph_0',['InterferenceGraph',['../classInterferenceGraph.html',1,'']]]
+  ['interferencegraph_0',['InterferenceGraph',['../class_interference_graph.html',1,'']]]
 ];

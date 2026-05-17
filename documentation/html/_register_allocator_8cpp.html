@@ -133,9 +133,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('_register_allo
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a5f703172b659e28c619f747b31d4f7a8" id="r_a5f703172b659e28c619f747b31d4f7a8"><td class="memItemLeft">static int&#160;</td><td class="memItemRight"><a class="el" href="#a5f703172b659e28c619f747b31d4f7a8">chaitinCandidate</a> (const <a class="el" href="class_interference_graph.html">InterferenceGraph</a> &amp;graph, const std::map&lt; int, int &gt; &amp;workDegree, const std::set&lt; int &gt; &amp;active)</td></tr>
-<tr class="memdesc:a5f703172b659e28c619f747b31d4f7a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Seleciona o candidato a spill pela heurística de Chaitin (T2.4).  <br /></td></tr>
 <tr class="memitem:a02d01c8192ecff9996f2b87861d01540" id="r_a02d01c8192ecff9996f2b87861d01540"><td class="memItemLeft">static std::vector&lt; <a class="el" href="struct_register_allocator_1_1_allocation.html">RegisterAllocator::Allocation</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a02d01c8192ecff9996f2b87861d01540">kempeChaitin</a> (const <a class="el" href="class_interference_graph.html">InterferenceGraph</a> &amp;graph, int N, bool &amp;feasible)</td></tr>
-<tr class="memdesc:a02d01c8192ecff9996f2b87861d01540"><td class="mdescLeft">&#160;</td><td class="mdescRight">Coloração de Kempe com heurística de Chaitin para seleção de spill.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Implementação do alocador de registos por coloração de grafos. </p>
@@ -149,8 +147,8 @@ Functions</h2></td></tr>
 <li>printResult() : escrita do resultado no ficheiro de saída.</li>
 </ul>
 <p>**Funções locais (file-scope, usadas apenas por <code>free</code>):**</p><ul>
-<li><a class="el" href="#a5f703172b659e28c619f747b31d4f7a8" title="Seleciona o candidato a spill pela heurística de Chaitin (T2.4).">chaitinCandidate()</a> : seleciona candidato pela razão grau/tamanho.</li>
-<li><a class="el" href="#a02d01c8192ecff9996f2b87861d01540" title="Coloração de Kempe com heurística de Chaitin para seleção de spill.">kempeChaitin()</a> : coloração de Kempe com heurística de Chaitin.</li>
+<li><a class="el" href="#a5f703172b659e28c619f747b31d4f7a8">chaitinCandidate()</a> : seleciona candidato pela razão grau/tamanho.</li>
+<li><a class="el" href="#a02d01c8192ecff9996f2b87861d01540">kempeChaitin()</a> : coloração de Kempe com heurística de Chaitin.</li>
 </ul>
 <h1 class="doxsection"><a class="anchor" id="changes"></a>
 Alterações relativamente à versão anterior</h1>
@@ -192,27 +190,6 @@ Alterações relativamente à versão anterior</h1>
 </table>
 </div><div class="memdoc">
 
-<p>Seleciona o candidato a spill pela heurística de Chaitin (T2.4). </p>
-<p>A heurística de Chaitin maximiza a razão:   </p><p class="formulaDsp">
-<picture><source srcset="form_0_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaDsp" alt="\&zwj;[  \text{score}(n) = \frac{\text{workDegree}(n)}{|\text{lineSet}(n)|}
-\&zwj;]" src="form_0.png"/></picture>
-</p>
-<p>Intuição:</p><ul>
-<li><b>Grau alto</b> → web com muitos conflitos, difícil de colorir; eliminá-la liberta mais colorações.</li>
-<li><b>Live range grande</b> → web cara de manter em registo ao longo de muitas instruções; vertê-la para memória tem menor custo relativo.</li>
-</ul>
-<p>Em caso de empate no score, é selecionado o primeiro nó encontrado na iteração sobre <code class="param">active</code> (menor id pelo determinismo do <code>std::set</code>).</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">graph</td><td>Grafo de interferência (para aceder aos lineSets das webs). </td></tr>
-    <tr><td class="paramname">workDegree</td><td>Mapa id → grau de trabalho atual. </td></tr>
-    <tr><td class="paramname">active</td><td>Conjunto de nós ainda ativos. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Id do nó com maior score grau/tamanho.</dd></dl>
-<dl class="section user"><dt>Complexidade</dt><dd>O(|active|) — iteração linear sobre o conjunto. </dd></dl>
-
 </div>
 </div>
 <a id="a02d01c8192ecff9996f2b87861d01540" name="a02d01c8192ecff9996f2b87861d01540"></a>
@@ -246,20 +223,6 @@ Alterações relativamente à versão anterior</h1>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Coloração de Kempe com heurística de Chaitin para seleção de spill. </p>
-<p>Estruturalmente idêntico a kempeWithSpillCap() sem limite de spills (<code>spillCap</code> = -1), mas usa <a class="el" href="#a5f703172b659e28c619f747b31d4f7a8" title="Seleciona o candidato a spill pela heurística de Chaitin (T2.4).">chaitinCandidate()</a> em vez de selectSpillCandidate() para escolher o nó a deitar para memória na fase de simplificação. Esta substituição implementa a heurística de Chaitin descrita na tarefa T2.4 do enunciado.</p>
-<p>A fase de coloração é idêntica à de kempeWithSpillCap(): menor cor disponível não usada por nenhum vizinho já colorido.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">graph</td><td>Grafo de interferência. </td></tr>
-    <tr><td class="paramname">N</td><td>Número de registos físicos disponíveis. </td></tr>
-    <tr><td class="paramname">feasible</td><td>Saída: sempre <code>true</code> (sem limite de spills). </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Vetor de Allocation por web.</dd></dl>
-<dl class="section user"><dt>Complexidade</dt><dd>O(W²) onde W = número de webs. </dd></dl>
 
 </div>
 </div>

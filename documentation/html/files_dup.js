@@ -1,18 +1,18 @@
 var files_dup =
 [
     [ "cmake-build-debug", "dir_95e29a8b8ee7c54052c171a88bb95675.html", "dir_95e29a8b8ee7c54052c171a88bb95675" ],
-    [ "AlgorithmConfig.h", "AlgorithmConfig_8h.html", "AlgorithmConfig_8h" ],
-    [ "Graph.h", "Graph_8h.html", "Graph_8h" ],
-    [ "InterferenceGraph.cpp", "InterferenceGraph_8cpp.html", null ],
-    [ "InterferenceGraph.h", "InterferenceGraph_8h.html", "InterferenceGraph_8h" ],
-    [ "LiveRange.cpp", "LiveRange_8cpp.html", null ],
-    [ "LiveRange.h", "LiveRange_8h.html", "LiveRange_8h" ],
+    [ "AlgorithmConfig.h", "_algorithm_config_8h.html", "_algorithm_config_8h" ],
+    [ "Graph.h", "_graph_8h.html", "_graph_8h" ],
+    [ "InterferenceGraph.cpp", "_interference_graph_8cpp.html", null ],
+    [ "InterferenceGraph.h", "_interference_graph_8h.html", "_interference_graph_8h" ],
+    [ "LiveRange.cpp", "_live_range_8cpp.html", null ],
+    [ "LiveRange.h", "_live_range_8h.html", "_live_range_8h" ],
     [ "main.cpp", "main_8cpp.html", "main_8cpp" ],
-    [ "Parser.cpp", "Parser_8cpp.html", null ],
-    [ "Parser.h", "Parser_8h.html", "Parser_8h" ],
-    [ "ProgramPoint.h", "ProgramPoint_8h.html", "ProgramPoint_8h" ],
-    [ "RegisterAllocator.cpp", "RegisterAllocator_8cpp.html", "RegisterAllocator_8cpp" ],
-    [ "RegisterAllocator.h", "RegisterAllocator_8h.html", "RegisterAllocator_8h" ],
-    [ "Web.cpp", "Web_8cpp.html", null ],
-    [ "Web.h", "Web_8h.html", "Web_8h" ]
+    [ "Parser.cpp", "_parser_8cpp.html", null ],
+    [ "Parser.h", "_parser_8h.html", "_parser_8h" ],
+    [ "ProgramPoint.h", "_program_point_8h.html", "_program_point_8h" ],
+    [ "RegisterAllocator.cpp", "_register_allocator_8cpp.html", "_register_allocator_8cpp" ],
+    [ "RegisterAllocator.h", "_register_allocator_8h.html", "_register_allocator_8h" ],
+    [ "Web.cpp", "_web_8cpp.html", null ],
+    [ "Web.h", "_web_8h.html", "_web_8h" ]
 ];

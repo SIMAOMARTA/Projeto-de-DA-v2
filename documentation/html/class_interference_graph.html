@@ -201,15 +201,7 @@ Private Attributes</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section user"><dt>Complexidade</dt><dd>O(W² × L), onde W = número de webs resultante, L = número médio de linhas por web. Dominado pela fase <a class="el" href="#a8590504008ef8e76259ba7986f29c76f" title="Constrói as arestas de interferência entre todas as webs.">buildEdges()</a> que testa todos os pares (W² chamadas a interferesWith()).</dd></dl>
-<p>Delega a construção nas duas fases privadas <a class="el" href="#a9ace91ca867c18bc6b849c4531e71cb1" title="Constrói as webs a partir das live ranges e adiciona os vértices ao grafo.">buildWebs()</a> e <a class="el" href="#a8590504008ef8e76259ba7986f29c76f" title="Constrói as arestas de interferência entre todas as webs.">buildEdges()</a>, executadas por esta ordem.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">ranges</td><td>Lista de live ranges de entrada.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section user"><dt>Complexidade</dt><dd>O(W² × L), dominado pela fase <a class="el" href="#a8590504008ef8e76259ba7986f29c76f" title="Constrói as arestas de interferência entre todas as webs.">buildEdges()</a>. </dd></dl>
+<dl class="section user"><dt>Complexidade</dt><dd>O(W² × L), onde W = número de webs resultante, L = número médio de linhas por web. Dominado pela fase <a class="el" href="#a8590504008ef8e76259ba7986f29c76f" title="Constrói as arestas de interferência entre todas as webs.">buildEdges()</a> que testa todos os pares (W² chamadas a interferesWith()). </dd></dl>
 
 </div>
 </div>
@@ -229,18 +221,8 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Construtor de cópia profunda. </p>
-<p>Construtor de cópia profunda do grafo de interferência.</p>
 <p>Copia o vetor de webs e reconstrói <code>baseGraph_</code> do zero, para garantir que a cópia não partilha estado com o original. Usa <a class="el" href="#a8590504008ef8e76259ba7986f29c76f" title="Constrói as arestas de interferência entre todas as webs.">buildEdges()</a> sobre as webs copiadas para recriar todas as arestas.</p>
 <p>Utilizado pelo <a class="el" href="class_register_allocator.html" title="Classe utilitária estática que implementa os algoritmos de alocação de registos.">RegisterAllocator</a> para preservar o grafo original enquanto experimenta variantes com spilling ou splitting.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">other</td><td>Grafo a copiar.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section user"><dt>Complexidade</dt><dd>O(W² × L), igual ao construtor principal.</dd></dl>
-<p>Copia o vetor de webs e reconstrói <code>baseGraph_</code> do zero (adição dos vértices e reconstrução de todas as arestas via <a class="el" href="#a8590504008ef8e76259ba7986f29c76f" title="Constrói as arestas de interferência entre todas as webs.">buildEdges()</a>), garantindo que a cópia é completamente independente do original.</p>
-<p>Este construtor é utilizado pelo <a class="el" href="class_register_allocator.html" title="Classe utilitária estática que implementa os algoritmos de alocação de registos.">RegisterAllocator</a> para preservar o grafo original enquanto experimenta spilling ou splitting num grafo auxiliar.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">other</td><td>Grafo a copiar.</td></tr>
@@ -288,16 +270,7 @@ Private Attributes</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section user"><dt>Complexidade</dt><dd>Dependente de <code><a class="el" href="class_graph.html#a405c098ad4638a18bdc294e41c27a88d">Graph&lt;int&gt;::addBidirectionalEdge()</a></code>.</dd></dl>
-<p>Delega em <code><a class="el" href="class_graph.html#a405c098ad4638a18bdc294e41c27a88d">Graph&lt;int&gt;::addBidirectionalEdge()</a></code> com peso 0.0 (o peso não tem significado semântico no grafo de interferência).</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">idA</td><td>Id da primeira web. </td></tr>
-    <tr><td class="paramname">idB</td><td>Id da segunda web.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section user"><dt>Complexidade</dt><dd>Dependente de <code><a class="el" href="class_graph.html#a405c098ad4638a18bdc294e41c27a88d">Graph&lt;int&gt;::addBidirectionalEdge()</a></code> — tipicamente O(1) amortizado com listas de adjacência. </dd></dl>
+<dl class="section user"><dt>Complexidade</dt><dd>Dependente de <code><a class="el" href="class_graph.html#a405c098ad4638a18bdc294e41c27a88d">Graph&lt;int&gt;::addBidirectionalEdge()</a></code>. </dd></dl>
 
 </div>
 </div>
@@ -325,11 +298,8 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Constrói as arestas de interferência entre todas as webs. </p>
-<p>Constrói as arestas de interferência entre todos os pares de webs.</p>
 <p>Testa todos os pares (i, j) com i &lt; j. Para cada par em que <a class="el" href="class_web.html#a1daf0ad084076fd059d0e66e75481125" title="Determina se esta web interfere com other.">Web::interferesWith()</a> retorna <code>true</code>, invoca addEdge(i, j).</p>
-<dl class="section user"><dt>Complexidade</dt><dd>O(W² × L), onde W = número de webs, L = linhas médias por web.</dd></dl>
-<p>Testa cada par não ordenado (i, j) com i &lt; j. Para cada par em que <a class="el" href="class_web.html#a1daf0ad084076fd059d0e66e75481125" title="Determina se esta web interfere com other.">Web::interferesWith()</a> retorna <code>true</code>, adiciona uma aresta bidirecional ao <code>baseGraph_</code> via <a class="el" href="#a59b849ae25805441bc1055fa645ee446" title="Adiciona uma aresta bidirecional de interferência entre as webs idA e idB.">addEdge()</a>. Esta fase domina a complexidade total da construção do grafo.</p>
-<dl class="section user"><dt>Complexidade</dt><dd>O(W² × L), onde W = número de webs e L = número médio de linhas partilhadas por par de webs. O fator L provém de interferesWith(). </dd></dl>
+<dl class="section user"><dt>Complexidade</dt><dd>O(W² × L), onde W = número de webs, L = linhas médias por web. </dd></dl>
 
 </div>
 </div>
@@ -357,7 +327,6 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Constrói as webs a partir das live ranges e adiciona os vértices ao grafo. </p>
-<p>Agrupa as live ranges por variável e funde as que se sobrepõem.</p>
 <p>Algoritmo:</p><ol type="1">
 <li>Agrupa as live ranges por nome de variável.</li>
 <li>Para cada variável, cria uma <a class="el" href="class_web.html" title="Nó do grafo de interferência — união de live ranges sobrepostas de uma variável.">Web</a> por range (webs parciais).</li>
@@ -370,21 +339,7 @@ Private Attributes</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section user"><dt>Complexidade</dt><dd>O(R² × P) no pior caso, onde R = número de ranges da variável com mais ranges, P = número de pontos por range. Na prática tende a ser linear no número de ranges.</dd></dl>
-<p>Algoritmo (por variável):</p><ol type="1">
-<li>Cria uma web parcial por cada live range.</li>
-<li>Entra num ciclo externo que percorre todos os pares (i, j) com i &lt; j. Se a web <code class="param">i</code> e a web <code class="param">j</code> se sobrepõem (overlaps()), a web <code class="param">j</code> é absorvida pela <code class="param">i</code> e removida do vetor. O ciclo reinicia (flag <code>merged</code>).</li>
-<li>Repete até nenhum par de webs se sobrepor (convergência garantida, pois a cada iteração o número de webs decresce estritamente em 1).</li>
-<li>As webs resultantes são adicionadas ao vetor global <code>webs_</code>.</li>
-</ol>
-<p>Após processar todas as variáveis, renumera os ids (0..W-1) e adiciona cada web como vértice em <code>baseGraph_</code>.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">ranges</td><td>Lista de live ranges de entrada.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section user"><dt>Complexidade</dt><dd>O(R² × P) por variável, onde R = número de ranges da variável com mais ranges, P = pontos por range. Na prática tende a ser O(R × P) porque as fusões são poucas. </dd></dl>
+<dl class="section user"><dt>Complexidade</dt><dd>O(R³ × P) no pior caso, onde R = número de ranges da variável com mais ranges, P = número de pontos por range. O fator cúbico deve-se ao facto de a cada fusão (absorb) o loop externo reiniciar desde o início, podendo ocorrer até R fusões cada uma precedida de O(R²) chamadas a overlaps(). Na prática tende a ser muito mais eficiente porque as fusões são poucas. </dd></dl>
 
 </div>
 </div>
@@ -404,7 +359,6 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Devolve o grau de interferência (número de vizinhos) da web <code class="param">id</code>. </p>
-<p>Devolve o grau de interferência da web <code class="param">id</code>.</p>
 <p>Corresponde ao número de arestas de interferência incidentes na web com identificador <code class="param">id</code>. Usado pelo <a class="el" href="class_register_allocator.html" title="Classe utilitária estática que implementa os algoritmos de alocação de registos.">RegisterAllocator</a> na fase de simplificação do algoritmo de Kempe.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -413,16 +367,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Grau inteiro da web no grafo de interferência.</dd></dl>
-<dl class="section user"><dt>Complexidade</dt><dd>O(1) (acesso direto ao tamanho da lista de adjacência).</dd></dl>
-<p>Retorna o número de arestas de interferência incidentes na web <code class="param">id</code>, obtido diretamente do tamanho da lista de adjacência do vértice correspondente em <code>baseGraph_</code>.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">id</td><td>Id da web. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Grau inteiro (0 se o id não existir no grafo).</dd></dl>
-<dl class="section user"><dt>Complexidade</dt><dd>O(1) </dd></dl>
+<dl class="section user"><dt>Complexidade</dt><dd>O(1) (acesso direto ao tamanho da lista de adjacência). </dd></dl>
 
 </div>
 </div>
@@ -443,8 +388,6 @@ Private Attributes</h2></td></tr>
 
 <p>Devolve o vetor de webs que compõem o grafo. </p>
 <p>A posição <code class="param">i</code> do vetor corresponde à web com id <code class="param">i</code>.</p>
-<dl class="section return"><dt>Returns</dt><dd>Referência constante para o vetor de <a class="el" href="class_web.html" title="Nó do grafo de interferência — união de live ranges sobrepostas de uma variável.">Web</a>. </dd></dl>
-<dl class="section user"><dt>Complexidade O(1)</dt><dd></dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>Referência constante para o vetor de <a class="el" href="class_web.html" title="Nó do grafo de interferência — união de live ranges sobrepostas de uma variável.">Web</a>. </dd></dl>
 <dl class="section user"><dt>Complexidade O(1)</dt><dd></dd></dl>
 
@@ -478,16 +421,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><code>true</code> se as webs <code class="param">idA</code> e <code class="param">idB</code> interferem.</dd></dl>
-<dl class="section user"><dt>Complexidade</dt><dd>Dependente de <code><a class="el" href="class_graph.html#adccb33124e266f9af4340cf795656b05">Graph&lt;int&gt;::hasEdge()</a></code> — tipicamente O(grau do nó).</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">idA</td><td>Id da primeira web. </td></tr>
-    <tr><td class="paramname">idB</td><td>Id da segunda web. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd><code>true</code> se as webs interferem no <code>baseGraph_</code>.</dd></dl>
-<dl class="section user"><dt>Complexidade</dt><dd>Dependente de <code><a class="el" href="class_graph.html#adccb33124e266f9af4340cf795656b05">Graph&lt;int&gt;::hasEdge()</a></code>. </dd></dl>
+<dl class="section user"><dt>Complexidade</dt><dd>Dependente de <code><a class="el" href="class_graph.html#adccb33124e266f9af4340cf795656b05">Graph&lt;int&gt;::hasEdge()</a></code> — tipicamente O(grau do nó). </dd></dl>
 
 </div>
 </div>
@@ -507,7 +441,6 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Devolve os ids das webs vizinhas (que interferem) com a web <code class="param">id</code>. </p>
-<p>Devolve os ids das webs que interferem com a web <code class="param">id</code>.</p>
 <p>Percorre a lista de adjacência do vértice <code class="param">id</code> em <code>baseGraph_</code> e recolhe os ids de todos os destinos.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -516,15 +449,6 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Vetor de ids das webs que interferem com a web <code class="param">id</code>.</dd></dl>
-<dl class="section user"><dt>Complexidade</dt><dd>O(grau(<code class="param">id</code>))</dd></dl>
-<p>Obtém o vértice de <code>baseGraph_</code> com informação <code class="param">id</code> e percorre a sua lista de adjacência, recolhendo os ids (informação) de cada destino.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">id</td><td>Id da web cujos vizinhos se pretendem. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Vetor de ids das webs vizinhas.</dd></dl>
 <dl class="section user"><dt>Complexidade</dt><dd>O(grau(<code class="param">id</code>)) </dd></dl>
 
 </div>
@@ -566,14 +490,7 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Imprime o grafo para <code>std::cout</code> (modo de depuração). </p>
-<p>Imprime o grafo de interferência para <code>std::cout</code>.</p>
 <p>Escreve a lista de webs com os seus pontos de programa e, de seguida, a lista de arestas de interferência (cada aresta impressa uma única vez, com o menor id primeiro).</p>
-<dl class="section user"><dt>Complexidade</dt><dd>O(W + E), onde W = número de webs, E = número de arestas.</dd></dl>
-<p>Escreve:</p><ol type="1">
-<li>A lista de webs com id, nome de variável e pontos de programa.</li>
-<li>A lista de arestas de interferência, cada aresta impressa uma única vez (garante id_menor &lt; id_maior).</li>
-</ol>
-<p>Útil para depuração e validação manual dos resultados.</p>
 <dl class="section user"><dt>Complexidade</dt><dd>O(W + E), onde W = número de webs, E = número de arestas. </dd></dl>
 
 </div>

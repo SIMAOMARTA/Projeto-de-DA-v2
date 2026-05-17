@@ -188,15 +188,6 @@ Private Attributes</h2></td></tr>
 <dl class="section pre"><dt>Precondition</dt><dd><code class="param">varName</code> não deve ser vazio. </dd>
 <dd>
 <code class="param">points</code> não deve estar vazio.</dd></dl>
-<dl class="section user"><dt>Complexidade</dt><dd>O(P log P), onde P = número de pontos, dominado pelas inserções no <code>std::set</code>.</dd></dl>
-<p>Inicializa os campos <code>varName</code> e <code>points</code> com os argumentos recebidos. De seguida itera sobre <code class="param">points</code> e insere o número de linha de cada um em <code>lineSet</code>, pré-construindo o conjunto ordenado para que chamadas futuras a <a class="el" href="#a9b3b8c6e3c3cb59ff805e743ea511259" title="Verifica se esta live range partilha pelo menos uma linha com other.">intersects()</a> sejam O(P) em vez de O(P²).</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">varName</td><td>Nome da variável associada a esta live range. </td></tr>
-    <tr><td class="paramname">points</td><td>Lista de pontos de programa que compõem a live range.</td></tr>
-  </table>
-  </dd>
-</dl>
 <dl class="section user"><dt>Complexidade</dt><dd>O(P log P), onde P = número de pontos, dominado pelas inserções no <code>std::set</code>. </dd></dl>
 
 </div>
@@ -220,8 +211,6 @@ Private Attributes</h2></td></tr>
 <p>Devolve o conjunto de números de linha desta live range. </p>
 <p>Estrutura auxiliar pré-construída no construtor que permite que <a class="el" href="#a9b3b8c6e3c3cb59ff805e743ea511259" title="Verifica se esta live range partilha pelo menos uma linha com other.">intersects()</a> opere em O(P) usando dois iteradores sobre conjuntos ordenados, em vez de uma pesquisa quadrática.</p>
 <dl class="section return"><dt>Returns</dt><dd>Referência constante para o <code>std::set&lt;int&gt;</code> de linhas ordenadas.</dd></dl>
-<dl class="section user"><dt>Complexidade</dt><dd>O(1)</dd></dl>
-<dl class="section return"><dt>Returns</dt><dd>Referência constante para o <code>std::set&lt;int&gt;</code> de linhas ordenadas.</dd></dl>
 <dl class="section user"><dt>Complexidade</dt><dd>O(1) </dd></dl>
 
 </div>
@@ -243,9 +232,6 @@ Private Attributes</h2></td></tr>
 
 <p>Devolve a lista de pontos de programa desta live range. </p>
 <p>Os pontos estão na ordem em que foram fornecidos ao construtor, preservando as anotações <code>isStart</code> e <code>isEnd</code> de cada um.</p>
-<dl class="section return"><dt>Returns</dt><dd>Referência constante para o vetor de <a class="el" href="struct_program_point.html" title="Representa um ponto de programa (instrução) dentro de uma live range.">ProgramPoint</a>.</dd></dl>
-<dl class="section user"><dt>Complexidade</dt><dd>O(1)</dd></dl>
-<p>Os pontos estão na ordem em que foram fornecidos ao construtor, preservando as anotações <code>isStart</code> e <code>isEnd</code> de cada ponto.</p>
 <dl class="section return"><dt>Returns</dt><dd>Referência constante para o vetor de <a class="el" href="struct_program_point.html" title="Representa um ponto de programa (instrução) dentro de uma live range.">ProgramPoint</a>.</dd></dl>
 <dl class="section user"><dt>Complexidade</dt><dd>O(1) </dd></dl>
 
@@ -297,21 +283,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><code>true</code> se houver pelo menos uma linha comum; <code>false</code> caso contrário.</dd></dl>
-<dl class="section user"><dt>Complexidade</dt><dd>O(min(|A|, |B|)) no melhor caso (primeira linha já comum); O(|A| + |B|) no pior caso (sem interseção), onde |A| e |B| são os tamanhos dos respetivos <code>lineSets</code>.</dd></dl>
-<p>Utiliza o algoritmo de merge sobre dois iteradores dos <code>lineSets</code> ordenados, equivalente ao passo de merge do merge-sort:</p><ol type="1">
-<li>Em cada passo, avança o iterador cujo valor corrente é menor.</li>
-<li>Se em algum ponto os dois valores forem iguais, retorna <code>true</code>.</li>
-<li>Se algum iterador chegar ao fim sem igualdade, retorna <code>false</code>.</li>
-</ol>
-<p>Esta abordagem evita a construção de estruturas auxiliares e opera diretamente nos <code>std::set</code> já ordenados, obtendo complexidade linear.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">other</td><td>A outra live range a comparar. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd><code>true</code> se houver pelo menos uma linha comum; <code>false</code> caso contrário.</dd></dl>
-<dl class="section user"><dt>Complexidade</dt><dd>O(min(|A|, |B|)) no melhor caso (primeira linha já comum); O(|A| + |B|) no pior caso (sem qualquer linha comum). </dd></dl>
+<dl class="section user"><dt>Complexidade</dt><dd>O(min(|A|, |B|)) no melhor caso (primeira linha já comum); O(|A| + |B|) no pior caso (sem interseção), onde |A| e |B| são os tamanhos dos respetivos <code>lineSets</code>. </dd></dl>
 
 </div>
 </div>
@@ -332,9 +304,6 @@ Private Attributes</h2></td></tr>
 
 <p>Devolve uma representação textual da live range. </p>
 <p>Constrói a string iterando sobre <code>points</code> na ordem de inserção. Cada ponto é representado pelo seu número de linha, seguido de <code>'+'</code> se <code>isStart</code> for verdadeiro e de <code>'-'</code> se <code>isEnd</code> for verdadeiro. Os pontos são separados por vírgulas.</p>
-<dl class="section return"><dt>Returns</dt><dd>String com os pontos separados por vírgulas e anotados. Exemplo: <code>"1+,2,3,4,5,6-"</code> </dd></dl>
-<dl class="section user"><dt>Complexidade</dt><dd>O(P) onde P = número de pontos de programa.</dd></dl>
-<p>Itera sobre o vetor <code>points</code> e constrói a string de saída no formato exigido pelo enunciado. Cada ponto é representado pelo número de linha, seguido opcionalmente dos sufixos <code>'+'</code> (se <code>isStart</code>) e <code>'-'</code> (se <code>isEnd</code>). Os pontos são separados por vírgulas. Um ponto pode ter ambos os sufixos se a variável é definida e usada na mesma instrução.</p>
 <dl class="section return"><dt>Returns</dt><dd>String com os pontos separados por vírgulas e anotados. Exemplo: <code>"1+,2,3,4,5,6-"</code> </dd></dl>
 <dl class="section user"><dt>Complexidade</dt><dd>O(P) onde P = número de pontos de programa. </dd></dl>
 

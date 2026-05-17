@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['webid_0',['webId',['../structRegisterAllocator_1_1Allocation.html#acbb685194dc81bcbbc8f220913cee5ba',1,'RegisterAllocator::Allocation']]],
-  ['webs_5f_1',['webs_',['../classInterferenceGraph.html#a4728c88f0f84629c96d4bde08af7418e',1,'InterferenceGraph']]],
-  ['weight_2',['weight',['../classEdge.html#af188b57b604f0d65e2da48733bd76426',1,'Edge']]]
+  ['webid_0',['webId',['../struct_register_allocator_1_1_allocation.html#acbb685194dc81bcbbc8f220913cee5ba',1,'RegisterAllocator::Allocation']]],
+  ['webs_5f_1',['webs_',['../class_interference_graph.html#a4728c88f0f84629c96d4bde08af7418e',1,'InterferenceGraph']]],
+  ['weight_2',['weight',['../class_edge.html#af188b57b604f0d65e2da48733bd76426',1,'Edge']]]
 ];
