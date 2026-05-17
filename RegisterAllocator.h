@@ -65,36 +65,47 @@ public:
         bool spilled = false; ///< @c true se a web foi enviada para memória ("M").
     };
 
-    /**
-     * @brief Aloca registos para todas as webs em @p graph e devolve o resultado.
-     *
-     * @details
-     * Seleciona internamente o algoritmo indicado em @p config e retorna
-     * um triplo @c {alocações, grafofinal, metadados}:
-     *
-     *  1. **alocações**: vetor de Allocation, um por web do grafo final.
-     *     Para algoritmos sem modificação do grafo (basic, spilling, free),
-     *     tem exatamente tantos elementos quantas as webs do grafo original.
-     *     Para splitting, pode ter mais (as webs divididas originam novas entradas).
-     *
-     *  2. **grafo final**: para basic, spilling e free é equivalente ao grafo
-     *     original (cópia sem modificações); para splitting pode conter mais
-     *     nós correspondentes às webs derivadas das divisões.
-     *
-     *  3. **metadados**: string de texto em formato legível por máquina.
-     *     - Vazia para basic e free.
-     *     - Para spilling: lista das webs vertidas (id, variável, grau).
-     *     - Para splitting: lista das divisões (variável, linha de corte,
-     *       ids das webs derivadas).
-     *
-     * @param graph   Grafo de interferência original.
-     * @param config  Configuração com número de registos e variante do algoritmo.
-     * @return        Triplo @c {alocações, grafo final, metadados}.
-     *
-     * @par Complexidade
-     * O(W²) para basic/spilling/free; O(K × W² × L) para splitting.
-     * W = número de webs, L = linhas médias por web, K = parâmetro do algoritmo.
-     */
+ /**
+      * @brief Aloca registos para todas as webs em @p graph e devolve o resultado.
+      *
+      * @details
+      * Seleciona internamente o algoritmo indicado em @p config e retorna
+      * um triplo @c {alocações, grafofinal, metadados}:
+      *
+      * 1. **alocações**: vetor de Allocation, um por web do grafo final.
+      * Para algoritmos sem modificação do grafo (basic, spilling, free),
+      * tem exatamente tantos elementos quantas as webs do grafo original.
+      * Para splitting, pode ter mais (as webs divididas originam novas entradas).
+      *
+      * 2. **grafo final**: para basic, spilling e free é equivalente ao grafo
+      * original (cópia sem modificações); para splitting pode conter mais
+      * nós correspondentes às webs derivadas das divisões.
+      *
+      * 3. **metadados**: string de texto em formato legível por máquina.
+      * - Vazia para basic e free.
+      * - Para spilling:
+      * @code
+      * # Spilling metadata [K=<param>]
+      * # Format: spilled_web: <webId> var=<name> degree=<d>
+      * spilled_count: <n>
+      * spilled_web: 2 var=i degree=5
+      * @endcode
+      * - Para splitting:
+      * @code
+      * # Splitting metadata [K=<param>]
+      * # Format: split: original_var=<name> split_at_line=<line> -> web<A> web<B>
+      * splits_count: <n>
+      * split: original_var=i split_at_line=9 -> web2 web3
+      * @endcode
+      *
+      * @param graph   Grafo de interferência original.
+      * @param config  Configuração com número de registos e variante do algoritmo.
+      * @return        Triplo @c {alocações, grafo final, metadados}.
+      *
+      * @par Complexidade
+      * O(W²) para basic/spilling/free; O(K × W² × L) para splitting.
+      * W = número de webs, L = linhas médias por web, K = parâmetro do algoritmo.
+      */
 
     static std::tuple<std::vector<Allocation>, InterferenceGraph, std::string> allocate(const InterferenceGraph& graph,
                                                                                         const AlgorithmConfig& config);

@@ -6,7 +6,7 @@
  *
  * **Modo batch**, modo não interativo:
  * @code
- *   ./prog -b testes/ranges.txt testes/registers.txt testes/output.txt
+ * ./prog -b testes/ranges.txt testes/registers.txt testes/output.txt
  * @endcode
  *
  * **Modo interativo**, onde se apresenta um menu simples que
@@ -34,28 +34,15 @@
 #include "RegisterAllocator.h"
 #include "AlgorithmConfig.h"
 
-/**
- * @brief Executa a pipeline completa.
- *
- * Algoritmo:
- *  1. **Parse** dos dois ficheiros de entrada (ranges e configuração).
- *  2. **Construção** do grafo de interferência.
- *  3. **Alocação** de registos com o algoritmo configurado.
- *  4. **Escrita** do resultado (+ metadados) no ficheiro de saída.
- *
- * @param rangesFile    Caminho para o ficheiro de live ranges.
- * @param registersFile Caminho para o ficheiro de configuração.
- * @param outputFile    Caminho para o ficheiro de saída.
- * @return              @c true se o pipeline foi concluído sem erros;
- *                      @c false caso contrário.
- *
- * @par Complexidade
- * O(W² × L), onde W = nº de webs, L = linhas médias por web.
- */
 static bool runAllocation(const std::string& rangesFile,
                           const std::string& registersFile,
                           const std::string& outputFile)
 {
+    // Algoritmo:
+    // 1. Parse dos dois ficheiros de entrada (ranges e configuração).
+    // 2. Construção do grafo de interferência.
+    // 3. Alocação de registos com o algoritmo configurado.
+    // 4. Escrita do resultado (+ metadados) no ficheiro de saída.
     try {
         // Parse dos ficheiros de entrada
         auto ranges   = Parser::parseRanges(rangesFile);
@@ -95,19 +82,14 @@ static bool runAllocation(const std::string& rangesFile,
     }
 }
 
-/**
- * @brief Menu interativo.
- *
- * Apresenta as seguintes opções em loop até o utilizador escolher a opção "Sair":
- *  1. Definir o ficheiro de live ranges.
- *  2. Definir o ficheiro de configuração de registos.
- *  3. Definir o ficheiro de saída.
- *  4. Executar a alocação (requer sempre as opções 1-3 preenchidas).
- *  5. Sair.
- *
- * Entradas inválidas são reportadas com mensagem de erro.
- */
 static void interactiveMenu() {
+    // Apresenta as seguintes opções em loop até o utilizador escolher a opção "Sair":
+    // 1. Definir o ficheiro de live ranges.
+    // 2. Definir o ficheiro de configuração de registos.
+    // 3. Definir o ficheiro de saída.
+    // 4. Executar a alocação (requer sempre as opções 1-3 preenchidas).
+    // 5. Sair.
+    // Entradas inválidas são reportadas com mensagem de erro.
     std::string rangesFile, registersFile, outputFile;
     while (true) {
         std::cout << "\n================== MENU ==================\n"
@@ -155,24 +137,12 @@ static void interactiveMenu() {
     }
 }
 
-/**
- * @brief Ponto de entrada — seleciona o modo batch ou o modo interativo.
- *
- * @par Modo batch
- * Sintaxe: @c ./prog @c -b @c ranges.txt @c registers.txt @c output.txt
- *
- * @par Modo interativo
- * Qualquer outra invocação inicia o menu interativo.
- *
- * @param argc  Número de argumentos da linha de comandos.
- * @param argv  Array de argumentos.
- * @return      0 (sucesso) ou 1 (erro no modo batch).
- */
 int main(int argc, char* argv[]) {
 #ifdef _WIN32
     SetConsoleOutputCP(CP_UTF8);
 #endif
 
+    // Modo batch: ./prog -b ranges.txt registers.txt output.txt
     if (argc == 5 && std::string(argv[1]) == "-b") {
         std::string rangesFile    = argv[2];
         std::string registersFile = argv[3];
@@ -181,6 +151,7 @@ int main(int argc, char* argv[]) {
         return ok ? 0 : 1;
     }
 
+    // Modo interativo: Qualquer outra invocação inicia o menu.
     interactiveMenu();
     return 0;
 }

@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['parser_2ecpp_0',['Parser.cpp',['../_parser_8cpp.html',1,'']]],
-  ['parser_2eh_1',['Parser.h',['../_parser_8h.html',1,'']]],
-  ['programpoint_2eh_2',['ProgramPoint.h',['../_program_point_8h.html',1,'']]]
+  ['registerallocator_2ecpp_0',['RegisterAllocator.cpp',['../RegisterAllocator_8cpp.html',1,'']]],
+  ['registerallocator_2eh_1',['RegisterAllocator.h',['../RegisterAllocator_8h.html',1,'']]]
 ];

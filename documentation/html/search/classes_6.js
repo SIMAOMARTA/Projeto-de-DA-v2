@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['registerallocator_0',['RegisterAllocator',['../class_register_allocator.html',1,'']]]
+  ['registerallocator_0',['RegisterAllocator',['../classRegisterAllocator.html',1,'']]]
 ];
