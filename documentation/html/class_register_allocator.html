@@ -155,8 +155,8 @@ Static Private Member Functions</h2></td></tr>
 <div class="line"><a class="code hl_function" href="#ac041d3213483d4176411bed7a83703a0">RegisterAllocator::printResult</a>(finalGraph, allocs, std::cout, meta);</div>
 <div class="ttc" id="aclass_interference_graph_html"><div class="ttname"><a href="class_interference_graph.html">InterferenceGraph</a></div><div class="ttdoc">Grafo de interferência entre webs de variáveis.</div><div class="ttdef"><b>Definition</b> InterferenceGraph.h:50</div></div>
 <div class="ttc" id="aclass_parser_html_a165f65c047fb13e114e37f25c9ee1dbf"><div class="ttname"><a href="class_parser.html#a165f65c047fb13e114e37f25c9ee1dbf">Parser::parseRegisters</a></div><div class="ttdeci">static AlgorithmConfig parseRegisters(const std::string &amp;filename)</div><div class="ttdoc">Lê e faz o parse do ficheiro de configuração de registos.</div><div class="ttdef"><b>Definition</b> Parser.cpp:226</div></div>
-<div class="ttc" id="aclass_register_allocator_html_a7ff05ef6c4ef05afb770a2722e618c14"><div class="ttname"><a href="#a7ff05ef6c4ef05afb770a2722e618c14">RegisterAllocator::allocate</a></div><div class="ttdeci">static std::tuple&lt; std::vector&lt; Allocation &gt;, InterferenceGraph, std::string &gt; allocate(const InterferenceGraph &amp;graph, const AlgorithmConfig &amp;config)</div><div class="ttdoc">Aloca registos para todas as webs em graph e devolve o resultado.</div><div class="ttdef"><b>Definition</b> RegisterAllocator.cpp:474</div></div>
-<div class="ttc" id="aclass_register_allocator_html_ac041d3213483d4176411bed7a83703a0"><div class="ttname"><a href="#ac041d3213483d4176411bed7a83703a0">RegisterAllocator::printResult</a></div><div class="ttdeci">static void printResult(const InterferenceGraph &amp;graph, const std::vector&lt; Allocation &gt; &amp;allocations, std::ostream &amp;out, const std::string &amp;metadata=&quot;&quot;)</div><div class="ttdoc">Escreve o resultado da alocação num stream de saída.</div><div class="ttdef"><b>Definition</b> RegisterAllocator.cpp:653</div></div>
+<div class="ttc" id="aclass_register_allocator_html_a7ff05ef6c4ef05afb770a2722e618c14"><div class="ttname"><a href="#a7ff05ef6c4ef05afb770a2722e618c14">RegisterAllocator::allocate</a></div><div class="ttdeci">static std::tuple&lt; std::vector&lt; Allocation &gt;, InterferenceGraph, std::string &gt; allocate(const InterferenceGraph &amp;graph, const AlgorithmConfig &amp;config)</div><div class="ttdoc">Aloca registos para todas as webs em graph e devolve o resultado.</div><div class="ttdef"><b>Definition</b> RegisterAllocator.cpp:476</div></div>
+<div class="ttc" id="aclass_register_allocator_html_ac041d3213483d4176411bed7a83703a0"><div class="ttname"><a href="#ac041d3213483d4176411bed7a83703a0">RegisterAllocator::printResult</a></div><div class="ttdeci">static void printResult(const InterferenceGraph &amp;graph, const std::vector&lt; Allocation &gt; &amp;allocations, std::ostream &amp;out, const std::string &amp;metadata=&quot;&quot;)</div><div class="ttdoc">Escreve o resultado da alocação num stream de saída.</div><div class="ttdef"><b>Definition</b> RegisterAllocator.cpp:660</div></div>
 <div class="ttc" id="astruct_algorithm_config_html"><div class="ttname"><a href="struct_algorithm_config.html">AlgorithmConfig</a></div><div class="ttdoc">Configuração parseada a partir do ficheiro de registos.</div><div class="ttdef"><b>Definition</b> AlgorithmConfig.h:49</div></div>
 </div><!-- fragment --> </div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
 <a id="a7ff05ef6c4ef05afb770a2722e618c14" name="a7ff05ef6c4ef05afb770a2722e618c14"></a>
@@ -211,7 +211,7 @@ Static Private Member Functions</h2></td></tr>
 <p>Seleciona o algoritmo com base em <code class="param">config.algorithm</code> e delega na implementação correspondente. Devolve sempre um triplo <code>{alocações</code>, grafofinal, metadados}.</p>
 <h3 class="doxsection"><a class="anchor" id="autotoc_md3"></a>
 Variante <code>basic</code> </h3>
-<p>Chama <a class="el" href="#a780771cebf42479c203614a5958b374d" title="Coloração greedy de Kempe com limite opcional de spills.">kempeWithSpillCap()</a> com <code>spillCap</code> = -1 (sem limite). As webs não coloríveis recebem <code>spilled=true</code> individualmente; as restantes mantêm o registo atribuído. Nenhum metadado é gerado.</p>
+<p>Chama <a class="el" href="#a780771cebf42479c203614a5958b374d" title="Coloração greedy de Kempe com limite opcional de spills.">kempeWithSpillCap()</a> com <code>spillCap</code> = 0 (não permite nenhum spill durante a simplificação). Se a alocação completa não for possível com os registos fornecidos, a flag de viabilidade torna-se falsa, ativando o fallback que verte integralmente TODAS as webs para a memória (<code>spilled=true</code>, associadas a <code>M</code>), resultando em 0 registos efetivamente utilizados. Nenhum metadado é gerado.</p>
 <h3 class="doxsection"><a class="anchor" id="autotoc_md4"></a>
 Variante <code>spilling</code> </h3>
 <p>Itera <code>cap</code> de 0 até K (inclusive). Na primeira iteração em que <a class="el" href="#a780771cebf42479c203614a5958b374d" title="Coloração greedy de Kempe com limite opcional de spills.">kempeWithSpillCap()</a> define <code class="param">feasible</code> = <code>true</code>, retorna. Os metadados listam, por ordem de seleção, o id, nome de variável e grau de cada web vertida. Se nenhum cap de 0 a K for viável, o fallback é devolver todas as webs como spilled.</p>
@@ -238,12 +238,6 @@ Variante <code>free</code> (Chaitin)</h3>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Triplo <code>{alocações</code>, grafo final, metadados}.</dd></dl>
 <dl class="section user"><dt>Complexidade</dt><dd>O(W²) para basic/spilling/free; O(K × W² × L) para splitting. </dd></dl>
-<p>Registo de uma única operação de divisão de web.</p>
-<p>Armazena os dados necessários para construir a linha de metadados correspondente no ficheiro de saída.</p>
-<p>&lt; nome da variável antes do split</p>
-<p>&lt; ponto de corte</p>
-<p>&lt; indice da primeira metade</p>
-<p>&lt; Índice da segunda metade</p>
 
 </div>
 </div>
